@@ -1,10 +1,15 @@
+// ProductCard.js
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, addToCart }) => {
+    const handleAddToCart = () => {
+        addToCart(product);
+    };
+
     return (
         <Card variant="outlined">
             {/* Imagem */}
@@ -19,7 +24,7 @@ const ProductCard = ({ product }) => {
                     Valor: {product.price}
                 </Typography>
                 {/* Botão Adicionar */}
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={handleAddToCart}>
                     Adicionar
                 </Button>
             </CardContent>

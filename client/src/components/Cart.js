@@ -1,14 +1,63 @@
 import React from 'react';
+import { IconButton, Typography, Grid, Button } from '@material-ui/core';
+import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
 
-const Cart = ({ cartItems }) => {
+const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
+    const handleIncrement = (itemId) => {
+        const updatedCartItems = cartItems.map(item => {
+            if (item.id === itemId) {
+                return { ...item, quantity: item.quantity + 1 };
+            }
+            return item;
+        });
+        setCartItems(updatedCartItems);
+    };
+
+    const handleDecrement = (itemId) => {
+        const updatedCartItems = cartItems.map(item => {
+            if (item.id === itemId && item.quantity > 1) {
+                return { ...item, quantity: item.quantity - 1 };
+            }
+            return item;
+        });
+        setCartItems(updatedCartItems);
+    };
+
     return (
         <div className="cart">
             <h2>Carrinho</h2>
-            <ul>
+            <Grid container spacing={2}>
                 {cartItems.map(item => (
-                    <li key={item.id}>{item.name} - {item.price}</li>
+                    <Grid item xs={4} key={item.id}>
+                        <Grid container alignItems="center" spacing={2}>
+                            <Grid item xs={5}>
+                                <Typography variant="body1">{item.name}</Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Grid container spacing={1} alignItems="center">
+                                    <Grid item>
+                                        <IconButton aria-label="Diminuir quantidade" onClick={() => handleDecrement(item.id)}>
+                                            <RemoveIcon />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography variant="body1">{item.quantity}</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <IconButton aria-label="Incrementar quantidade" onClick={() => handleIncrement(item.id)}>
+                                            <AddIcon />
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="body1">R$ {(item.price * item.quantity).toFixed(2)}</Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 ))}
-            </ul>
+            </Grid>
+            <Button variant="contained" color="primary" onClick={() => setCartOpen(false)}>Fechar Carrinho</Button>
         </div>
     );
 };
