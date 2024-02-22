@@ -5,6 +5,7 @@ import Cart from './components/Cart';
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     const products = [
         { id: 1, name: 'Produto 1', price: 10.99, category: 'Alimentos', image: 'https://source.unsplash.com/random/360x120a' },
@@ -18,10 +19,10 @@ function App() {
 
     return (
         <div className="App">
-            <TopNav />
+            <TopNav setIsCartOpen={setIsCartOpen} cartItems={cartItems} />
             <div className="container">
                 <ProductGrid products={products} addToCart={addToCart} />
-                <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                {isCartOpen && <Cart cartItems={cartItems} setCartItems={setCartItems} setCartOpen={setIsCartOpen} />}
             </div>
         </div>
     );

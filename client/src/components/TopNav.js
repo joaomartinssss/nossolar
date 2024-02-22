@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -6,18 +7,18 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Cart from './Cart';
 
-// Estilo customizado para o input de pesquisa
 const SearchInput = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: '#f0f0f0',
     display: 'flex',
-    alignItems: 'center', // Adicionado para centralizar verticalmente
+    alignItems: 'center',
     width: 'auto',
 }));
 
-// Estilo customizado para o ícone de pesquisa
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -26,32 +27,68 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
     position: 'absolute',
     left: 0,
-    backgroundColor: '#f0f0f0', // Mesma cor de background do SearchInput
-    borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`, // Adicionado para arredondar o canto superior esquerdo
+    backgroundColor: '#f0f0f0',
+    borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`,
 }));
 
-const TopNav = () => {
+const CartContainer = styled('div')(({ theme, isOpen }) => ({
+    position: 'fixed',
+    boxSizing: 'border-box',
+    top: 0,
+    right: 0,
+    zIndex: 999,
+    padding: '2rem',
+    width: '50vw', // 50% da largura da tela
+    height: '100vh', // 100% da altura da tela
+    backgroundColor: 'white',
+    boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.4)', // Sombra mais forte
+    overflowY: 'auto',
+    transition: 'transform 0.5s ease-in-out', // Adicionando uma transição suave
+    transform: `translateX(${isOpen ? '0%' : '100%'})`, // Movendo o carrinho para a direita para escondê-lo
+}));
+
+const TopNav = ({ cartItems }) => {
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const handleCartClick = () => {
+        setIsCartOpen(!isCartOpen);
+    };
+
+    const handleClickAway = () => {
+        setIsCartOpen(false);
+    };
 
     return (
-        <div>
+        <div style={{ position: 'relative' }}>
             <AppBar position="static" style={{ marginBottom: '1rem' }}>
                 <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem' }}>
-                    {/* Logo */}
                     <div className="logo">Logo</div>
-                    {/* Pesquisar */}
                     <SearchInput style={{padding: '.3rem 2rem'}}>
-                        {/* Ícone de pesquisa dentro do SearchInput */}
                         <SearchIconWrapper>
                             <SearchIcon color="primary"/>
                         </SearchIconWrapper>
                         <InputBase
                             placeholder="Pesquisar por produtos"
                             inputProps={{ 'aria-label': 'search' }}
-                            style={{ paddingLeft: '2rem' }} // Adicionado para compensar a largura do ícone
+                            style={{ paddingLeft: '2rem' }}
                         />
                     </SearchInput>
-                    {/* Carrinho e Login */}
                     <div>
+                        <ClickAwayListener onClickAway={handleClickAway}>
+                            <div style={{ position: 'relative' }}>
+                                <IconButton
+                                    size="large"
+                                    color="inherit"
+                                    aria-label="carrinho"
+                                    onClick={handleCartClick}
+                                >
+                                    <ShoppingCartIcon />
+                                </IconButton>
+                                <CartContainer isOpen={isCartOpen}>
+                                    <Cart cartItems={cartItems} />
+                                </CartContainer>
+                            </div>
+                        </ClickAwayListener>
                         <IconButton
                             size="large"
                             color="inherit"

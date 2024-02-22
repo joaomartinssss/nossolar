@@ -33,10 +33,10 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
             <h2>Carrinho</h2>
             <Grid container spacing={2}>
                 {cartItems.map(item => (
-                    <Grid item xs={4} key={item.id}>
+                    <Grid item xs={10} key={item.id}>
                         <Grid container alignItems="center" spacing={2}>
                             <Grid item xs={5}>
-                                <Typography variant="body1">{item.name}</Typography>
+                                <Typography variant="body1" style={{ color: 'black' }}>{item.name}</Typography>
                             </Grid>
                             <Grid item xs={3}>
                                 <Grid container spacing={1} alignItems="center">
@@ -46,7 +46,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="body1">{item.quantity}</Typography>
+                                        <Typography variant="body1" style={{ color: 'black' }}>{item.quantity}</Typography>
                                     </Grid>
                                     <Grid item>
                                         <IconButton aria-label="Incrementar quantidade" onClick={() => handleIncrement(item.id)}>
@@ -56,7 +56,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                 </Grid>
                             </Grid>
                             <Grid item xs={3}>
-                                <Typography variant="body1">R$ {(item.price * item.quantity).toFixed(2)}</Typography>
+                                <Typography variant="body1" style={{ color: 'black' }}>R$ {(item.price * item.quantity).toFixed(2)}</Typography>
                             </Grid>
                             <Grid item xs={1}>
                                 <IconButton aria-label="Remover item" onClick={() => handleRemove(item.id)}>
