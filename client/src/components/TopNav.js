@@ -35,7 +35,7 @@ const TopNav = () => {
     return (
         <div>
             <AppBar position="static" style={{ marginBottom: '1rem' }}>
-                <Toolbar sx={{ justifyContent: 'space-between', padding: '0 1rem' }}>
+                <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem' }}>
                     {/* Logo */}
                     <div className="logo">Logo</div>
                     {/* Pesquisar */}

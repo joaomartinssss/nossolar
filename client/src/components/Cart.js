@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Typography, Grid, Button } from '@material-ui/core';
-import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
+import { Add as AddIcon, Remove as RemoveIcon, Delete as DeleteIcon } from '@material-ui/icons';
 
 const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     const handleIncrement = (itemId) => {
@@ -20,6 +20,11 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
             }
             return item;
         });
+        setCartItems(updatedCartItems);
+    };
+
+    const handleRemove = (itemId) => {
+        const updatedCartItems = cartItems.filter(item => item.id !== itemId);
         setCartItems(updatedCartItems);
     };
 
@@ -50,8 +55,13 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={3}>
                                 <Typography variant="body1">R$ {(item.price * item.quantity).toFixed(2)}</Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <IconButton aria-label="Remover item" onClick={() => handleRemove(item.id)}>
+                                    <DeleteIcon />
+                                </IconButton>
                             </Grid>
                         </Grid>
                     </Grid>
