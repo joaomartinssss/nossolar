@@ -24,7 +24,7 @@ const ProductCard = ({ product, addToCart }) => {
                     Valor: {product.price}
                 </Typography>
                 {/* Botão Adicionar */}
-                <Button variant="contained" color="primary" onClick={handleAddToCart}>
+                <Button variant="contained" color="primary" onClick={handleAddToCart} style={{borderRadius: '1rem'}}>
                     Adicionar
                 </Button>
             </CardContent>

@@ -43,6 +43,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <img src="/carrinho_vazio.png" alt="Imagem Carrinho Vazio" style={{ width: '25rem' }} />
                     <p style={{ color: 'black' }}>Carrinho vazio, que tal adicionar alguns itens?</p>
+                    <Button variant="contained" color="primary" onClick={() => setCartOpen(false)}>Fechar Carrinho</Button>
                 </div>
             ) : (
                 <div>

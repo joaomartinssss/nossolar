@@ -26,7 +26,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    left: 0,
+    right: 0,
     backgroundColor: '#f0f0f0',
     borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`,
 }));
@@ -82,7 +82,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
             <AppBar position="static" style={{ marginBottom: '1rem' }}>
                 <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem' }}>
                     <div className="logo">Logo</div>
-                    <SearchInput style={{ padding: '.3rem 2rem' }}>
+                    <SearchInput style={{ padding: '.2rem 2rem .2rem .1rem' }}>
                         <SearchIconWrapper>
                             <SearchIcon color="primary" />
                         </SearchIconWrapper>
