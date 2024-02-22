@@ -4,9 +4,9 @@ import ProductCard from './ProductCard';
 
 const ProductGrid = ({ products, addToCart }) => {
     return (
-        <Grid container spacing={2} className="product-grid-container" sx={{ marginTop: '20px' }}>
+        <Grid container className="product-grid-container" sx={{ marginTop: '20px', width: '60%', margin: '0 auto', background: '' }}>
             {products.map(product => (
-                <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                <Grid key={product.id} item xs={12} sm={6} md={3} lg={3} style={{ display: 'flex' }}>
                     {/* Passe a função addToCart como propriedade para o componente ProductCard */}
                     <ProductCard product={product} addToCart={addToCart} />
                 </Grid>
