@@ -27,7 +27,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
     position: 'absolute',
     right: 0,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'blue',
     borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`,
 }));
 
@@ -63,6 +63,18 @@ const CartIndicator = styled('div')({
     fontSize: 12,
 });
 
+const NavigationBar = styled('div')({
+    backgroundColor: '#003599',
+    padding: '0.8rem 0',
+    textAlign: 'center',
+});
+
+const NavLink = styled('a')({
+    color: 'white',
+    textDecoration: 'none',
+    margin: '0 1rem',
+});
+
 const TopNav = ({ cartItems, setCartItems }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -79,12 +91,19 @@ const TopNav = ({ cartItems, setCartItems }) => {
 
     return (
         <div style={{ position: 'relative' }}>
+            <NavigationBar>
+                <NavLink href="#">Institucional</NavLink>
+                <NavLink href="#">Atendimento</NavLink>
+                <NavLink href="#">Nossas Lojas</NavLink>
+                <NavLink href="#">Folhetos</NavLink>
+                <NavLink href="#">Trabalhe Conosco</NavLink>
+            </NavigationBar>
             <AppBar position="static" style={{ marginBottom: '1rem' }}>
-                <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem' }}>
-                    <div className="logo">Logo</div>
+                <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem', background:'white' }}>
+                    <div className="logo" style={{color:'black'}}>Logo</div>
                     <SearchInput style={{ padding: '.2rem 2rem .2rem .1rem' }}>
                         <SearchIconWrapper>
-                            <SearchIcon color="primary" />
+                            <SearchIcon style={{cursor:"pointer"}} />
                         </SearchIconWrapper>
                         <InputBase
                             placeholder="Pesquisar por produtos"
