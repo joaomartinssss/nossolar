@@ -20,10 +20,10 @@ const ProductCard = ({ product, addToCart }) => {
     };
 
     return (
-        <Card variant="outlined" id={`product-card-${product.id}`} style={{ height: '400px', overflow: 'hidden' }}>
+        <Card variant="outlined" id={`product-card-${product.id}`} style={{ minHeight: '400px', width: '200px', overflow: 'hidden' }}>
             {/* Imagem */}
             <img src={product.image} alt={product.name} style={{ width: '100%', height: '200px' }} />
-            <CardContent id={`product-card-content-${product.id}`}>
+            <CardContent id={`product-card-content-${product.id}`} style={{ minHeight: '150px' }}>
                 {/* Nome */}
                 <Typography variant="h5" component="div" style={{ fontSize: `${fontSize}rem` }}>
                     {product.name}

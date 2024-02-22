@@ -104,7 +104,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
             <AppBar position="static" style={{ marginBottom: '1rem' }}>
                 <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem', background:'white' }}>
                     <div className="logo" style={{color:'black'}}>Logo</div>
-                    <SearchInput style={{ padding: '.2rem 2rem .2rem .1rem' }}>
+                    <SearchInput style={{ padding: '.2rem 3rem .2rem .1rem' }}>
                         <SearchIconWrapper>
                             <SearchIcon style={{cursor:"pointer"}} />
                         </SearchIconWrapper>
