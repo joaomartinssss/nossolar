@@ -32,9 +32,9 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
         <div className="cart">
             <h2>Carrinho</h2>
             <Grid container spacing={2}>
-                {cartItems.map(item => (
+                {cartItems.map((item, index) => (
                     <Grid item xs={10} key={item.id}>
-                        <Grid container alignItems="center" spacing={2}>
+                        <Grid container alignItems="center" spacing={2} style={{ borderBottom: index < cartItems.length - 1 ? '1px solid #ccc' : 'none' }}>
                             <Grid item xs={5}>
                                 <Typography variant="body1" style={{ color: 'black' }}>{item.name}</Typography>
                             </Grid>
@@ -73,3 +73,4 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
 };
 
 export default Cart;
+
