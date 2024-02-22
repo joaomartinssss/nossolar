@@ -75,7 +75,7 @@ const TopNav = ({ cartItems }) => {
                     </SearchInput>
                     <div>
                         <ClickAwayListener onClickAway={handleClickAway}>
-                            <div style={{ position: 'relative' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <IconButton
                                     size="large"
                                     color="inherit"
@@ -87,15 +87,15 @@ const TopNav = ({ cartItems }) => {
                                 <CartContainer isOpen={isCartOpen}>
                                     <Cart cartItems={cartItems} />
                                 </CartContainer>
+                                <IconButton
+                                    size="large"
+                                    color="inherit"
+                                    aria-label="conta"
+                                >
+                                    <AccountCircleIcon />
+                                </IconButton>
                             </div>
                         </ClickAwayListener>
-                        <IconButton
-                            size="large"
-                            color="inherit"
-                            aria-label="conta"
-                        >
-                            <AccountCircleIcon />
-                        </IconButton>
                     </div>
                 </Toolbar>
             </AppBar>
