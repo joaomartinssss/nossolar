@@ -27,6 +27,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
         const updatedCartItems = cartItems.filter(item => item.id !== itemId);
         setCartItems(updatedCartItems);
     };
+    
 
     // Função para calcular o total
     const calculateTotal = () => {

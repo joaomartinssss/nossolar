@@ -48,7 +48,22 @@ const CartContainer = styled('div')(({ theme, isOpen }) => ({
     color: '#333'
 }));
 
-const TopNav = ({ cartItems, setCartItems }) => { // Adicione setCartItems como uma propriedade
+const CartIndicator = styled('div')({
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    width: 20,
+    height: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    fontSize: 12,
+});
+
+const TopNav = ({ cartItems, setCartItems }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     const handleCartClick = () => {
@@ -59,14 +74,17 @@ const TopNav = ({ cartItems, setCartItems }) => { // Adicione setCartItems como 
         setIsCartOpen(false);
     };
 
+    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const indicatorContent = totalItems > 9 ? '9+' : totalItems;
+
     return (
         <div style={{ position: 'relative' }}>
             <AppBar position="static" style={{ marginBottom: '1rem' }}>
                 <Toolbar sx={{ justifyContent: 'space-between', padding: '.5rem 1rem' }}>
                     <div className="logo">Logo</div>
-                    <SearchInput style={{padding: '.3rem 2rem'}}>
+                    <SearchInput style={{ padding: '.3rem 2rem' }}>
                         <SearchIconWrapper>
-                            <SearchIcon color="primary"/>
+                            <SearchIcon color="primary" />
                         </SearchIconWrapper>
                         <InputBase
                             placeholder="Pesquisar por produtos"
@@ -76,7 +94,7 @@ const TopNav = ({ cartItems, setCartItems }) => { // Adicione setCartItems como 
                     </SearchInput>
                     <div>
                         <ClickAwayListener onClickAway={handleClickAway}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                                 <IconButton
                                     size="large"
                                     color="inherit"
@@ -84,6 +102,7 @@ const TopNav = ({ cartItems, setCartItems }) => { // Adicione setCartItems como 
                                     onClick={handleCartClick}
                                 >
                                     <ShoppingCartIcon />
+                                    {totalItems > 0 && <CartIndicator>{indicatorContent}</CartIndicator>}
                                 </IconButton>
                                 <CartContainer isOpen={isCartOpen}>
                                     <Cart cartItems={cartItems} setCartItems={setCartItems} setCartOpen={setIsCartOpen} />
