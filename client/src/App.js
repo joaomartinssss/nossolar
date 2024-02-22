@@ -1,3 +1,4 @@
+// App.js
 import React, { useState } from 'react';
 import TopNav from './components/TopNav';
 import ProductGrid from './components/ProductGrid';
@@ -19,7 +20,7 @@ function App() {
 
     return (
         <div className="App">
-            <TopNav setIsCartOpen={setIsCartOpen} cartItems={cartItems} />
+            <TopNav setIsCartOpen={setIsCartOpen} cartItems={cartItems} setCartItems={setCartItems} /> {/* Passando setCartItems */}
             <div className="container">
                 <ProductGrid products={products} addToCart={addToCart} />
                 {isCartOpen && <Cart cartItems={cartItems} setCartItems={setCartItems} setCartOpen={setIsCartOpen} />}

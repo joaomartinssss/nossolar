@@ -38,16 +38,17 @@ const CartContainer = styled('div')(({ theme, isOpen }) => ({
     right: 0,
     zIndex: 999,
     padding: '2rem',
-    width: '50vw', // 50% da largura da tela
+    width: '40vw', // 50% da largura da tela
     height: '100vh', // 100% da altura da tela
     backgroundColor: 'white',
     boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.4)', // Sombra mais forte
     overflowY: 'auto',
     transition: 'transform 0.5s ease-in-out', // Adicionando uma transição suave
     transform: `translateX(${isOpen ? '0%' : '100%'})`, // Movendo o carrinho para a direita para escondê-lo
+    color: '#333'
 }));
 
-const TopNav = ({ cartItems }) => {
+const TopNav = ({ cartItems, setCartItems }) => { // Adicione setCartItems como uma propriedade
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     const handleCartClick = () => {
@@ -85,7 +86,7 @@ const TopNav = ({ cartItems }) => {
                                     <ShoppingCartIcon />
                                 </IconButton>
                                 <CartContainer isOpen={isCartOpen}>
-                                    <Cart cartItems={cartItems} />
+                                    <Cart cartItems={cartItems} setCartItems={setCartItems} setCartOpen={setIsCartOpen} />
                                 </CartContainer>
                                 <IconButton
                                     size="large"
