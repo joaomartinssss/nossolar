@@ -38,7 +38,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     const isEmptyCart = cartItems.length === 0;
 
     return (
-        <div className="cart">
+        <div className="cart" style={{ position: 'relative', paddingBottom: '3rem' }}>
             {isEmptyCart ? (
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <img src="/carrinho_vazio.png" alt="Imagem Carrinho Vazio" style={{ width: '25rem' }} />
@@ -89,7 +89,23 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                             }}>Total: R$ {calculateTotal().toFixed(2)}</Typography>
                         </Grid>
                     </Grid>
-                    <Button variant="contained" color="primary" onClick={() => setCartOpen(false)}>Fechar Carrinho</Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{
+                            position: 'fixed',
+                            bottom: '0',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            zIndex: '999',
+                            width: '90%',
+                            maxWidth: '500px',
+                            marginBottom: '1rem'
+                        }}
+                        onClick={() => setCartOpen(false)}
+                    >
+                        Fechar Carrinho
+                    </Button>
                 </div>
             )}
         </div>
