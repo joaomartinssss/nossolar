@@ -52,7 +52,7 @@ const CartIndicator = styled('div')({
     position: 'absolute',
     top: -8,
     right: -8,
-    backgroundColor: 'red',
+    backgroundColor: 'green',
     borderRadius: '50%',
     width: 20,
     height: 20,
