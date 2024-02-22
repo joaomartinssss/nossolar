@@ -11,7 +11,7 @@ const ProductCard = ({ product, addToCart }) => {
     };
 
     return (
-        <Card variant="outlined" style={{ width: '300px'}}>
+        <Card variant="outlined">
             {/* Imagem */}
             <img src={product.image} alt={product.name} style={{ width: '100%', height: '350px' }} />
             <CardContent>
