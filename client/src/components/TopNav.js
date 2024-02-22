@@ -17,6 +17,9 @@ const SearchInput = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     width: 'auto',
+    '&:focus-within': { // Aplica estilos quando o input ou algum de seus filhos está em foco
+        border: '2px solid blue',
+    },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -116,7 +119,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
                             <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                                 <IconButton
                                     size="large"
-                                    color="inherit"
+                                    color="primary"
                                     aria-label="carrinho"
                                     onClick={handleCartClick}
                                 >
@@ -128,7 +131,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
                                 </CartContainer>
                                 <IconButton
                                     size="large"
-                                    color="inherit"
+                                    color="primary"
                                     aria-label="conta"
                                 >
                                     <AccountCircleIcon />
