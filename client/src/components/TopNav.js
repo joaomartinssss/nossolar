@@ -40,8 +40,8 @@ const CartContainer = styled('div')(({ theme, isOpen }) => ({
     top: 0,
     right: 0,
     zIndex: 999,
-    padding: '2rem',
-    width: '40vw', // 50% da largura da tela
+    padding: '2rem 1rem',
+    width: '50vw', // 50% da largura da tela
     height: '100vh', // 100% da altura da tela
     backgroundColor: 'white',
     boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.4)', // Sombra mais forte

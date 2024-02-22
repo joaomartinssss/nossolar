@@ -24,10 +24,10 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     };
 
     const handleRemove = (itemId) => {
-        const updatedCartItems = cartItems.filter(item => item.id !== itemId);
+        const updatedCartItems = cartItems.filter(item => `${item.id}-${item.quantity}` !== itemId);
         setCartItems(updatedCartItems);
     };
-    
+
 
     // Função para calcular o total
     const calculateTotal = () => {
@@ -51,11 +51,20 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                     <Grid container spacing={2}>
                         {cartItems.map((item, index) => (
                             <Grid item xs={12} key={item.id}>
-                                <Grid container alignItems="center" spacing={2} style={{ borderBottom: index < cartItems.length - 1 ? '1px solid #ccc' : 'none' }}>
-                                    <Grid item xs={5}>
+                                <Grid container alignItems="center" spacing={1} style={{ borderBottom: index < cartItems.length - 1 ? '1px solid #ccc' : 'none' }}>
+                                    <Grid item xs={1}>
+                                        <div style={{
+                                            width: '50px',
+                                            height: '50px',
+                                            overflow: 'hidden',
+                                            borderRadius: '50%'
+                                        }}>
+                                            <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    </Grid>                                    <Grid item xs={4}>
                                         <Typography variant="body1" style={{ color: 'black' }}>{item.name}</Typography>
                                     </Grid>
-                                    <Grid item xs={3}>
+                                    <Grid item xs={2}>
                                         <Grid container spacing={1} alignItems="center">
                                             <Grid item>
                                                 <IconButton aria-label="Diminuir quantidade" onClick={() => handleDecrement(item.id)}>
@@ -75,8 +84,8 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                     <Grid item xs={3}>
                                         <Typography variant="body1" style={{ color: 'black' }}>R$ {(item.price * item.quantity).toFixed(2)}</Typography>
                                     </Grid>
-                                    <Grid item xs={1}>
-                                        <IconButton aria-label="Remover item" onClick={() => handleRemove(item.id)}>
+                                    <Grid item xs={2}>
+                                        <IconButton aria-label="Remover item" onClick={() => handleRemove(`${item.id}-${item.quantity}`)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Grid>
@@ -94,7 +103,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                         color="primary"
                         style={{
                             position: 'fixed',
-                            bottom: '0',
+                            bottom: '1rem',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             zIndex: '999',
