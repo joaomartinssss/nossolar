@@ -14,7 +14,7 @@ const Rodape = () => {
   };
   
   return (
-    <section>
+    <section style={estiloRodape}>
       <h2>Sobre o Supermercado</h2>
       <p>
         O Supermercado Nosso Lar é um estabelecimento familiar que oferece os
