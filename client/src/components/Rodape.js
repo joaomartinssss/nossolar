@@ -2,7 +2,7 @@ import React from "react";
 
 const Rodape = () => {
   const estiloRodape = {
-    position: "fixed",
+    position: "static",
     bottom: 0,
     left: 0,
     width: "100%",
