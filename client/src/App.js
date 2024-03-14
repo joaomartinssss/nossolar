@@ -7,6 +7,7 @@ import Rodape from "./components/Rodape";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
+import Categoria from "./components/Categoria";
 
 
 const ScrollToTopButton = styled(Button)({
@@ -163,7 +164,7 @@ function App() {
           />
         )}
       </div>
-
+      <Categoria/>    
       <Rodape />
       <ScrollToTopButton onClick={scrollToTop} variant="contained" color="primary" >
       <ArrowUpwardIcon sx={{ fontSize: "30px" }} />

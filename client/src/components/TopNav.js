@@ -161,7 +161,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
                   />
                 </CartContainer>
                 <IconButton size="large" color="primary" aria-label="conta">
-                  <span style={{ marginRight: '0.5rem', fontSize: '1rem' }}>Entre ou cadastre-se</span>
+                  <span style={{ marginRight: '0.5rem', fontSize: '1rem', marginLeft: '1rem', }}>Entre ou cadastre-se</span>
                   <AccountCircleIcon />
                 </IconButton>
 
