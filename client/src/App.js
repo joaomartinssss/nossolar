@@ -4,6 +4,19 @@ import TopNav from "./components/TopNav";
 import ProductGrid from "./components/ProductGrid";
 import Cart from "./components/Cart";
 import Rodape from "./components/Rodape";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/system";
+
+
+const ScrollToTopButton = styled(Button)({
+  position: "fixed",
+  bottom: "20px",
+  right: "20px",
+  borderRadius: "50%", // Torna o botão circular
+  width: "50px", // Define a largura do botão
+  height: "50px", // Define a altura do botão
+});
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -125,6 +138,13 @@ function App() {
     ]);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="App">
       <TopNav
@@ -145,6 +165,9 @@ function App() {
       </div>
 
       <Rodape />
+      <ScrollToTopButton onClick={scrollToTop} variant="contained" color="primary" >
+      <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
+      </ScrollToTopButton>
     </div>
   );
 }
