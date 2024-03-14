@@ -31,7 +31,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
   position: "absolute",
   right: 0,
-  backgroundColor: "blue",
+  backgroundColor: "blue", //mudança feita para teste, cor original azul
   borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`,
 }));
 
@@ -44,7 +44,7 @@ const CartContainer = styled("div")(({ theme, isOpen }) => ({
   padding: "2rem 1rem",
   width: "50vw", // 50% da largura da tela
   height: "100vh", // 100% da altura da tela
-  backgroundColor: "white",
+  backgroundColor: "white", //mudança feita para teste, cor original branco
   boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)", // Sombra mais forte
   overflowY: "auto",
   transition: "transform 0.5s ease-in-out", // Adicionando uma transição suave
@@ -68,7 +68,7 @@ const CartIndicator = styled("div")({
 });
 
 const NavigationBar = styled("div")({
-  backgroundColor: "#003599",
+  backgroundColor: "#e74c3c",
   padding: "0.8rem 0",
   textAlign: "center",
 });
@@ -77,6 +77,9 @@ const NavLink = styled("a")({
   color: "white",
   textDecoration: "none",
   margin: "0 1rem",
+  "&:hover": {
+    color: "gray",},
+  fontWeight: "bold",
 });
 
 const TopNav = ({ cartItems, setCartItems }) => {
@@ -110,10 +113,13 @@ const TopNav = ({ cartItems, setCartItems }) => {
           sx={{
             justifyContent: "space-between",
             padding: ".5rem 1rem",
-            background: "white",
+            background: "#003599", //mudança feita para teste
           }}
         >
-          <div className="logo" style={{ color: "blue", fontWeight: "bold", fontSize:'1.5rem'}}>
+          <div
+            className="logo"
+            style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
+          >
             Seja Bem-vindo ao Supermercado Nosso Lar
           </div>
           <SearchInput style={{ padding: ".2rem 3rem .2rem .1rem" }}>

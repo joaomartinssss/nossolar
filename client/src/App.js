@@ -50,6 +50,70 @@ function App() {
       image:
         "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
     },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
+    {
+      id: 5,
+      name: "Halls preta exemplo",
+      price: 17.34,
+      category: "peixaria",
+      image:
+        "https://a-static.mlcdn.com.br/450x450/bala-halls-extra-forte-275g-embalagem-com-21-unidades/efacil/4301075/177376eae44a94f742a75d632a788281.jpeg",
+    },
     // { id: 5, name: 'teste', price: 15.50, category: 'Eletrônicos', image: 'teste' },
     // Adicione mais produtos conforme necessário
   ];
