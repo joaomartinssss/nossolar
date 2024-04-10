@@ -23,7 +23,6 @@ const Categoria = () => {
       height: "100%",
       top: 0,
       left: 0,
-      position: "fixed",
       flexDirection: "column",
       alignItems: "center",
       backgroundColor: "#003599",
@@ -59,25 +58,25 @@ const Categoria = () => {
     <section id="produtos" style={style.produtos}>
       <h2>Nossos Produtos</h2>
       <div className="botao-dos-produtos">
-        <button style={style.button}>Bebidas</button>
         <button style={style.button}>Hortifruti</button>
-        <button style={style.button}>Mercearia</button>
+        <button style={style.button}>Padaria</button>
         <button style={style.button}>Açougue</button>
+        <button style={style.button}>Bebidas</button>
         <button style={style.button}>Rotisseria</button>
-        <button style={style.button}>Laticínios</button>
-        <button style={style.button}>Congelados</button>
-        <button style={style.button}>Japonês</button>
-        <button style={style.button}>Limpeza</button>
-        <button style={style.button}>Higiene</button>
-        <button style={style.button}>Churrasco</button>
         <button style={style.button}>Bomboniere</button>
-        <button style={style.button}>Doces</button>
         <button style={style.button}>Bazar</button>
         <button style={style.button}>Automotivo</button>
-        <button style={style.button}>Utilidades</button>
-        <button style={style.button}>Padaria</button>
-        <button style={style.button}>Frios</button>
+        <button style={style.button}>Mercearia</button>
+        <button style={style.button}>Limpeza</button>
+        <button style={style.button}>Laticínios</button>
         <button style={style.button}>Bebês</button>
+        <button style={style.button}>Higiene</button>
+        <button style={style.button}>Congelados</button>
+        <button style={style.button}>Japonês</button>
+        <button style={style.button}>Churrasco</button>
+        <button style={style.button}>Doces</button>
+        <button style={style.button}>Utilidades</button>
+        <button style={style.button}>Frios</button>
         <button style={style.button}>Petshop</button>
         <button style={style.button}>Utilidades</button>
       </div>
