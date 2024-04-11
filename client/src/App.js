@@ -13,9 +13,9 @@ const ScrollToTopButton = styled(Button)({
   position: "fixed",
   bottom: "20px",
   right: "20px",
-  borderRadius: "50%", // Torna o botão circular
-  width: "50px", // Define a largura do botão
-  height: "50px", // Define a altura do botão
+  borderRadius: "50%",
+  width: "50px",
+  height: "60px",
 });
 
 function App() {
