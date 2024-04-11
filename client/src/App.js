@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from "react";
 import TopNav from "./components/TopNav";
 import ProductGrid from "./components/ProductGrid";
@@ -23,28 +22,23 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const teste = [
-    // { id: 5, name: 'teste', price: 15.50, category: 'Eletrônicos', image: 'teste' },
-    // Adicione mais produtos conforme necessário
-  ];
-
   useEffect(() => {
     const fetchProducts = async () => {
-        try {
-            const response = await fetch('http://localhost:3001/categories');
-            if (!response.ok) {
-                throw new Error('Falha ao carregar os produtos.');
-            }
-            const data = await response.json();
-            console.log(data)
-            setProducts(data);
-        } catch (error) {
-            console.error('Erro ao obter os produtos:', error);
+      try {
+        const response = await fetch("http://localhost:3001/categories");
+        if (!response.ok) {
+          throw new Error("Falha ao carregar os produtos.");
         }
+        const data = await response.json();
+        // console.log(data);
+        setProducts(data);
+      } catch (error) {
+        console.error("Erro ao obter os produtos:", error);
+      }
     };
 
     fetchProducts();
-}, []);
+  }, []);
 
   const addToCart = (product) => {
     setCartItems((prevCartItems) => [
