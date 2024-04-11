@@ -19,7 +19,7 @@ const Categoria = () => {
     //   },
     produtos: {
       display: "block",
-      width: "200px",
+      width: "300px",
       height: "100%",
       top: 0,
       left: 0,
@@ -39,7 +39,8 @@ const Categoria = () => {
       color: "aliceblue",
       padding: "0.3rem 1rem",
       marginTop: "0.5rem",
-      fontWeight: "bold",
+      fontSize: "1rem",
+      cursor: "pointer",
       border: "none",
       width: "100%",
     },
