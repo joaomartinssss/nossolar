@@ -83,19 +83,14 @@ const NavLink = styled("a")({
   fontWeight: "bold",
 });
 
-const UsersContainer = styled("div")({
-  position: "absolute",
-  top: "calc(300% + 10px)", // Posicionando abaixo do botão da conta
-  left: '5rem',
-  backgroundColor: "white",
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-  padding: "1rem",
-  zIndex: 1000,
-});
-
 const TopNav = ({ cartItems, setCartItems }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
+  const [openUsersCard, setOpenUsersCard] = useState()
+
+  const handleClose = () => {
+    setOpenUsersCard(false)
+  }
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
@@ -186,11 +181,11 @@ const TopNav = ({ cartItems, setCartItems }) => {
                   <AccountCircleIcon />
                 </IconButton>
                 {isUserPopupOpen && (
-                <ClickAwayListener onClickAway={handleClickAway}>
-                  <UsersContainer>
-                    <Users />
-                  </UsersContainer>
-                </ClickAwayListener>
+                  <ClickAwayListener onClickAway={handleClickAway}>
+                    <Users
+                      handleClose={handleClose}
+                    />
+                  </ClickAwayListener>
                 )}
               </div>
             </ClickAwayListener>
