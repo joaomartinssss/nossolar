@@ -9,6 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/system";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Cart from "./Cart";
+import Users from './users';
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -18,7 +19,6 @@ const SearchInput = styled("div")(({ theme }) => ({
   alignItems: "center",
   width: "auto",
   "&:focus-within": {
-    // Aplica estilos quando o input ou algum de seus filhos está em foco
     border: "2px solid blue",
   },
 }));
@@ -42,13 +42,13 @@ const CartContainer = styled("div")(({ theme, isOpen }) => ({
   right: 0,
   zIndex: 999,
   padding: "2rem 1rem",
-  width: "50vw", // 50% da largura da tela
-  height: "100vh", // 100% da altura da tela
-  backgroundColor: "white", //mudança feita para teste, cor original branco
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)", // Sombra mais forte
+  width: "50vw",
+  height: "100vh",
+  backgroundColor: "white",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
   overflowY: "auto",
-  transition: "transform 0.5s ease-in-out", // Adicionando uma transição suave
-  transform: `translateX(${isOpen ? "0%" : "100%"})`, // Movendo o carrinho para a direita para escondê-lo
+  transition: "transform 0.5s ease-in-out",
+  transform: `translateX(${isOpen ? "0%" : "100%"})`,
   color: "#333",
 }));
 
@@ -83,8 +83,19 @@ const NavLink = styled("a")({
   fontWeight: "bold",
 });
 
+const UsersContainer = styled("div")({
+  position: "absolute",
+  top: "calc(300% + 10px)", // Posicionando abaixo do botão da conta
+  left: '5rem',
+  backgroundColor: "white",
+  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+  padding: "1rem",
+  zIndex: 1000,
+});
+
 const TopNav = ({ cartItems, setCartItems }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
@@ -92,6 +103,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
 
   const handleClickAway = () => {
     setIsCartOpen(false);
+    setIsUserPopupOpen(false);
   };
 
   const totalItems = cartItems.reduce(
@@ -99,6 +111,10 @@ const TopNav = ({ cartItems, setCartItems }) => {
     0
   );
   const indicatorContent = totalItems > 9 ? "9+" : totalItems;
+
+  const handleUserPopupClick = () => {
+    setIsUserPopupOpen(!isUserPopupOpen);
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -160,11 +176,22 @@ const TopNav = ({ cartItems, setCartItems }) => {
                     setCartOpen={setIsCartOpen}
                   />
                 </CartContainer>
-                <IconButton size="large" color="primary" aria-label="conta">
-                  <span style={{ marginRight: '0.5rem', fontSize: '1rem', marginLeft: '1rem', }}>Entre ou cadastre-se</span>
+                <IconButton
+                  size="large"
+                  color="primary"
+                  aria-label="conta"
+                  onClick={handleUserPopupClick} // Adicione a função de clique no botão de conta
+                >
+                  <span style={{ marginRight: "0.5rem", fontSize: "1rem", marginLeft: "1rem" }}>Entre ou cadastre-se</span>
                   <AccountCircleIcon />
                 </IconButton>
-
+                {isUserPopupOpen && (
+                <ClickAwayListener onClickAway={handleClickAway}>
+                  <UsersContainer>
+                    <Users />
+                  </UsersContainer>
+                </ClickAwayListener>
+                )}
               </div>
             </ClickAwayListener>
           </div>
