@@ -1,9 +1,18 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -76,7 +85,7 @@ app.put('/categories/:categoryId', (req, res) => {
     const categoryId = req.params.categoryId;
     const { name } = req.body;
     const updateCategory = { name };
-    
+
     connection.query('UPDATE categories SET ? WHERE id = ?', [updateCategory, categoryId], (error, results) => {
         if (error) {
             console.error('Erro ao atualizar categoria:', error);
@@ -91,7 +100,7 @@ app.put('/products/:productId', (req, res) => {
     const productId = req.params.productId;
     const { name, categoryId } = req.body;
     const updateProduct = { name, category_id: categoryId };
-    
+
     connection.query('UPDATE products SET ? WHERE id = ?', [updateProduct, productId], (error, results) => {
         if (error) {
             console.error('Erro ao atualizar produto:', error);
@@ -104,7 +113,7 @@ app.put('/products/:productId', (req, res) => {
 
 app.delete('/categories/:categoryId', (req, res) => {
     const categoryId = req.params.categoryId;
-    
+
     connection.query('DELETE FROM categories WHERE id = ?', categoryId, (error, results) => {
         if (error) {
             console.error('Erro ao excluir categoria:', error);
@@ -117,7 +126,7 @@ app.delete('/categories/:categoryId', (req, res) => {
 
 app.delete('/products/:productId', (req, res) => {
     const productId = req.params.productId;
-    
+
     connection.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
         if (error) {
             console.error('Erro ao excluir produto:', error);
