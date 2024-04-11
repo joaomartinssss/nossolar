@@ -35,9 +35,9 @@ app.post('/categories', (req, res) => {
 });
 
 app.post('/categories/:categoryId/products', (req, res) => {
-    const categoryId = req.params.categoriaId;
+    const categoryId = req.params.categoryId;
     const { name } = req.body;
-    const newProduct = { name, category_id: category_id };
+    const newProduct = { name, category_id: categoryId };
     connection.query('INSERT INTO products SET ?', newProduct, (error, results) => {
         if (error) {
             console.error('Erro ao inserir produto:', error);
@@ -45,7 +45,7 @@ app.post('/categories/:categoryId/products', (req, res) => {
             return;
         }
         newProduct.id = results.insertId;
-        res.status(201).json(novoProduto);
+        res.status(201).json(newProduct);
     });
 });
 
@@ -71,6 +71,64 @@ app.get('/categories/:categoryId/products', (req, res) => {
         res.json(results);
     });
 });
+
+app.put('/categories/:categoryId', (req, res) => {
+    const categoryId = req.params.categoryId;
+    const { name } = req.body;
+    const updateCategory = { name };
+    
+    connection.query('UPDATE categories SET ? WHERE id = ?', [updateCategory, categoryId], (error, results) => {
+        if (error) {
+            console.error('Erro ao atualizar categoria:', error);
+            res.status(500).send('Erro ao atualizar categoria');
+            return;
+        }
+        res.status(200).json({ message: 'Categoria atualizada com sucesso' });
+    });
+});
+
+app.put('/products/:productId', (req, res) => {
+    const productId = req.params.productId;
+    const { name, categoryId } = req.body;
+    const updateProduct = { name, category_id: categoryId };
+    
+    connection.query('UPDATE products SET ? WHERE id = ?', [updateProduct, productId], (error, results) => {
+        if (error) {
+            console.error('Erro ao atualizar produto:', error);
+            res.status(500).send('Erro ao atualizar produto');
+            return;
+        }
+        res.status(200).json({ message: 'Produto atualizado com sucesso' });
+    });
+});
+
+app.delete('/categories/:categoryId', (req, res) => {
+    const categoryId = req.params.categoryId;
+    
+    connection.query('DELETE FROM categories WHERE id = ?', categoryId, (error, results) => {
+        if (error) {
+            console.error('Erro ao excluir categoria:', error);
+            res.status(500).send('Erro ao excluir categoria');
+            return;
+        }
+        res.status(200).json({ message: 'Categoria excluída com sucesso' });
+    });
+});
+
+app.delete('/products/:productId', (req, res) => {
+    const productId = req.params.productId;
+    
+    connection.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
+        if (error) {
+            console.error('Erro ao excluir produto:', error);
+            res.status(500).send('Erro ao excluir produto');
+            return;
+        }
+        res.status(200).json({ message: 'Produto excluído com sucesso' });
+    });
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
