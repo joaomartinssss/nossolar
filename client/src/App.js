@@ -31,13 +31,13 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
         try {
-            const response = await fetch('/categories');
+            const response = await fetch('http://localhost:3001/categories');
             if (!response.ok) {
                 throw new Error('Falha ao carregar os produtos.');
             }
             const data = await response.json();
-            setProducts(data);
             console.log(data)
+            setProducts(data);
         } catch (error) {
             console.error('Erro ao obter os produtos:', error);
         }
