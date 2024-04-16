@@ -158,6 +158,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
                   color="primary"
                   aria-label="carrinho"
                   onClick={handleCartClick}
+                  style={{ color: "#D3D3D3" }}
                 >
                   <ShoppingCartIcon />
                   {totalItems > 0 && (
@@ -176,8 +177,9 @@ const TopNav = ({ cartItems, setCartItems }) => {
                   color="primary"
                   aria-label="conta"
                   onClick={handleUserPopupClick} // Adicione a função de clique no botão de conta
+                  style={{ color: "#D3D3D3" }}
                 >
-                  <span style={{ marginRight: "0.5rem", fontSize: "1rem", marginLeft: "1rem" }}>Entre ou cadastre-se</span>
+                  <span style={{ marginRight: "0.5rem", fontSize: "1rem", marginLeft: "1rem", color: "#D3D3D3" }}>Entre ou cadastre-se</span>
                   <AccountCircleIcon />
                 </IconButton>
                 {isUserPopupOpen && (
