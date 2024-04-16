@@ -78,7 +78,8 @@ const NavLink = styled("a")({
   textDecoration: "none",
   margin: "0 1rem",
   "&:hover": {
-    color: "gray",
+    color: "#003599",
+    backgroundColor: "#D3D3D3",
   },
   fontWeight: "bold",
 });
