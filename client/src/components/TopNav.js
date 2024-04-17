@@ -9,7 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/system";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Cart from "./Cart";
-import Users from './users';
+import Users from "./users";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,7 +68,7 @@ const CartIndicator = styled("div")({
 });
 
 const NavigationBar = styled("div")({
-  backgroundColor: "#e74c3c",
+  backgroundColor: "#1976d2",
   padding: "0.8rem 0",
   textAlign: "center",
 });
@@ -77,9 +77,17 @@ const NavLink = styled("a")({
   color: "white",
   textDecoration: "none",
   margin: "0 1rem",
+  paddingLeft: "10px",
+  paddingRight: "10px",
+  borderRadius: "5px",
   "&:hover": {
-    color: "#003599",
-    backgroundColor: "#D3D3D3",
+    color: "white",
+    backgroundColor: "#003962",
+    paddingBottom: "30px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
+    paddingTop: "10px",
+    borderRadius: "6px",
   },
   fontWeight: "bold",
 });
@@ -87,11 +95,11 @@ const NavLink = styled("a")({
 const TopNav = ({ cartItems, setCartItems }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
-  const [openUsersCard, setOpenUsersCard] = useState()
+  const [openUsersCard, setOpenUsersCard] = useState();
 
   const handleClose = () => {
-    setOpenUsersCard(false)
-  }
+    setOpenUsersCard(false);
+  };
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
@@ -180,14 +188,21 @@ const TopNav = ({ cartItems, setCartItems }) => {
                   onClick={handleUserPopupClick} // Adicione a função de clique no botão de conta
                   style={{ color: "#D3D3D3" }}
                 >
-                  <span style={{ marginRight: "0.5rem", fontSize: "1rem", marginLeft: "1rem", color: "#D3D3D3" }}>Entre ou cadastre-se</span>
+                  <span
+                    style={{
+                      marginRight: "0.5rem",
+                      fontSize: "1rem",
+                      marginLeft: "1rem",
+                      color: "#D3D3D3",
+                    }}
+                  >
+                    Entre ou cadastre-se
+                  </span>
                   <AccountCircleIcon />
                 </IconButton>
                 {isUserPopupOpen && (
                   <ClickAwayListener onClickAway={handleClickAway}>
-                    <Users
-                      handleClose={handleClose}
-                    />
+                    <Users handleClose={handleClose} />
                   </ClickAwayListener>
                 )}
               </div>
