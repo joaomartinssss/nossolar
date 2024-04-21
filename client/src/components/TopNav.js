@@ -42,7 +42,7 @@ const CartContainer = styled("div")(({ theme, isOpen }) => ({
   right: 0,
   zIndex: 999,
   padding: "2rem 1rem",
-  width: "50vw",
+  width: "30vw",
   height: "100vh",
   backgroundColor: "white",
   boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
