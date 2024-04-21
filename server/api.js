@@ -96,6 +96,17 @@ app.put('/categories/:categoryId', (req, res) => {
     });
 });
 
+app.get('/products', (req, res) => {
+    connection.query('SELECT * FROM products', (error, results) => {
+        if (error) {
+            console.error('Erro ao buscar produtos:', error);
+            res.status(500).send('Erro ao buscar produtos');
+            return;
+        }
+        res.json(results);
+    });
+});
+
 app.put('/products/:productId', (req, res) => {
     const productId = req.params.productId;
     const { name, categoryId } = req.body;
