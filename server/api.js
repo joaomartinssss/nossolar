@@ -45,8 +45,8 @@ app.post('/categories', (req, res) => {
 
 app.post('/categories/:categoryId/products', (req, res) => {
     const categoryId = req.params.categoryId;
-    const { name } = req.body;
-    const newProduct = { name, category_id: categoryId };
+    const { name, image, description } = req.body;
+    const newProduct = { name, category_id: categoryId, image, description};
     connection.query('INSERT INTO products SET ?', newProduct, (error, results) => {
         if (error) {
             console.error('Erro ao inserir produto:', error);
@@ -146,6 +146,36 @@ app.delete('/products/:productId', (req, res) => {
         }
         res.status(200).json({ message: 'Produto excluído com sucesso' });
     });
+});
+
+app.delete('/products/', (req, res) => {
+    connection.query('DELETE FROM products', (error, results) => {
+        if (error) {
+            console.error('Erro ao excluir todos os produtos:', error);
+            res.status(500).send('Erro ao excluir todos os produtos');
+            return;
+        }
+        res.status(200).json({ message: 'Todos os produtos excluídos com sucesso' });
+    });
+});
+
+app.delete('/products/:productId', (req, res) => {
+    const productId = req.params.productId;
+
+    connection.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
+        if (error) {
+            console.error('Erro ao excluir produto:', error);
+            res.status(500).send('Erro ao excluir produto');
+            return;
+        }
+        res.status(200).json({ message: 'Produto excluído com sucesso' });
+    });
+});
+
+app.put('/products/:productId', (req, res) => {
+    const productId = req.params.productId;
+    const { name, categoryId, image, description } = req.body;
+    const updateProduct = { name, category_id: categoryId, image, description };
 });
 
 
