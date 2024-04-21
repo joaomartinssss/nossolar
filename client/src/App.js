@@ -7,6 +7,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import Category from "./components/Category";
+import './App.css';
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
