@@ -6,7 +6,7 @@ import Rodape from "./components/Rodape";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
-import Categoria from "./components/Categoria";
+import Category from "./components/Category";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -62,7 +62,7 @@ function App() {
         setCartItems={setCartItems}
       />
       <div className="container" style={{ display: "flex", flexGrow: 1 }}>
-        <Categoria style={{ flexGrow: 1 }} />
+        <Category style={{ flexGrow: 1 }} />
         <ProductGrid products={products} addToCart={addToCart} />
       </div>
       {isCartOpen && (
@@ -71,7 +71,7 @@ function App() {
           setCartItems={setCartItems}
           setCartOpen={setIsCartOpen}
         />
-      )}
+      )}  
       <Rodape />
       <ScrollToTopButton
         onClick={scrollToTop}
