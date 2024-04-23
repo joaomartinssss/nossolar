@@ -45,8 +45,8 @@ app.post('/categories', (req, res) => {
 
 app.post('/categories/:categoryId/products', (req, res) => {
     const categoryId = req.params.categoryId;
-    const { name, image, description } = req.body;
-    const newProduct = { name, category_id: categoryId, image, description};
+    const { name, image, description, price } = req.body;
+    const newProduct = { name, category_id: categoryId, image, description, price };
     connection.query('INSERT INTO products SET ?', newProduct, (error, results) => {
         if (error) {
             console.error('Erro ao inserir produto:', error);
