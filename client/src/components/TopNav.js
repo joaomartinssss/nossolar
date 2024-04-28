@@ -143,7 +143,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
           >
             Seja Bem-vindo ao Supermercado Nosso Lar
           </div>
-          <SearchInput style={{ padding: ".2rem 3rem .2rem .1rem" }}>
+          <SearchInput style={{ padding: ".2rem 5rem .2rem .1rem" }}>
             <SearchIconWrapper>
               <SearchIcon style={{ cursor: "pointer" }} />
             </SearchIconWrapper>
