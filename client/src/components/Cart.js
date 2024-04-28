@@ -61,8 +61,9 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                         }}>
                                             <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
-                                    </Grid>                                    <Grid item xs={4}>
-                                        <Typography variant="body1" style={{ color: 'black', marginLeft: '30px'}}>{item.name}</Typography>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <Typography variant="body1" style={{ color: 'black', marginLeft: '30px' }}>{item.name}</Typography>
                                     </Grid>
                                     <Grid item /*xs={2}*/>
                                         <Grid container spacing={1} alignItems="center">
