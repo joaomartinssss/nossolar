@@ -45,8 +45,13 @@ app.post('/categories', (req, res) => {
 
 app.post('/categories/:categoryId/products', (req, res) => {
     const categoryId = req.params.categoryId;
+<<<<<<< Updated upstream
     const { name, image, description, price } = req.body;
     const newProduct = { name, category_id: categoryId, image, description, price };
+=======
+    const { name, price, image, description } = req.body;
+    const newProduct = { name,price, category_id: categoryId, image, description};
+>>>>>>> Stashed changes
     connection.query('INSERT INTO products SET ?', newProduct, (error, results) => {
         if (error) {
             console.error('Erro ao inserir produto:', error);
