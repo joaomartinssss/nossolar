@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-const ProductCard = ({ product, addToCart }) => {
+const ProductCard = ({ product, addToCart, onSelectProduct }) => {
   const [fontSize, setFontSize] = useState(1); // Font size state
 
   useEffect(() => {
@@ -21,6 +21,10 @@ const ProductCard = ({ product, addToCart }) => {
 
   const handleAddToCart = () => {
     addToCart(product);
+  };
+
+  const handleClick = () => {
+    onSelectProduct(product);
   };
 
   return (
@@ -76,6 +80,7 @@ const ProductCard = ({ product, addToCart }) => {
         >
           Adicionar
         </Button>
+        <Button onClick={handleClick}>View Details</Button>
       </CardContent>
     </Card>
   );

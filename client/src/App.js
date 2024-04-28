@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import Category from "./components/Category";
 import './App.css';
+import ProductPage from "./components/ProductPage";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -22,6 +23,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,7 +33,6 @@ function App() {
           throw new Error("Falha ao carregar os produtos.");
         }
         const data = await response.json();
-        // console.log(data);
         setProducts(data);
       } catch (error) {
         console.error("Erro ao obter os produtos:", error);
@@ -64,7 +65,14 @@ function App() {
       />
       <div className="container" style={{ display: "flex", flexGrow: 1 }}>
         <Category style={{ flexGrow: 1 }} />
-        <ProductGrid products={products} addToCart={addToCart} />
+        {!selectedProduct && (
+          <ProductGrid
+            products={products}
+            addToCart={addToCart}
+            onSelectProduct={setSelectedProduct}
+          />
+        )}
+        {selectedProduct && <ProductPage product={selectedProduct} />}
       </div>
       {isCartOpen && (
         <Cart
@@ -72,7 +80,7 @@ function App() {
           setCartItems={setCartItems}
           setCartOpen={setIsCartOpen}
         />
-      )}  
+      )}
       <Rodape />
       <ScrollToTopButton
         onClick={scrollToTop}
