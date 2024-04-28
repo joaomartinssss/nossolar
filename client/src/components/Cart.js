@@ -62,7 +62,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                             <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
                                     </Grid>                                    <Grid item xs={4}>
-                                        <Typography variant="body1" style={{ color: 'black' }}>{item.name}</Typography>
+                                        <Typography variant="body1" style={{ color: 'black', marginLeft: '30px'}}>{item.name}</Typography>
                                     </Grid>
                                     <Grid item xs={2}>
                                         <Grid container spacing={1} alignItems="center">
@@ -72,7 +72,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                                 </IconButton>
                                             </Grid>
                                             <Grid item>
-                                                <Typography variant="body1" style={{ color: 'black' }}>{item.quantity}</Typography>
+                                                <Typography variant="body1" style={{ color: 'black', display:'grid'}}>{item.quantity}</Typography>
                                             </Grid>
                                             <Grid item>
                                                 <IconButton aria-label="Incrementar quantidade" onClick={() => handleIncrement(item.id)}>
@@ -82,7 +82,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={3}>
-                                        <Typography variant="body1" style={{ color: 'black' }}>R$ {(item.price * item.quantity).toFixed(2)}</Typography>
+                                        <Typography variant="body1" style={{ color: 'black', marginLeft: '5px' }}>R$ {(item.price * item.quantity).toFixed(2)}</Typography>
                                     </Grid>
                                     <Grid item xs={2}>
                                         <IconButton aria-label="Remover item" onClick={() => handleRemove(`${item.id}-${item.quantity}`)}>
@@ -94,7 +94,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                         ))}
                         <Grid item xs={12}>
                             <Typography variant="h6" style={{
-                                color: 'white', textAlign: 'left', marginTop: '1rem', background: '#333', width: 'fit-content', padding: '0.5rem 1rem', // Adicionando padding
+                                color: 'white', textAlign: 'left', marginTop: '1rem', background: '#333', width: 'fit-content', padding: '0.5rem 1rem', borderRadius: '5px' // Adicionando padding
                             }}>Total: R$ {calculateTotal().toFixed(2)}</Typography>
                         </Grid>
                     </Grid>
@@ -102,14 +102,15 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                         variant="contained"
                         color="primary"
                         style={{
-                            position: 'fixed',
+                            position: 'relative',
                             bottom: '1rem',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             zIndex: '999',
                             width: '90%',
                             maxWidth: '500px',
-                            marginBottom: '1rem'
+                            marginBottom: '1rem',
+                            marginTop: '3rem'
                         }}
                         onClick={() => setCartOpen(false)}
                     >
