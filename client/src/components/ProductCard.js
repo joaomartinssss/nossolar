@@ -23,6 +23,7 @@ const ProductCard = ({ product, addToCart }) => {
     addToCart(product);
   };
 
+<<<<<<< Updated upstream
   return (
     <Card
       variant="outlined"
@@ -79,6 +80,28 @@ const ProductCard = ({ product, addToCart }) => {
       </CardContent>
     </Card>
   );
+=======
+    return (
+        <Card variant="outlined" id={`product-card-${product.id}`} style={{ maxHeight: '350px', width: '200px', overflow: 'hidden' }}>
+            {/* Imagem */}
+            <img src={product.image} alt={product.name} style={{ width: '100%', height: '200px' }} />
+            <CardContent id={`product-card-content-${product.id}`} style={{ minHeight: '150px' }}>
+                {/* Nome */}
+                <Typography variant="h5" component="div" style={{ fontSize: `${fontSize}rem` }}>
+                    {product.name}
+                </Typography>
+                {/* Preço */}
+                <Typography variant="body1" color="textSecondary" style={{ fontSize: `${fontSize}rem` }}>
+                    Valor: {product.price}
+                </Typography>
+                {/* Botão Adicionar */}
+                <Button variant="contained" color="primary" onClick={handleAddToCart} style={{ borderRadius: '1rem', fontSize: `${fontSize}rem` }}>
+                    Adicionar
+                </Button>
+            </CardContent>
+        </Card>
+    );
+>>>>>>> Stashed changes
 };
 
 export default ProductCard;
