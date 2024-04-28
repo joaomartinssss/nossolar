@@ -64,7 +64,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                     </Grid>                                    <Grid item xs={4}>
                                         <Typography variant="body1" style={{ color: 'black', marginLeft: '30px'}}>{item.name}</Typography>
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    <Grid item /*xs={2}*/>
                                         <Grid container spacing={1} alignItems="center">
                                             <Grid item>
                                                 <IconButton aria-label="Diminuir quantidade" onClick={() => handleDecrement(item.id)}>
@@ -72,7 +72,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                                 </IconButton>
                                             </Grid>
                                             <Grid item>
-                                                <Typography variant="body1" style={{ color: 'black', display:'grid'}}>{item.quantity}</Typography>
+                                                <Typography variant="body1" style={{ color: 'black' }}>{item.quantity}</Typography>
                                             </Grid>
                                             <Grid item>
                                                 <IconButton aria-label="Incrementar quantidade" onClick={() => handleIncrement(item.id)}>
@@ -82,7 +82,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={3}>
-                                        <Typography variant="body1" style={{ color: 'black', marginLeft: '5px' }}>R$ {(item.price * item.quantity).toFixed(2)}</Typography>
+                                        <Typography variant="body1" style={{ color: 'black' }}>R$ {(item.price * item.quantity).toFixed(2)}</Typography>
                                     </Grid>
                                     <Grid item xs={2}>
                                         <IconButton aria-label="Remover item" onClick={() => handleRemove(`${item.id}-${item.quantity}`)}>
