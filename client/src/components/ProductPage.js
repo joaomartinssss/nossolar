@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const useStyles = makeStyles({
@@ -43,10 +44,10 @@ const ProductPage = ({ product, history }) => {
   return (
     <div className={classes.productPage}>
       <Card>
-        <CardContent className={classes.productContainer}>
-          <ArrowBackIcon>
-            <button onClick={handleGoBack} style={{}}></button>
-          </ArrowBackIcon>
+        <CardContent className={classes.productContainer}>        
+          <IconButton onClick={handleGoBack}>
+            <ArrowBackIcon />
+          </IconButton>
           <div className={classes.productDetails}>
             <img
               src={product.image}
