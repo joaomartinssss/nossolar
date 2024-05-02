@@ -26,6 +26,8 @@ const registerPage = ({}) => {
           <InputBase placeholder="Senha..."></InputBase>
           <Typography>Confirme sua Senha:</Typography>
           <InputBase placeholder="Senha..."></InputBase>
+          <Typography>Possui Cadastro?</Typography>
+          <Button onClick={loginPage}>Entre</Button>
           <Button>Confirmar</Button>
         </CardContent>
       </Card>
@@ -33,7 +35,7 @@ const registerPage = ({}) => {
   );
 };
 
-const usersPage = ({}) => {
+const loginPage = ({}) => {
   return (
     <div>
       <Card style={{ backgroundColor: "" }}>
@@ -45,11 +47,11 @@ const usersPage = ({}) => {
           <InputBase placeholder="Senha..."></InputBase>
           <Button>Esqueci a Senha</Button>
           <Button>Entrar</Button>
-          <Button>Cadastre-se</Button>
+          <Button onClick={registerPage}>Cadastre-se</Button>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default usersPage;
+export default loginPage;

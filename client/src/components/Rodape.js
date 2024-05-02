@@ -24,7 +24,15 @@ const Rodape = () => {
         conveniente, com preços acessíveis e uma ampla variedade de opções.
       </p>
       <p>Suburbano: (11) 4142-8317</p>
+      <p>
+        Av. Lizete Geralda Calandrini Guimarães, 57 - Parque Suburbano, Itapevi
+        - SP, 06663-665
+      </p>
       <p>Vitápolis: (11) 4141-2746</p>
+      <p>
+        R. Cecília Pereira Alves, 105 - Jardim Vitapolis, Itapevi - SP,
+        06693-360
+      </p>
       <footer>
         <p>&copy; 2024 Supermercado Nosso Lar</p>
       </footer>
