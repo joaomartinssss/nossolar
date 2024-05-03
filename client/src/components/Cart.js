@@ -93,11 +93,13 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                                 </Grid>
                             </Grid>
                         ))}
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-end', alignItems:"center"}}>
                             <Typography variant="h6" style={{
                                 color: 'white', textAlign: 'left', marginTop: '1rem', background: '#333', width: 'fit-content', padding: '0.5rem 1rem', borderRadius: '5px' // Adicionando padding
                             }}>Total: R$ {calculateTotal().toFixed(2)}</Typography>
-                        </Grid>
+                            <Button variant="contained" style={{ background: 'green', color: 'white', marginLeft:'1rem', padding: '0.5rem 1rem', marginRight:'1.5rem'}}>Finalizar Compra</Button>                        
+                        </Grid>                        
+                            
                     </Grid>
                     <Button
                         variant="contained"
