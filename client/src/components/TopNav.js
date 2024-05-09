@@ -68,7 +68,7 @@ const CartIndicator = styled("div")({
 });
 
 const NavigationBar = styled("div")({
-  backgroundColor: "#1976d2",
+  backgroundColor: "red",
   padding: "0.8rem 0",
   textAlign: "center",
 });

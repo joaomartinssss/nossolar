@@ -69,7 +69,7 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
           Preço: R$ {product.price}
         </Typography>
         <Typography style={{ fontFamily: "sans-serif", fontWeight: "bold", marginBottom: '15px'}}>
-          Descrição: {product.description}
+          {product.description}
         </Typography>
         {/* Botão Adicionar */}
         <Button
