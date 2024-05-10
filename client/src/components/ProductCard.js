@@ -45,21 +45,22 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
       />
       <CardContent
         id={`product-card-content-${product.id}`}
-        style={{ minHeight: "150px" }}
+        style={{ minHeight: "150px", background:"#E8E5DA" }}
       >
         {/* Nome */}
         <Typography
           variant="h5"
           component="div"
           style={{
-            fontSize: `${fontSize}rem`,
-            fontFamily: "sans-serif",
-            fontWeight: "bold",
-            marginBottom: "10px",
+          fontSize: `${fontSize}rem`,
+          fontFamily: "sans-serif",
+          fontWeight: "bold",
+          marginBottom: "10px",
           }}
-        >
-          {product.name}
+          >
+          {product.name.length > 30 ? `${product.name.substring(0, 30)}...` : product.name}
         </Typography>
+
         {/* Preço */}
         <Typography
           variant="body1"
@@ -69,8 +70,9 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
           Preço: R$ {product.price}
         </Typography>
         <Typography style={{ fontFamily: "sans-serif", fontWeight: "bold", marginBottom: '15px'}}>
-          {product.description}
+          {product.description.length > 30 ? `${product.description.slice(0, 30)}...` : product.description}
         </Typography>
+
         {/* Botão Adicionar */}
         <Button
           variant="contained"

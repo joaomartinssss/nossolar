@@ -82,7 +82,7 @@ const NavLink = styled("a")({
   borderRadius: "5px",
   "&:hover": {
     color: "white",
-    backgroundColor: "#003962",
+    backgroundColor: "#003599",
     paddingBottom: "30px",
     paddingLeft: "10px",
     paddingRight: "10px",
