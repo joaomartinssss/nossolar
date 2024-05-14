@@ -9,6 +9,7 @@ import { styled } from "@mui/system";
 import Category from "./components/Category";
 import './App.css';
 import ProductPage from "./components/ProductPage";
+import BlackOverlay from "./components/GreenOverlay";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -65,6 +66,7 @@ function App() {
       />
       <div className="container" style={{ display: "flex", flexGrow: 1 }}>
         <Category style={{ flexGrow: 1 }} />
+        <BlackOverlay/> 
         {!selectedProduct && (
           <ProductGrid
             products={products}
