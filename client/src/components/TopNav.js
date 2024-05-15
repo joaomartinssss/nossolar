@@ -120,14 +120,21 @@ const TopNav = ({ cartItems, setCartItems }) => {
     setIsUserPopupOpen(!isUserPopupOpen);
   };
 
+  const scrollToBottom = () => {
+    window.scrollTo({ 
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <div style={{ position: "relative" }}>
       <NavigationBar>
-        <NavLink href="#">Institucional</NavLink>
-        <NavLink href="#">Atendimento</NavLink>
-        <NavLink href="#">Nossas Lojas</NavLink>
-        <NavLink href="#">Folhetos</NavLink>
-        <NavLink href="#">Trabalhe Conosco</NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>Institucional</NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>Atendimento</NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>Nossas Lojas</NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>Folhetos</NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>Trabalhe Conosco</NavLink>
       </NavigationBar>
       <AppBar position="static" style={{ marginBottom: "1rem" }}>
         <Toolbar
