@@ -1,7 +1,8 @@
 import React from "react";
+import { Typography } from "@mui/material";
 
-const BlackOverlay = ({ show }) => {
-  return show ? (
+function BlackOverlay() {
+  return (
     <div
       style={{
         background: "green",
@@ -10,10 +11,13 @@ const BlackOverlay = ({ show }) => {
         left: 0,
         width: "100%",
         height: "100%",
+        width: "100%",
+        display: "block",
       }}
-    >
+      >
+      <Typography variant="h6"style={{color: "white", margin: "2rem", fontWeight:"bold"}}>Supermercado Nosso Lar</Typography>
     </div>
-  ) : null;
-};
+  );
+}
 
 export default BlackOverlay;
