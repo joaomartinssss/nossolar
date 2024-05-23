@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IconButton, Typography, Grid, Button } from '@material-ui/core';
 import { Add as AddIcon, Remove as RemoveIcon, Delete as DeleteIcon } from '@material-ui/icons';
-import BlackOverlay from './GreenOverlay';
+import { Link } from 'react-router-dom';
 
 const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     const handleIncrement = (itemId) => {
@@ -37,15 +37,6 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
 
     // Verificar se o carrinho está vazio
     const isEmptyCart = cartItems.length === 0;
-
-    const [showBlackOverlay, setShowBlackOverlay] = useState(false);
-
-    const handleFinalizarCompra = () => {
-        // Definindo a tela preta após 3 segundos
-        setTimeout(() => {
-            setShowBlackOverlay(true);
-        }, 1500);
-    };
 
     return (
         <div className="cart" style={{ position: 'relative', paddingBottom: '3rem' }}>
@@ -107,16 +98,17 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                             <Typography variant="h6" style={{
                                 color: 'white', textAlign: 'left', marginTop: '1rem', background: '#333', width: 'fit-content', padding: '0.5rem 1rem', borderRadius: '5px' // Adicionando padding
                             }}>Total: R$ {calculateTotal().toFixed(2)}</Typography>
-                            <Button variant="contained" 
-                            style={{ 
+                            <Button 
+                                variant="contained" 
+                                style={{ 
                                 background: 'green', 
                                 color: 'white', 
                                 marginLeft:'1rem', 
                                 padding: '0.5rem 1rem', 
-                                marginRight:'1.5rem'}}
-                                onClick={handleFinalizarCompra}>Finalizar Compra
-                                </Button>
-                                <BlackOverlay show={showBlackOverlay}/>                        
+                                marginRight:'1.5rem'}}>
+                                Finalizar Compra
+                            </Button>
+                                {/* <BlackOverlay show={showBlackOverlay}/>*/}
                         </Grid>                        
                             
                     </Grid>

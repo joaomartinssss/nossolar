@@ -10,7 +10,9 @@
   import './App.css';
   import ProductPage from "./components/ProductPage";
   import BlackOverlay from "./components/GreenOverlay";
-import { Link } from "react-router-dom";
+  import { BrowserRouter as Router , Route , Routes } from "react-router-dom";
+  import RegisterPage from "./components/RegisterPage";
+  import LoginPage from "./components/LoginPage";
 
   const ScrollToTopButton = styled(Button)({
     position: "fixed",
@@ -58,41 +60,48 @@ import { Link } from "react-router-dom";
       });
     };
 
-    return (
+    return (      
       <div className="App">
-        <TopNav
-          setIsCartOpen={setIsCartOpen}
-          cartItems={cartItems}
-          setCartItems={setCartItems}
-        />
-        <div className="container" style={{ display: "flex", flexGrow: 1 }}>
-          <Category style={{ flexGrow: 1 }} />
-          {!selectedProduct && (
-            <ProductGrid
+          <TopNav
+            setIsCartOpen={setIsCartOpen}
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+            />
+          <div className="container" style={{ display: "flex", flexGrow: 1 }}>
+            <Category style={{ flexGrow: 1 }} />
+            {!selectedProduct && (
+              <ProductGrid
               products={products}
               addToCart={addToCart}
               onSelectProduct={setSelectedProduct}
+              />
+            )}
+            {selectedProduct && <ProductPage product={selectedProduct} />}
+          </div>
+          {isCartOpen && (
+            <Cart
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+            setCartOpen={setIsCartOpen}
             />
           )}
-          {selectedProduct && <ProductPage product={selectedProduct} />}
-        </div>
-        {isCartOpen && (
-          <Cart
-          cartItems={cartItems}
-          setCartItems={setCartItems}
-          setCartOpen={setIsCartOpen}
-            />
-        )}
-        <Rodape />
-        <ScrollToTopButton
-          onClick={scrollToTop}
-          variant="contained"
-          color="primary"
-          >
-          <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
-        </ScrollToTopButton>        
-        {/* <BlackOverlay/> */}
-      </div>
+          <Rodape />
+          <ScrollToTopButton
+            onClick={scrollToTop}
+            variant="contained"
+            color="primary"
+            >
+            <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
+          </ScrollToTopButton>
+          <Router>
+            <Routes>
+              <Route path="/FinalizePurchase" element={<BlackOverlay />} />
+              <Route path="/cadastro" element={<RegisterPage />}/>
+              <Route path="/login" element={<LoginPage />}/>
+            </Routes>            
+            {/* <BlackOverlay/> */}
+          </Router>
+        </div>      
     );
   }
 
