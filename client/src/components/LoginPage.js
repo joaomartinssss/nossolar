@@ -6,6 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
+import { BrowserRouter as Router, Link, Routes } from "react-router-dom";
 
 const style = {
   backGround: {
@@ -29,16 +30,17 @@ const style = {
   personIcon: {
     fontSize: 50,
     marginBottom: 20,
-    color: "blue",
-  },
-  inputBase: {
-    border: "1px solid black",
-    borderRadius: "3px",
+    color: "#B1B5C8",
   },
   inputBase: {
     border: "1px solid black",
     borderRadius: "3px",
     padding: "0px 3px 0px 3px", // Add some padding so that the placeholder margin is visible
+    backgroundColor: "#DBDDE6",
+  },
+  card: {
+    backgroundColor: "white", // Cor do Card
+    padding: "20px", // Espaçamento interno do Card
   },
 };
 
@@ -46,7 +48,7 @@ function loginPage() {
   return (
     <div
       style={{
-        background: "green",
+        background: "#78C0E0",
         position: "fixed",
         top: 0,
         left: 0,
@@ -58,25 +60,30 @@ function loginPage() {
         alignItems: "center",
       }}
     >
-      <Card>
+      <Card style={style.card}>
         <CardContent style={style.cardContent}>
-          <PersonIcon  style={style.personIcon} />
+          <PersonIcon style={style.personIcon} />
           <Typography style={style.text}>Insira seu Email.</Typography>
-          <InputBase style={style.inputBase}  placeholder="joaozinho@exemplo.com..."></InputBase>
+          <InputBase
+            style={style.inputBase}
+            placeholder="joaozinho@exemplo.com..."
+          ></InputBase>
           <Typography style={style.text}>Insira sua Senha.</Typography>
           <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
           <Box>
-            <Button style={{marginBottom:"1rem", marginTop:"0"}}>
+            <Button style={{ marginBottom: "1rem", marginTop: "0" }}>
               Esqueci a Senha
             </Button>
           </Box>
           <Box>
             <Button variant="contained" style={style.button}>
               Entrar
-            </Button>
-            <Button variant="contained" style={style.button}>
-              Cadastre-se
-            </Button>
+            </Button>            
+              <Link to={"/cadastro"}>
+                <Button variant="contained" style={style.button}>
+                  Cadastre-se
+                </Button>
+              </Link>
           </Box>
         </CardContent>
       </Card>

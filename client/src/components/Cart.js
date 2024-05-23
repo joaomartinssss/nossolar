@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IconButton, Typography, Grid, Button } from '@material-ui/core';
 import { Add as AddIcon, Remove as RemoveIcon, Delete as DeleteIcon } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     const handleIncrement = (itemId) => {
@@ -98,16 +98,20 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                             <Typography variant="h6" style={{
                                 color: 'white', textAlign: 'left', marginTop: '1rem', background: '#333', width: 'fit-content', padding: '0.5rem 1rem', borderRadius: '5px' // Adicionando padding
                             }}>Total: R$ {calculateTotal().toFixed(2)}</Typography>
-                            <Button 
-                                variant="contained" 
-                                style={{ 
-                                background: 'green', 
-                                color: 'white', 
-                                marginLeft:'1rem', 
-                                padding: '0.5rem 1rem', 
-                                marginRight:'1.5rem'}}>
-                                Finalizar Compra
-                            </Button>
+                            <Router>
+                                <Link to={"/FinalizePurchase"}>
+                                    <Button 
+                                        variant="contained" 
+                                        style={{ 
+                                        background: 'green', 
+                                        color: 'white', 
+                                        marginLeft:'1rem', 
+                                        padding: '0.5rem 1rem', 
+                                        marginRight:'1.5rem'}}>
+                                        Finalizar Compra
+                                    </Button>
+                                </Link>    
+                            </Router>
                                 {/* <BlackOverlay show={showBlackOverlay}/>*/}
                         </Grid>                        
                             

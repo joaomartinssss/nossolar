@@ -6,10 +6,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const style = {
-  backGround: {
-    backgroundColor: "yellow"
+  card: {
+  marginTop: "10rem"
   },
   text: {
     color: "black",
@@ -19,32 +20,30 @@ const style = {
   button: {
     backgroundColor: "blue",
     color: "white",
-    marginRight: "10px"
+    marginRight: "10px",
   },
   cardContent: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    
   },
   personIcon: {
     fontSize: 50,
     marginBottom: 20,
-    color: "blue"
-  },
-  inputBase: {
-    border: "1px solid black",
-    borderRadius: "3px"
+    color: "#B1B5C8"
   },
    inputBase: {
     border: "1px solid black",
     borderRadius: "3px",
-    padding: "0px 3px 0px 3px"  // Add some padding so that the placeholder margin is visible
-  }
+    padding: "0px 3px 0px 3px",  // Add some padding so that the placeholder margin is visible
+    backgroundColor: "#DBDDE6"
+  },
 };
 
 function registerPage () {
   return (
-    <div style={{background: "green",
+    <div style={{background: "#78C0E0",
     position: "fixed",
     top: 0,
     left: 0,
@@ -73,8 +72,10 @@ function registerPage () {
           <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
           <Typography style={style.text}>Possui Cadastro?</Typography>
           <Box>
-            <Button style={style.button}>Entre</Button>
             <Button style={style.button}>Confirmar</Button>
+            <Link to={"/login"}>
+              <Button style={style.button}>Acesse sua conta</Button>
+            </Link>            
           </Box>
         </CardContent>
       </Card>
