@@ -9,10 +9,13 @@
   import Category from "./components/Category";
   import './App.css';
   import ProductPage from "./components/ProductPage";
-  import BlackOverlay from "./components/GreenOverlay";
+  import FinalizePurchase from "./components/FinalizePurchase";
   import { BrowserRouter as Router , Route , Routes } from "react-router-dom";
   import RegisterPage from "./components/RegisterPage";
   import LoginPage from "./components/LoginPage";
+  import Delivery from "./components/Delivery";
+  import RetirarNaLoja from "./components/RetirarNaLoja";
+  import EntregarEmCasa from "./components/EntregarEmCasa"
 
   const ScrollToTopButton = styled(Button)({
     position: "fixed",
@@ -95,11 +98,13 @@
           </ScrollToTopButton>
           <Router>
             <Routes>
-              <Route path="/FinalizePurchase" element={<BlackOverlay />} />
+              <Route path="/FinalizePurchase" element={<FinalizePurchase />} />
               <Route path="/cadastro" element={<RegisterPage />}/>
               <Route path="/login" element={<LoginPage />}/>
-            </Routes>            
-            {/* <BlackOverlay/> */}
+              <Route path="/delivery" element={<Delivery/>}/>
+              <Route path="RetirarNaLoja" element={<RetirarNaLoja/>}/>
+              <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
+            </Routes>                    
           </Router>
         </div>      
     );

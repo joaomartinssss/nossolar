@@ -25,8 +25,7 @@ const style = {
   cardContent: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    
+    alignItems: "center",    
   },
   personIcon: {
     fontSize: 50,
@@ -44,17 +43,18 @@ const style = {
 function registerPage () {
   return (
     <div style={{background: "#78C0E0",
-    position: "fixed",
+    position:"fixed",
     top: 0,
     left: 0,
     width: "100%",
-    height: "100%",
+    height: "100vh",
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    overflow: "auto"
     }}>
-      <Card >
+      <Card sx={{marginTop: '10rem', marginBottom:'3rem'}}>
         <CardContent style={style.cardContent}>
           <PersonIcon style={style.personIcon}/>
           <Typography style={style.text}>Cadastre-se no Supermercado Nosso Lar</Typography>
@@ -70,11 +70,11 @@ function registerPage () {
           <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
           <Typography style={style.text}>Confirme sua Senha:</Typography>
           <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
-          <Typography style={style.text}>Possui Cadastro?</Typography>
+            <Button style={style.button} sx={{marginTop:"15px"}}>Confirmar</Button>
+          <Typography style={style.text} sx={{marginTop:"20px"}}>Possui Cadastro?</Typography>
           <Box>
-            <Button style={style.button}>Confirmar</Button>
             <Link to={"/login"}>
-              <Button style={style.button}>Acesse sua conta</Button>
+              <Button style={style.button} sx={{marginBottom:"20px", marginTop:"10px"}}>Acesse sua conta</Button>
             </Link>            
           </Box>
         </CardContent>

@@ -21,6 +21,7 @@ const style = {
     backgroundColor: "blue",
     color: "white",
     marginRight: "10px",
+    marginLeft: "10px",
   },
   cardContent: {
     display: "flex",
@@ -70,21 +71,24 @@ function loginPage() {
           ></InputBase>
           <Typography style={style.text}>Insira sua Senha.</Typography>
           <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
-          <Box>
-            <Button style={{ marginBottom: "1rem", marginTop: "0" }}>
-              Esqueci a Senha
-            </Button>
-          </Box>
+          <Link to={""}>
+            <Box>
+              <Button style={{ marginBottom: "1rem", marginTop: "0" }}>
+                Esqueci a Senha
+              </Button>
+            </Box>
+          </Link>
           <Box>
             <Button variant="contained" style={style.button}>
               Entrar
-            </Button>            
-              <Link to={"/cadastro"}>
-                <Button variant="contained" style={style.button}>
-                  Cadastre-se
-                </Button>
-              </Link>
+            </Button>
           </Box>
+          <Typography style={style.text}>Ainda não possui cadastro?</Typography>
+          <Link to={"/cadastro"}>
+            <Button variant="contained" style={style.button}>
+              Cadastre-se
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </div>
