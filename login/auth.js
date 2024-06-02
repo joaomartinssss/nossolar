@@ -58,4 +58,33 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.post("/login", async (req, res) => {
+  const { email, senha } = req.body;
+
+  try {
+    let user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(400).json({ msg: "Usuário não encontrado" });
+    }
+
+    const isMatch = await bcrypt.compare(senha, user.senha);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Senha incorreta" });
+    }
+
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    jwt.sign(payload, "segredoDoToken", { expiresIn: 3600 }, (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
 module.exports = router;

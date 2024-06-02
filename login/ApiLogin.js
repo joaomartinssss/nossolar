@@ -1,13 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mysql = require("mysql");
+// const mysql = require("mysql");
 const PORT = 5000;
 const auth = require("./auth");
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use('/api/auth', auth)
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use("/api/auth", auth);
 
 const connection = mysql.createConnection({
   host: "localhost",
