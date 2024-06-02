@@ -58,18 +58,18 @@ function registerPage () {
         <CardContent style={style.cardContent}>
           <PersonIcon style={style.personIcon}/>
           <Typography style={style.text}>Cadastre-se no Supermercado Nosso Lar</Typography>
-          <Typography style={style.text}>Insira seu Nome e Sobrenome:</Typography>
-          <InputBase style={style.inputBase} placeholder="Exemplo: José Silva"></InputBase>
+          <Typography style={style.text}>Insira seu Nome completo:</Typography>
+          <InputBase style={style.inputBase} placeholder="Ex: José Silva de Silva"></InputBase>
           <Typography style={style.text}>Insira seu CEP:</Typography>
-          <InputBase style={style.inputBase} placeholder="Insira seu CEP aqui"></InputBase>
+          <InputBase style={style.inputBase} placeholder="Insira seu CEP aqui..."></InputBase>
           <Typography style={style.text}>Insira seu Email:</Typography>
-          <InputBase style={style.inputBase} placeholder="joaozinho@exemplo.com..."></InputBase>
-          <Typography style={style.text}>Confirme seu Email:</Typography>
-          <InputBase style={style.inputBase} placeholder="joaozinho@exemplo.com..."></InputBase>
+          <InputBase style={style.inputBase} placeholder="user@exemplo.com..."></InputBase>
           <Typography style={style.text}>Insira sua Senha:</Typography>
-          <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
-          <Typography style={style.text}>Confirme sua Senha:</Typography>
-          <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
+          <InputBase style={style.inputBase} type="password" placeholder="Senha..."></InputBase>
+          <Typography style={style.text}>Insira seu CPF:</Typography>
+          <InputBase style={style.inputBase} placeholder="Ex: 123.456.789-00"></InputBase>
+          <Typography style={style.text}>Insira sua data de nascimento:</Typography>
+          <InputBase style={style.inputBase} placeholder="Ex: 12/01/1999"></InputBase>
             <Button style={style.button} sx={{marginTop:"15px"}}>Confirmar</Button>
           <Typography style={style.text} sx={{marginTop:"20px"}}>Possui Cadastro?</Typography>
           <Box>

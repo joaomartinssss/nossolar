@@ -67,10 +67,10 @@ function loginPage() {
           <Typography style={style.text}>Insira seu Email.</Typography>
           <InputBase
             style={style.inputBase}
-            placeholder="joaozinho@exemplo.com..."
+            placeholder="user@exemplo.com..."
           ></InputBase>
           <Typography style={style.text}>Insira sua Senha.</Typography>
-          <InputBase style={style.inputBase} placeholder="Senha..."></InputBase>
+          <InputBase style={style.inputBase} type="password" placeholder="Senha..."></InputBase>
           <Link to={""}>
             <Box>
               <Button style={{ marginBottom: "1rem", marginTop: "0" }}>
