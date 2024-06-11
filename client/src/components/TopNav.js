@@ -144,11 +144,10 @@ const TopNav = ({ cartItems, setCartItems }) => {
             background: "#003599", //mudança feita para teste
           }}
         >
-          <div
-            className="logo"
+          <div            
             style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
           >
-            Seja Bem-vindo ao Supermercado Nosso Lar
+          Supermercado Nosso Lar
           </div>
           <SearchInput style={{ padding: ".2rem 5rem .2rem .1rem" }}>
             <SearchIconWrapper>

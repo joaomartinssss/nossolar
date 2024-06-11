@@ -27,7 +27,10 @@
   });
 
   function App() {
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(() => {
+      const savedCartItems = localStorage.getItem("cartItems");
+      return savedCartItems ? JSON.parse(savedCartItems) :  [];
+    });
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -48,6 +51,10 @@
 
       fetchProducts();
     }, []);
+
+    useEffect(() => {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const addToCart = (product) => {
       setCartItems((prevCartItems) => [
@@ -98,7 +105,7 @@
           </ScrollToTopButton>
           <Router>
             <Routes>
-              <Route path="/FinalizePurchase" element={<FinalizePurchase />} />
+              <Route path="/FinalizePurchase" element={<FinalizePurchase cartItems={cartItems} setCartItems={setCartItems}/>} />
               <Route path="/cadastro" element={<RegisterPage />}/>
               <Route path="/login" element={<LoginPage />}/>
               <Route path="/delivery" element={<Delivery/>}/>

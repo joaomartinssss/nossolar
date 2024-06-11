@@ -1,6 +1,19 @@
 import React from "react";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Grid";
+import Rodape from "./Rodape";
+import { Link } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const style = {
   card: {
@@ -8,11 +21,12 @@ const style = {
     // display: "flex",
     // flexDirection: "column",
     // height: "auto",
+    width: "100%",
+    height: "100dvh",
   },
   cardContent: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
     height: "100%",
     position: "relative",
     // paddingBottom: "2rem",
@@ -24,9 +38,8 @@ const style = {
     margin: "10px",
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "green",
     color: "white",
-    marginRight: "10px",
   },
 
   spacer: {
@@ -46,54 +59,162 @@ const style = {
   grid: {
     margin: "10px",
   },
+  link: {
+    textDecoration: "none",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: "2rem",
+    right: "2rem",
+  },
 };
 
-function BlackOverlay() {
+function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
+  return (
+    <Grid container alignItems="center" style={style.grid}>
+      <Grid item xs={2}>
+        <img
+          src={item.image}
+          alt={item.name}
+          style={{
+            borderRadius: "50%",
+            maxWidth: "100px",
+          }}
+        />
+      </Grid>
+      <Grid item xs={3}>
+        <Typography sx={{ fontWeight: "bold" }}>{item.name}</Typography>
+      </Grid>
+      <Grid item xs={2}>
+        <IconButton
+          sx={{ margin: "15px" }}
+          onClick={() => handleDecrement(item.id)}
+        >
+          <RemoveIcon />
+        </IconButton>
+        {item.quantity}
+        <IconButton
+          sx={{ margin: "15px" }}
+          onClick={() => handleIncrement(item.id)}
+        >
+          <AddIcon />
+        </IconButton>
+      </Grid>
+      <Grid item xs={2}>
+        <Typography>{(item.price * item.quantity).toFixed(2)}</Typography>
+      </Grid>
+      <Grid item xs={1}>
+        <IconButton onClick={() => handleRemove(item.id)}>
+          <DeleteIcon />
+        </IconButton>
+      </Grid>
+    </Grid>
+  );
+}
+
+function BlackOverlay({ cartItems, setCartItems }) {
+  const handleIncrement = (itemId) => {
+    const updateCartItems = cartItems.map((item) => {
+      if (item.id === itemId) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    });
+    setCartItems(updateCartItems);
+  };
+
+  const handleDecrement = (itemId) => {
+    const updateCartItems = cartItems.map((item) => {
+      if (item.id === itemId && item.quantity > 1) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    setCartItems(updateCartItems);
+  };
+
+  const handleRemove = (itemId) => {
+    const updateCartItems = cartItems.filter((item) => item.id !== itemId);
+    setCartItems(updateCartItems);
+  };
+
   return (
     <div
       style={{
-        background: "#78C0E0",
+        background: "#003599",
         position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
-        display: "flex",
+        display: "block",
         justifyContent: "center",
         alignItems: "center",
         overflow: "auto",
       }}
     >
-      <Card style={style.card} sx={{marginTop:"10rem", marginBottom:"3rem"}}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "1rem",
+        }}
+      >
+        <CardContent>
+          <Link to={""} style={style.link}>
+            <Typography
+              variant="h6"
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+                textDecoration: "none",
+              }}
+            >
+              Supermercado Nosso Lar
+            </Typography>
+          </Link>
+        </CardContent>
+        <Link to={""} style={style.link}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <PersonIcon sx={{ color: "#D3D3D3", fontSize: "2rem" }} />
+            <Typography sx={{ color: "#D3D3D3", marginLeft: "5px" }}>
+              Nome Do Cliente
+            </Typography>
+          </Box>
+        </Link>
+      </div>
+
+      <Card style={style.card}>
         <CardContent style={style.cardContent}>
-          <Typography
-            variant="h6"
-            style={{ color: "black", margin: "2rem", fontWeight: "bold" }}
-          >
-            Supermercado Nosso Lar
-          </Typography>
-          <Grid style={style.grid}>
-            <div>produto 1</div>
-          </Grid>
-          <Grid style={style.grid}>
-            <div>produto 2</div>
-          </Grid>
-          <Grid style={style.grid}>
-            <div>produto 3</div>
-          </Grid>
-          <Grid style={style.grid}>
-            <div>produto 4</div>
-          </Grid>         
-          <div style={style.spacer} />
-          <Button
-            style={style.button}
-            variant="contained"
-            sx={{ marginBottom: "2rem", marginRight: "0", marginTop:"2rem" }}
-          >
-            Confirmar
-          </Button>
+          {cartItems.map((item) => (
+            <ProductRow 
+            key={item.id}
+            item={item}
+            handleIncrement={handleIncrement}
+            handleDecrement={handleDecrement}
+            handleRemove={handleRemove}
+            ></ProductRow>
+          ))}          
+          <div style={style.buttonContainer}>
+            <Link to={"/delivery"}>
+              <Button
+                style={style.button}
+                variant="contained"
+                sx={{
+                  marginBottom: "5rem",
+                  marginRight: "0",
+                  marginTop: "2rem",
+                }}
+              >
+                Confirmar
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
+      <Rodape />
     </div>
   );
 }
