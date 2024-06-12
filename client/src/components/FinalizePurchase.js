@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -138,6 +138,31 @@ function BlackOverlay({ cartItems, setCartItems }) {
     setCartItems(updateCartItems);
   };
 
+  const [totals, setTotals] = useState({
+    valorCompra: 0,
+    frete: 0,
+    descontos: 0,
+    subtotal: 0,
+    total: 0,
+  });
+
+  useEffect(() => {
+    const valorCompra = cartItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    const subtotal = valorCompra + totals.frete - totals.descontos;
+    const total = subtotal;
+
+    setTotals({
+      valorCompra,
+      frete: totals.frete,
+      descontos: totals.descontos,
+      subtotal,
+      total,
+    });
+  }, [cartItems, totals.frete, totals.descontos]);
+
   return (
     <div
       style={{
@@ -145,12 +170,12 @@ function BlackOverlay({ cartItems, setCartItems }) {
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100%",
+        width: "100vw",
         height: "100%",
         display: "block",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "auto",
+        overflowX: "hidden",
       }}
     >
       <div
@@ -188,30 +213,48 @@ function BlackOverlay({ cartItems, setCartItems }) {
 
       <Card style={style.card}>
         <CardContent style={style.cardContent}>
-          {cartItems.map((item) => (
-            <ProductRow 
-            key={item.id}
-            item={item}
-            handleIncrement={handleIncrement}
-            handleDecrement={handleDecrement}
-            handleRemove={handleRemove}
-            ></ProductRow>
-          ))}          
-          <div style={style.buttonContainer}>
-            <Link to={"/delivery"}>
-              <Button
-                style={style.button}
-                variant="contained"
-                sx={{
-                  marginBottom: "5rem",
-                  marginRight: "0",
-                  marginTop: "2rem",
-                }}
-              >
-                Confirmar
-              </Button>
-            </Link>
-          </div>
+          <Grid container>
+            <Grid item xs={9} sx={{pr: 4}}>
+              {cartItems.map((item) => (
+                <ProductRow
+                  key={item.id}
+                  item={item}
+                  handleIncrement={handleIncrement}
+                  handleDecrement={handleDecrement}
+                  handleRemove={handleRemove}
+                />
+              ))}
+            </Grid>
+            <Grid item xs={3}>
+              <Box sx={{ padding: "20px", color: "black", textAlign: "left" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Resumo do Pedido
+                </Typography>
+                <Typography>
+                  Valor da Compra: {totals.valorCompra.toFixed(2)}
+                </Typography>
+                <Typography>Frete: {totals.frete.toFixed(2)}</Typography>
+                <Typography>
+                  Descontos: {totals.descontos.toFixed(2)}
+                </Typography>
+                <Typography>Subtotal: {totals.subtotal.toFixed(2)}</Typography>
+                <Typography>Total: {totals.total.toFixed(2)}</Typography>
+                <Link to={"/delivery"}>
+                  <Button
+                    style={style.button}
+                    variant="contained"
+                    sx={{
+                      marginBottom: "5rem",
+                      marginRight: "0",
+                      marginTop: "2rem",
+                    }}
+                  >
+                    Confirmar
+                  </Button>
+                </Link>
+              </Box>
+            </Grid>
+          </Grid>          
         </CardContent>
       </Card>
       <Rodape />
