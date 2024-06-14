@@ -6,6 +6,7 @@ import {
   CardContent,
   IconButton,
   Typography,
+  typographyClasses,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Rodape from "./Rodape";
@@ -13,7 +14,8 @@ import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { BorderColor } from "@material-ui/icons";
 
 const style = {
   card: {
@@ -52,7 +54,7 @@ const style = {
     color: "#B1B5C8",
   },
   inputBase: {
-    border: "1px solid black",
+    border: "1px solid #A3A9AA",
     borderRadius: "3px",
     padding: "0px 3px 0px 3px", // Add some padding so that the placeholder margin is visible
     backgroundColor: "#DBDDE6",
@@ -60,6 +62,8 @@ const style = {
   grid: {
     margin: "10px",
     background: "#E5E7E6",
+    border: "1px solid #A3A9AA",
+    borderRadius: "3px",
   },
   link: {
     textDecoration: "none",
@@ -73,11 +77,31 @@ const style = {
     display: "flex",
     justifyContent: "space-around",
   },
+  typographyClasses: {
+    fontFamily: "unset",
+    padding: "0rem 0rem 1.5rem 0rem",
+    background: "white",
+    borderRadius: "3px",
+    padding: "5px",
+    marginBottom: "1.5px",
+    border: "1px solid #A3A9AA",
+  },
+  clientDados: {
+    marginLeft: "1rem",
+    fontWeight: "bold",
+    fontFamily: "unset",
+    background: "white",
+    borderRadius: "3px",
+    padding: "5px",
+    marginRight: "1rem",
+    marginBottom: "1px",
+    border: "1px solid #A3A9AA",
+  },
 };
 
 function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
   return (
-    <Grid container alignItems="center" style={style.grid}>
+    <Grid container alignItems="center" style={style.grid} sx={{}}>
       <Grid item xs={2}>
         <img
           src={item.image}
@@ -91,27 +115,37 @@ function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
       <Grid item xs={3}>
         <Typography sx={{ fontWeight: "bold" }}>{item.name}</Typography>
       </Grid>
-      <Grid item xs={2}>
+      <Grid
+        item
+        xs={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          borderRadius: "5px",
+          // padding: "0 0 0 0",
+        }}
+      >
         <IconButton
-          sx={{ margin: "15px" }}
+          sx={{ margin: "5px 0" }}
           onClick={() => handleDecrement(item.id)}
         >
-          <RemoveIcon />
+          <RemoveIcon sx={{ color: "red" }} />
         </IconButton>
-        {item.quantity}
-        <IconButton
-          sx={{ margin: "15px" }}
-          onClick={() => handleIncrement(item.id)}
-        >
-          <AddIcon />
+        <Typography sx={{ margin: "0 5px", fontWeight: "bold" }}>
+          {item.quantity}
+        </Typography>
+        <IconButton onClick={() => handleIncrement(item.id)}>
+          <AddIcon sx={{ color: "#14248A" }} />
         </IconButton>
       </Grid>
       <Grid item xs={2}>
-        <Typography>{(item.price * item.quantity).toFixed(2)}</Typography>
+        <Typography sx={{ fontWeight: "bold" }}>
+          {(item.price * item.quantity).toFixed(2)}
+        </Typography>
       </Grid>
       <Grid item xs={1}>
         <IconButton onClick={() => handleRemove(item.id)}>
-          <DeleteIcon />
+          <DeleteForeverOutlinedIcon sx={{ color: "red" }} />
         </IconButton>
       </Grid>
     </Grid>
@@ -142,6 +176,10 @@ function BlackOverlay({ cartItems, setCartItems }) {
   const handleRemove = (itemId) => {
     const updateCartItems = cartItems.filter((item) => item.id !== itemId);
     setCartItems(updateCartItems);
+  };
+
+  const HandleclearCart = () => {
+    setCartItems([]);
   };
 
   const [totals, setTotals] = useState({
@@ -194,7 +232,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
         }}
       >
         <CardContent>
-          <Link to={""} style={style.link}>
+          <Link to={"/"} style={style.link}>
             <Typography
               variant="h6"
               style={{
@@ -218,7 +256,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
         </Link>
       </div>
 
-      <Card style={style.card}>
+      <Card style={style.card} sx={{ background: "yellow" }}>
         <CardContent style={style.cardContent}>
           <Grid container>
             <Grid item xs={9} sx={{ pr: 4 }}>
@@ -235,7 +273,11 @@ function BlackOverlay({ cartItems, setCartItems }) {
             <Grid
               item
               xs={3}
-              sx={{ background: "#E5E7E6", borderRadius: "5px" }}
+              sx={{
+                background: "#E5E7E6",
+                borderRadius: "5px",
+                border: "1px solid #A3A9AA",
+              }}
             >
               <Grid>
                 <Typography
@@ -250,59 +292,18 @@ function BlackOverlay({ cartItems, setCartItems }) {
                   DADOS PESSOAIS:
                 </Typography>
                 <Typography
-                  sx={{
-                    marginLeft: "1rem",
-                    fontWeight: "bold",
-                    marginTop: "1rem",
-                    fontFamily: "unset",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginRight:"1rem",
-                    marginBottom:"1px"
-                  }}
+                  style={style.clientDados}
+                  sx={{ marginTop: "1rem" }}
                 >
                   Email: joaozinho77@gmail.com
                 </Typography>
-                <Typography
-                  sx={{
-                    marginLeft: "1rem",
-                    fontWeight: "bold",
-                    fontFamily: "unset",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginRight:"1rem",
-                    marginBottom:"1px"
-                  }}
-                >
+                <Typography style={style.clientDados}>
                   Nome: Joãozinho Martins
                 </Typography>
-                <Typography
-                  sx={{
-                    marginLeft: "1rem",
-                    fontWeight: "bold",
-                    fontFamily: "unset",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginRight:"1rem",
-                    marginBottom:"1px"
-                  }}
-                >
+                <Typography style={style.clientDados}>
                   Endereço: Rua Sebastião Mamede Nº 251
                 </Typography>
-                <Typography
-                  sx={{
-                    marginLeft: "1rem",
-                    fontWeight: "bold",
-                    fontFamily: "unset",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginRight:"1rem"
-                  }}
-                >
+                <Typography style={style.clientDados}>
                   Telefone: (11) 98060-7358
                 </Typography>
               </Grid>
@@ -353,56 +354,16 @@ function BlackOverlay({ cartItems, setCartItems }) {
                 >
                   RESUMO DO PEDIDO:
                 </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontFamily: "unset",
-                    padding: "0rem 0rem 1.5rem 0rem",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginBottom: "1.5px",
-                  }}
-                >
+                <Typography variant="h6" style={style.typographyClasses}>
                   Valor da Compra: R$ {totals.valorCompra.toFixed(2)}
                 </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontFamily: "unset",
-                    padding: "0rem 0rem 1.5rem 0rem",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginBottom: "2px",
-                  }}
-                >
+                <Typography variant="h6" style={style.typographyClasses}>
                   Frete: R$ {totals.frete.toFixed(2)}
                 </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontFamily: "unset",
-                    padding: "0rem 0rem 1.5rem 0rem",
-                    background: "white",
-                    borderRadius: "3px",
-                    padding: "5px",
-                    marginBottom: "2px",
-                  }}
-                >
+                <Typography variant="h6" style={style.typographyClasses}>
                   Descontos: R$ {totals.descontos.toFixed(2)}
                 </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontFamily: "unset",
-                    padding: "0rem 0rem 1.5rem 0rem",
-                    background: "white",
-                    // borderRadius: "5px",
-                    padding: "5px",
-                    marginBottom: "2px",
-                  }}
-                >
+                <Typography variant="h6" style={style.typographyClasses}>
                   Subtotal: R$ {totals.subtotal.toFixed(2)}
                 </Typography>
                 <Typography
@@ -415,6 +376,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                     borderRadius: "3px",
                     padding: "5px",
                     marginBottom: "1rem",
+                    border: "1px solid #A3A9AA",
                   }}
                 >
                   TOTAL A PAGAR: R$ {totals.total.toFixed(2)}
@@ -440,6 +402,25 @@ function BlackOverlay({ cartItems, setCartItems }) {
                       Confirmar
                     </Button>
                   </Link>
+                </Box>
+                <Box
+                  sx={{
+                    margin: "1rem",
+                    display: "flex",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      background: "#D10000",
+                      fontFamily: "unset",
+                    }}
+                    onClick={HandleclearCart}
+                  >
+                    Deletar Carrinho
+                    <DeleteForeverOutlinedIcon />
+                  </Button>
                 </Box>
               </Box>
             </Grid>
