@@ -23,6 +23,7 @@ const style = {
     // height: "auto",
     width: "100%",
     height: "100dvh",
+    overflowY: "auto",
   },
   cardContent: {
     display: "flex",
@@ -58,6 +59,7 @@ const style = {
   },
   grid: {
     margin: "10px",
+    background: "#E5E7E6",
   },
   link: {
     textDecoration: "none",
@@ -66,6 +68,10 @@ const style = {
     position: "absolute",
     bottom: "2rem",
     right: "2rem",
+  },
+  buttonFlexContainer: {
+    display: "flex",
+    justifyContent: "space-around",
   },
 };
 
@@ -78,7 +84,7 @@ function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
           alt={item.name}
           style={{
             borderRadius: "50%",
-            maxWidth: "100px",
+            maxWidth: "60px",
           }}
         />
       </Grid>
@@ -175,6 +181,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
         display: "block",
         justifyContent: "center",
         alignItems: "center",
+        overflowY: "auto",
         overflowX: "hidden",
       }}
     >
@@ -214,7 +221,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
       <Card style={style.card}>
         <CardContent style={style.cardContent}>
           <Grid container>
-            <Grid item xs={9} sx={{pr: 4}}>
+            <Grid item xs={9} sx={{ pr: 4 }}>
               {cartItems.map((item) => (
                 <ProductRow
                   key={item.id}
@@ -225,36 +232,218 @@ function BlackOverlay({ cartItems, setCartItems }) {
                 />
               ))}
             </Grid>
-            <Grid item xs={3}>
-              <Box sx={{ padding: "20px", color: "black", textAlign: "left" }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Resumo do Pedido
+            <Grid
+              item
+              xs={3}
+              sx={{ background: "#E5E7E6", borderRadius: "5px" }}
+            >
+              <Grid>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    marginTop: "1rem",
+                    fontFamily: "unset",
+                  }}
+                >
+                  DADOS PESSOAIS:
                 </Typography>
-                <Typography>
-                  Valor da Compra: {totals.valorCompra.toFixed(2)}
+                <Typography
+                  sx={{
+                    marginLeft: "1rem",
+                    fontWeight: "bold",
+                    marginTop: "1rem",
+                    fontFamily: "unset",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginRight:"1rem",
+                    marginBottom:"1px"
+                  }}
+                >
+                  Email: joaozinho77@gmail.com
                 </Typography>
-                <Typography>Frete: {totals.frete.toFixed(2)}</Typography>
-                <Typography>
-                  Descontos: {totals.descontos.toFixed(2)}
+                <Typography
+                  sx={{
+                    marginLeft: "1rem",
+                    fontWeight: "bold",
+                    fontFamily: "unset",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginRight:"1rem",
+                    marginBottom:"1px"
+                  }}
+                >
+                  Nome: Joãozinho Martins
                 </Typography>
-                <Typography>Subtotal: {totals.subtotal.toFixed(2)}</Typography>
-                <Typography>Total: {totals.total.toFixed(2)}</Typography>
-                <Link to={"/delivery"}>
+                <Typography
+                  sx={{
+                    marginLeft: "1rem",
+                    fontWeight: "bold",
+                    fontFamily: "unset",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginRight:"1rem",
+                    marginBottom:"1px"
+                  }}
+                >
+                  Endereço: Rua Sebastião Mamede Nº 251
+                </Typography>
+                <Typography
+                  sx={{
+                    marginLeft: "1rem",
+                    fontWeight: "bold",
+                    fontFamily: "unset",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginRight:"1rem"
+                  }}
+                >
+                  Telefone: (11) 98060-7358
+                </Typography>
+              </Grid>
+              <Grid sx={{ background: "#E5E7E6" }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "unset",
+                    textAlign: "center",
+                    padding: "5px",
+                    margin: "1rem",
+                  }}
+                >
+                  OPÇÕES DE ENTREGA:
+                </Typography>
+                <Box style={{ ...style.buttonFlexContainer }}>
                   <Button
-                    style={style.button}
+                    sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
                     variant="contained"
-                    sx={{
-                      marginBottom: "5rem",
-                      marginRight: "0",
-                      marginTop: "2rem",
-                    }}
                   >
-                    Confirmar
+                    Receber em casa
                   </Button>
-                </Link>
+                  <Button
+                    sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
+                    variant="contained"
+                  >
+                    Retirar na Loja
+                  </Button>
+                </Box>
+              </Grid>
+              <Box
+                sx={{
+                  padding: "20px",
+                  color: "black",
+                  textAlign: "left",
+                  background: "#E5E7E6",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    padding: "1.5rem 0rem 0.5rem 0rem",
+                    fontFamily: "unset",
+                    textAlign: "center",
+                  }}
+                >
+                  RESUMO DO PEDIDO:
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "unset",
+                    padding: "0rem 0rem 1.5rem 0rem",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginBottom: "1.5px",
+                  }}
+                >
+                  Valor da Compra: R$ {totals.valorCompra.toFixed(2)}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "unset",
+                    padding: "0rem 0rem 1.5rem 0rem",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginBottom: "2px",
+                  }}
+                >
+                  Frete: R$ {totals.frete.toFixed(2)}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "unset",
+                    padding: "0rem 0rem 1.5rem 0rem",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginBottom: "2px",
+                  }}
+                >
+                  Descontos: R$ {totals.descontos.toFixed(2)}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "unset",
+                    padding: "0rem 0rem 1.5rem 0rem",
+                    background: "white",
+                    // borderRadius: "5px",
+                    padding: "5px",
+                    marginBottom: "2px",
+                  }}
+                >
+                  Subtotal: R$ {totals.subtotal.toFixed(2)}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    padding: "0rem 0rem 1.5rem 0rem",
+                    fontFamily: "unset",
+                    background: "white",
+                    borderRadius: "3px",
+                    padding: "5px",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  TOTAL A PAGAR: R$ {totals.total.toFixed(2)}
+                </Typography>
+                <Box style={{ ...style.buttonFlexContainer }}>
+                  <Link to={"/"}>
+                    <Button
+                      variant="contained"
+                      sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
+                    >
+                      Continuar Comprando
+                    </Button>
+                  </Link>
+                  <Link to={"/delivery"}>
+                    <Button
+                      style={style.button}
+                      variant="contained"
+                      sx={{
+                        padding: "5px 10px",
+                        fontFamily: "sans-serif",
+                      }}
+                    >
+                      Confirmar
+                    </Button>
+                  </Link>
+                </Box>
               </Box>
             </Grid>
-          </Grid>          
+          </Grid>
         </CardContent>
       </Card>
       <Rodape />
