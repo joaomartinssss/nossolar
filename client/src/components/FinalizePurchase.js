@@ -15,7 +15,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { BorderColor } from "@material-ui/icons";
+import InputBase from "@mui/material/InputBase";
+import InputMask from "react-input-mask";
 
 const style = {
   card: {
@@ -54,7 +55,7 @@ const style = {
     color: "#B1B5C8",
   },
   inputBase: {
-    border: "1px solid #A3A9AA",
+    border: "1px solid black",
     borderRadius: "3px",
     padding: "0px 3px 0px 3px", // Add some padding so that the placeholder margin is visible
     backgroundColor: "#DBDDE6",
@@ -190,6 +191,9 @@ function BlackOverlay({ cartItems, setCartItems }) {
     total: 0,
   });
 
+  const [showPickupOptions, setShowPickupOptions] = useState(false);
+  const [showDeliveryOPtions, setShowDeliveryOptions] = useState(false);
+
   useEffect(() => {
     const valorCompra = cartItems.reduce(
       (acc, item) => acc + item.price * item.quantity,
@@ -206,6 +210,16 @@ function BlackOverlay({ cartItems, setCartItems }) {
       total,
     });
   }, [cartItems, totals.frete, totals.descontos]);
+
+  const handlePickupClick = () => {
+    setShowPickupOptions(true);
+    setShowDeliveryOptions(false);
+  };
+
+  const handleDeliveryClick = () => {
+    setShowDeliveryOptions(true);
+    setShowPickupOptions(false);
+  };
 
   return (
     <div
@@ -256,7 +270,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
         </Link>
       </div>
 
-      <Card style={style.card} sx={{ background: "yellow" }}>
+      <Card style={style.card} sx={{ background: "#BCD3F2" }}>
         <CardContent style={style.cardContent}>
           <Grid container>
             <Grid item xs={9} sx={{ pr: 4 }}>
@@ -324,16 +338,184 @@ function BlackOverlay({ cartItems, setCartItems }) {
                   <Button
                     sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
                     variant="contained"
+                    onClick={handleDeliveryClick}
                   >
                     Receber em casa
                   </Button>
                   <Button
                     sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
                     variant="contained"
+                    onClick={handlePickupClick}
                   >
                     Retirar na Loja
                   </Button>
                 </Box>
+                {showPickupOptions && ( //conditionally render the pickup options
+                  <Grid>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: "bold",
+                        fontFamily: "unset",
+                        textAlign: "center",
+                        padding: "5px",
+                        margin: "1rem",
+                      }}
+                    >
+                      RETIRAR EM:
+                    </Typography>
+                    <Box sx={style.buttonFlexContainer}>
+                      <Button
+                        variant="contained"
+                        sx={{ fontFamily: "sans-serif" }}
+                      >
+                        Vitápolis
+                      </Button>
+                      <Button
+                        variant="contained"
+                        sx={{ fontFamily: "sans-serif" }}
+                      >
+                        Suburbano
+                      </Button>
+                    </Box>
+                  </Grid>
+                )}
+                {showDeliveryOPtions && ( //conditionally render the pickup options
+                  <Grid>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: "bold",
+                        fontFamily: "unset",
+                        textAlign: "center",
+                        padding: "5px",
+                        margin: "1rem",
+                      }}
+                    >
+                      ENDEREÇO PARA ENTREGA:
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        margin: "1rem",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          fontFamily: "unset",
+                          textAlign: "center",
+                          padding: "5px",
+                        }}
+                      >
+                        Nome completo:
+                      </Typography>
+                      <InputBase
+                        style={style.inputBase}
+                        placeholder="Ex: José Silva de Silva"
+                      ></InputBase>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              fontFamily: "unset",
+                              textAlign: "center",
+                              padding: "5px",
+                            }}
+                          >
+                            Telefone:
+                          </Typography>
+                          <InputMask
+                            mask="(99) 99999 - 9999"
+                            style={{
+                              ...style.inputBase,
+                              padding: "0.5rem",
+                              width: "100%",
+                            }}
+                            placeholder="Insira seu telefone aqui"
+                          ></InputMask>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              fontFamily: "unset",
+                              textAlign: "center",
+                              padding: "5px",
+                            }}
+                          >
+                            CEP:
+                          </Typography>
+                          <InputMask
+                            mask="99999 - 999"
+                            style={{
+                              ...style.inputBase,
+                              padding: "0.5rem",
+                              width: "100%",
+                            }}
+                            placeholder="Insira seu CEP aqui..."
+                          ></InputMask>
+                        </Grid>
+                      </Grid>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          fontFamily: "unset",
+                          textAlign: "center",
+                          padding: "5px",
+                        }}
+                      >
+                        Rua:
+                      </Typography>
+                      <InputBase
+                        style={style.inputBase}
+                        placeholder="Ex: Av: Pedro Paulino..."
+                      ></InputBase>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              fontFamily: "unset",
+                              textAlign: "center",
+                              padding: "5px",
+                            }}
+                          >
+                            Número:
+                          </Typography>
+                          <InputBase
+                            style={{ ...style.inputBase, width: "100%" }}
+                            placeholder="Número..."
+                          ></InputBase>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              fontFamily: "unset",
+                              textAlign: "center",
+                              padding: "5px",
+                            }}
+                          >
+                            Complemento:
+                          </Typography>
+                          <InputBase
+                            style={{ ...style.inputBase, width: "100%" }}
+                            placeholder="Opcional"
+                          ></InputBase>
+                        </Grid>
+                      </Grid>
+                      <Button
+                        variant="contained"
+                        sx={{ margin: "1.5rem", background: "green" }}
+                      >
+                        Salvar Endereço
+                      </Button>
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
               <Box
                 sx={{
