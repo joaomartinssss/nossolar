@@ -123,7 +123,6 @@ function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
           display: "flex",
           alignItems: "center",
           borderRadius: "5px",
-          // padding: "0 0 0 0",
         }}
       >
         <IconButton
