@@ -17,6 +17,7 @@ import Delivery from "./components/Delivery";
 import RetirarNaLoja from "./components/RetirarNaLoja";
 import EntregarEmCasa from "./components/EntregarEmCasa";
 import PageView from "./components/PageVIew";
+import ClientArea from "./components/clientArea";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -121,6 +122,7 @@ function App() {
           <Route path="RetirarNaLoja" element={<RetirarNaLoja />} />
           <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
           <Route path="/PageView" element={<PageView />} />
+          <Route path="/AreaDoCliente" element={<ClientArea />} />
         </Routes>
       </Router>
     </div>
