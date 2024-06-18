@@ -18,10 +18,10 @@ const style = {
     margin: "10px",
   },
   button: {
-    backgroundColor: "blue",
     color: "white",
     marginRight: "10px",
     marginLeft: "10px",
+    fontFamily: "sans-serif",
   },
   cardContent: {
     display: "flex",
@@ -31,10 +31,10 @@ const style = {
   personIcon: {
     fontSize: 50,
     marginBottom: 20,
-    color: "#B1B5C8",
+    color: "#324376",
   },
   inputBase: {
-    border: "1px solid black",
+    border: "1px solid #324376",
     borderRadius: "3px",
     padding: "0px 3px 0px 3px", // Add some padding so that the placeholder margin is visible
     backgroundColor: "#DBDDE6",
@@ -70,7 +70,11 @@ function loginPage() {
             placeholder="user@exemplo.com..."
           ></InputBase>
           <Typography style={style.text}>Insira sua Senha.</Typography>
-          <InputBase style={style.inputBase} type="password" placeholder="Senha..."></InputBase>
+          <InputBase
+            style={style.inputBase}
+            type="password"
+            placeholder="Senha..."
+          ></InputBase>
           <Link to={""}>
             <Box>
               <Button style={{ marginBottom: "1rem", marginTop: "0" }}>
@@ -79,13 +83,16 @@ function loginPage() {
             </Box>
           </Link>
           <Box>
-            <Button variant="contained" style={style.button}>
+            <Button
+              variant="contained"
+              style={{ ...style.button, background: "green" }}
+            >
               Entrar
             </Button>
           </Box>
           <Typography style={style.text}>Ainda não possui cadastro?</Typography>
           <Link to={"/cadastro"}>
-            <Button variant="contained" style={style.button}>
+            <Button variant="contained" style={{ ...style.button }}>
               Cadastre-se
             </Button>
           </Link>

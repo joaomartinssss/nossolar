@@ -11,7 +11,9 @@ import InputMask from "react-input-mask";
 
 const style = {
   card: {
-    marginTop: "10rem",
+    margin: "2rem 0",
+    overflow: "auto",
+    padding: "0 10rem",
   },
   text: {
     color: "black",
@@ -19,9 +21,9 @@ const style = {
     margin: "10px",
   },
   button: {
-    backgroundColor: "blue",
     color: "white",
     marginRight: "10px",
+    fontFamily: "sans-serif",
   },
   cardContent: {
     display: "flex",
@@ -31,13 +33,14 @@ const style = {
   personIcon: {
     fontSize: 50,
     marginBottom: 20,
-    color: "#B1B5C8",
+    color: "#324376",
   },
   inputBase: {
     border: "1px solid black",
     borderRadius: "3px",
     padding: "0px 3px 0px 3px", // Add some padding so that the placeholder margin is visible
     backgroundColor: "#DBDDE6",
+    border: "1px solid #324376",
   },
   // textField: {
   //   padding: "0px 3px 0px 3px",
@@ -55,17 +58,16 @@ function registerPage() {
         left: 0,
         width: "100%",
         height: "100vh",
-        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "auto",
+        flexDirection: "column",
       }}
     >
-      <Card sx={{ marginTop: "10rem", marginBottom: "3rem" }}>
+      <Card style={style.card}>
         <CardContent style={style.cardContent}>
           <PersonIcon style={style.personIcon} />
-          <Typography style={style.text}>
+          <Typography style={style.text} variant="h5">
             Cadastre-se no Supermercado Nosso Lar
           </Typography>
           <Typography style={style.text}>Insira seu Nome completo:</Typography>
@@ -78,6 +80,12 @@ function registerPage() {
             mask="99999 - 999"
             style={{ ...style.inputBase, padding: "0.5rem" }}
             placeholder="Insira seu CEP aqui..."
+          ></InputMask>
+          <Typography style={style.text}>Insira seu telefone</Typography>
+          <InputMask
+            mask="(99) 99999 - 9999"
+            style={{ ...style.inputBase, padding: "0.5rem" }}
+            placeholder="(11) 91234 - 5678"
           ></InputMask>
           <Typography style={style.text}>Insira seu Email:</Typography>
           <InputBase
@@ -106,7 +114,11 @@ function registerPage() {
               shrink: true,
             }}
           ></InputBase>
-          <Button style={style.button} sx={{ marginTop: "15px" }}>
+          <Button
+            variant="contained"
+            style={{ ...style.button, background: "green" }}
+            sx={{ marginTop: "15px" }}
+          >
             Confirmar
           </Button>
           <Typography style={style.text} sx={{ marginTop: "20px" }}>
@@ -117,6 +129,7 @@ function registerPage() {
               <Button
                 style={style.button}
                 sx={{ marginBottom: "20px", marginTop: "10px" }}
+                variant="contained"
               >
                 Acesse sua conta
               </Button>

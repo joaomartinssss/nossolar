@@ -3,21 +3,13 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("./database");
 
 sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
     console.log("Conectado ao banco de dados com sucesso");
   })
   .catch((err) => {
     console.error("erro ao se conectar ao banco de dados", err);
   });
-
-// const sequelize = new Sequelize("usuarios_nosso_lar",
-//     "root",
-//     "Bl@ck100305",
-//     {
-//     host: "localhost",
-//     dialect: "mysql",
-//     });
 
 const User = sequelize.define(
   "User",
@@ -56,6 +48,11 @@ const User = sequelize.define(
     data_criacao: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
+    },
+    telefone: {
+      type: DataTypes.STRING(15),
+      allowNull: false,
+      unique: true,
     },
   },
   {

@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
-  const { name, email, senha, cep, cpf, data_nascimento } = req.body;
+  const { name, email, senha, cep, cpf, data_nascimento, telefone } = req.body;
 
   try {
     let user = await User.findOne({ where: { email: email } });
@@ -24,18 +24,8 @@ router.post("/register", async (req, res) => {
       cep,
       cpf,
       data_nascimento,
+      telefone,
     });
-
-    // user = new User({
-    //   name,
-    //   email,
-    //   senha,
-    //   cep,
-    //   cpf,
-    //   data_nascimento,
-    // });
-
-    // await user.save();
 
     const payload = {
       user: {
@@ -53,7 +43,7 @@ router.post("/register", async (req, res) => {
       }
     );
   } catch (err) {
-    console.error(err.message);
+    console.error("Erro ao registrar usuário", err);
     res.status(500).send("Erro no servidor");
   }
 });
