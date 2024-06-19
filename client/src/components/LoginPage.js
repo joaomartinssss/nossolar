@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -6,7 +6,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
-import { BrowserRouter as Router, Link, Routes } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const style = {
   backGround: {
@@ -45,7 +46,27 @@ const style = {
   },
 };
 
-function loginPage() {
+function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        senha,
+      });
+      // Armazene o token no localStorage
+      localStorage.setItem("token", res.data.token);
+      // Redirecionar o usuário para a página inicial após o login
+      navigate("/");
+    } catch (err) {
+      console.error("Erro ao fazer login", err);
+      alert("Email ou senha incorretos");
+    }
+  };
+
   return (
     <div
       style={{
@@ -55,7 +76,6 @@ function loginPage() {
         left: 0,
         width: "100%",
         height: "100%",
-        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -68,12 +88,16 @@ function loginPage() {
           <InputBase
             style={style.inputBase}
             placeholder="user@exemplo.com..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           ></InputBase>
           <Typography style={style.text}>Insira sua Senha.</Typography>
           <InputBase
             style={style.inputBase}
             type="password"
             placeholder="Senha..."
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
           ></InputBase>
           <Link to={""}>
             <Box>
@@ -86,6 +110,7 @@ function loginPage() {
             <Button
               variant="contained"
               style={{ ...style.button, background: "green" }}
+              onClick={handleLogin}
             >
               Entrar
             </Button>
@@ -102,4 +127,4 @@ function loginPage() {
   );
 }
 
-export default loginPage;
+export default LoginPage;
