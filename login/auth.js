@@ -5,7 +5,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
-  const { name, email, senha, cep, cpf, data_nascimento, telefone } = req.body;
+  let { name, email, senha, cep, cpf, data_nascimento, telefone } = req.body;
+
+  //remove os espaços e formata os dados
+  name = name.trim();
+  email = email.trim();
+  cep = cep.replace(/\s+/g, '');
+  telefone = telefone.replace(/\s+/g, '');
+
+  //validação adicional pode ser adicionada aqui se necessário
 
   try {
     let user = await User.findOne({ where: { email: email } });
@@ -15,7 +23,6 @@ router.post("/register", async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(senha, salt);
-    // user.password = await bcrypt.hash(password, salt);
 
     user = await User.create({
       name,

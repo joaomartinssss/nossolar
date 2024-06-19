@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -6,7 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import { Box, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 
 const style = {
@@ -48,7 +48,48 @@ const style = {
   // },
 };
 
-function registerPage() {
+function RegisterPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    senha: "",
+    cep: "",
+    cpf: "",
+    data_nascimento: "",
+    telefone: "",
+  });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("registro bem-sucedido");
+        navigate.push("/login");
+      } else {
+        alert(data.msg || "erro ao registrar");
+      }
+    } catch (error) {
+      console.error("Erro ao registrar usuário", error);
+      alert("Erro ao registrar usuário");
+    }
+  };
+
   return (
     <div
       style={{
@@ -70,57 +111,91 @@ function registerPage() {
           <Typography style={style.text} variant="h5">
             Cadastre-se no Supermercado Nosso Lar
           </Typography>
-          <Typography style={style.text}>Insira seu Nome completo:</Typography>
-          <InputBase
-            style={style.inputBase}
-            placeholder="Ex: José Silva de Silva"
-          ></InputBase>
-          <Typography style={style.text}>Insira seu CEP:</Typography>
-          <InputMask
-            mask="99999 - 999"
-            style={{ ...style.inputBase, padding: "0.5rem" }}
-            placeholder="Insira seu CEP aqui..."
-          ></InputMask>
-          <Typography style={style.text}>Insira seu telefone</Typography>
-          <InputMask
-            mask="(99) 99999 - 9999"
-            style={{ ...style.inputBase, padding: "0.5rem" }}
-            placeholder="(11) 91234 - 5678"
-          ></InputMask>
-          <Typography style={style.text}>Insira seu Email:</Typography>
-          <InputBase
-            style={style.inputBase}
-            placeholder="user@exemplo.com..."
-          ></InputBase>
-          <Typography style={style.text}>Insira sua Senha:</Typography>
-          <InputBase
-            style={style.inputBase}
-            type="password"
-            placeholder="Senha..."
-          ></InputBase>
-          <Typography style={style.text}>Insira seu CPF:</Typography>
-          <InputMask
-            mask="999.999.999-99"
-            style={{ ...style.inputBase, padding: "0.5rem" }}
-            placeholder="Ex: 123.456.789-00"
-          ></InputMask>
-          <Typography style={style.text}>
-            Insira sua data de nascimento:
-          </Typography>
-          <InputBase
-            style={style.inputBase}
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          ></InputBase>
-          <Button
-            variant="contained"
-            style={{ ...style.button, background: "green" }}
-            sx={{ marginTop: "15px" }}
-          >
-            Confirmar
-          </Button>
+          <form onSubmit={handleSubmit}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography style={style.text}>
+                Insira seu Nome completo:
+              </Typography>
+              <InputBase
+                style={style.inputBase}
+                placeholder="Ex: José Silva de Silva"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              ></InputBase>
+              <Typography style={style.text}>Insira seu CEP:</Typography>
+              <InputMask
+                mask="99999 - 999"
+                style={{ ...style.inputBase, padding: "0.5rem" }}
+                placeholder="Insira seu CEP aqui..."
+                name="cep"
+                value={formData.cep}
+                onChange={handleChange}
+              ></InputMask>
+              <Typography style={style.text}>Insira seu telefone</Typography>
+              <InputMask
+                mask="(99) 99999 - 9999"
+                style={{ ...style.inputBase, padding: "0.5rem" }}
+                placeholder="(11) 91234 - 5678"
+                name="telefone"
+                value={formData.telefone}
+                onChange={handleChange}
+              ></InputMask>
+              <Typography style={style.text}>Insira seu Email:</Typography>
+              <InputBase
+                style={style.inputBase}
+                placeholder="user@exemplo.com..."
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              ></InputBase>
+              <Typography style={style.text}>Insira sua Senha:</Typography>
+              <InputBase
+                style={style.inputBase}
+                type="password"
+                placeholder="Senha..."
+                name="senha"
+                value={formData.senha}
+                onChange={handleChange}
+              ></InputBase>
+              <Typography style={style.text}>Insira seu CPF:</Typography>
+              <InputMask
+                mask="999.999.999-99"
+                style={{ ...style.inputBase, padding: "0.5rem" }}
+                placeholder="Ex: 123.456.789-00"
+                name="cpf"
+                value={formData.cpf}
+                onChange={handleChange}
+              ></InputMask>
+              <Typography style={style.text}>
+                Insira sua data de nascimento:
+              </Typography>
+              <InputBase
+                style={style.inputBase}
+                type="date"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                name="data_nascimento"
+                value={formData.data_nascimento}
+                onChange={handleChange}
+              ></InputBase>
+              <Button
+                variant="contained"
+                type="submit"
+                style={{ ...style.button, background: "green" }}
+                sx={{ marginTop: "15px" }}
+              >
+                Confirmar
+              </Button>
+            </Box>
+          </form>
           <Typography style={style.text} sx={{ marginTop: "20px" }}>
             Possui Cadastro?
           </Typography>
@@ -141,4 +216,4 @@ function registerPage() {
   );
 }
 
-export default registerPage;
+export default RegisterPage;
