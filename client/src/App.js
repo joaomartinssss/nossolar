@@ -79,7 +79,10 @@ function App() {
         cartItems={cartItems}
         setCartItems={setCartItems}
       />
-      <div className="container" style={{ display: "flex", flexGrow: 1 }}>
+      <div
+        className="container"
+        style={{ display: "flex", flexGrow: 1, flexDirection: "column" }}
+      >
         <Category style={{ flexGrow: 1 }} />
         {!selectedProduct && (
           <ProductGrid

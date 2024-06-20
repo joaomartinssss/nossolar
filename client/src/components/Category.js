@@ -1,71 +1,82 @@
-import React from "react";
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const Categoria = () => {
+  const [hoveredButton, setHoveredButton] = useState(null);
+
   const style = {
     produtos: {
-      display: "block",
-      width: "300px",
+      display: "flex",
+      width: "100%",
       height: "100%",
       top: 0,
       left: 0,
-      flexDirection: "column",
+      flexDirection: "row",
       alignItems: "center",
-      backgroundColor: "#003599",
+      backgroundColor: "red",
       color: "aliceblue",
-      borderRadius: "5px",
-      padding: "20px",
-    },
-    buttonContainer: {
-      width: "100%",
-      marginBottom: "0.5rem",
+      padding: "5px",
+      overflowX: "auto",
     },
     button: {
-      display: "block",
+      display: "flex",
       borderRadius: "5px",
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "#003599",
-      color: "aliceblue",
+      backgroundColor: "red",
+      color: "white",
+      fontWeight: "bold",
       padding: "0.3rem 1rem",
       fontSize: "1rem",
       cursor: "pointer",
       textDecoration: "none",
     },
     buttonHover: {
-      backgroundColor: "rgb(0, 191, 255)",
+      backgroundColor: "#A40606",
       fontWeight: "bold",
     },
   };
 
   return (
     <section id="produtos" style={style.produtos}>
-      <h2>Nossos Produtos</h2>
-      <div className="botao-dos-produtos">
       <Router>
-          <Link to="/hortifruti" style={style.button}>Hortifruti</Link>
-          <Link to="/padaria" style={style.button}>Padaria</Link>
-          <Link to="/acougue" style={style.button}>Açougue</Link>
-          <Link to="/bebidas" style={style.button}>Bebidas</Link>
-          <Link to="/rotisseria" style={style.button}>Rotisseria</Link>
-          <Link to="/bomboniere" style={style.button}>Bomboniere</Link>
-          <Link to="/bazar" style={style.button}>Bazar</Link>
-          <Link to="/automotivo" style={style.button}>Automotivo</Link>
-          <Link to="/mercearia" style={style.button}>Mercearia</Link>
-          <Link to="/limpeza" style={style.button}>Limpeza</Link>
-          <Link to="/laticinios" style={style.button}>Laticínios</Link>
-          <Link to="/bebes" style={style.button}>Bebês</Link>
-          <Link to="/higiene" style={style.button}>Higiene</Link>
-          <Link to="/congelados" style={style.button}>Congelados</Link>
-          <Link to="/japones" style={style.button}>Japonês</Link>
-          <Link to="/churrasco" style={style.button}>Churrasco</Link>
-          <Link to="/doces" style={style.button}>Doces</Link>
-          <Link to="/utilidades" style={style.button}>Utilidades</Link>
-          <Link to="/frios" style={style.button}>Frios</Link>
-          <Link to="/petshop" style={style.button}>Petshop</Link>
-        </Router>
-
-      </div>
+        {[
+          "hortifruti",
+          "padaria",
+          "acougue",
+          "bebidas",
+          "rotisseria",
+          "bomboniere",
+          "bazar",
+          "automotivo",
+          "mercearia",
+          "limpeza",
+          "laticinios",
+          "bebes",
+          "higiene",
+          "congelados",
+          "japones",
+          "churrasco",
+          "doces",
+          "utilidades",
+          "frios",
+          "petshop",
+        ].map((category) => (
+          <Link
+            key={category}
+            to={`/${category}`}
+            style={
+              hoveredButton === category
+                ? { ...style.button, ...style.buttonHover }
+                : style.button
+            }
+            onMouseEnter={() => setHoveredButton(category)}
+            onMouseLeave={() => setHoveredButton(null)}
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </Link>
+        ))}
+      </Router>
     </section>
   );
 };

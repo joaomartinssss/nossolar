@@ -82,7 +82,7 @@ const NavLink = styled("a")({
   borderRadius: "5px",
   "&:hover": {
     color: "white",
-    backgroundColor: "#003599",
+    backgroundColor: "#A40606",
     paddingBottom: "30px",
     paddingLeft: "10px",
     paddingRight: "10px",
@@ -136,7 +136,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
         <NavLink href="#" onClick={scrollToBottom}>Folhetos</NavLink>
         <NavLink href="#" onClick={scrollToBottom}>Trabalhe Conosco</NavLink>
       </NavigationBar>
-      <AppBar position="static" style={{ marginBottom: "1rem" }}>
+      <AppBar position="static" style={{}}>
         <Toolbar
           sx={{
             justifyContent: "space-between",
