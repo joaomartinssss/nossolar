@@ -19,7 +19,8 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
     setFontSize(fontSizeRatio > 1 ? 1 : fontSizeRatio); // Limitar tamanho máximo da fonte a 1
   }, [product.id]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (event) => {
+    event.stopPropagation();
     addToCart(product);
   };
 
@@ -31,7 +32,13 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
     <Card
       variant="outlined"
       id={`product-card-${product.id}`}
-      style={{ minHeight: "400px", width: "200px", overflow: "hidden" }}
+      style={{
+        minHeight: "400px",
+        width: "200px",
+        overflow: "hidden",
+        cursor: "pointer",
+      }}
+      onClick={handleClick}
     >
       {/* Imagem */}
       <img
@@ -45,44 +52,60 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
       />
       <CardContent
         id={`product-card-content-${product.id}`}
-        style={{ minHeight: "150px", background:"#E8E5DA" }}
+        style={{
+          minHeight: "150px",
+          background: "white",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding:"10px"
+        }}
       >
-        {/* Nome */}
-        <Typography
-          variant="h5"
-          component="div"
-          style={{
-          fontSize: `${fontSize}rem`,
-          fontFamily: "sans-serif",
-          fontWeight: "bold",
-          marginBottom: "10px",
-          }}
+        <div>
+          {/* Nome */}
+          <Typography
+            variant="h5"
+            component="div"
+            style={{
+              fontSize: `${fontSize}rem`,
+              fontFamily: "sans-serif",
+              fontWeight: "bold",
+              marginBottom: "10px",
+            }}
           >
-          {product.name.length > 30 ? `${product.name.substring(0, 30)}...` : product.name}
-        </Typography>
+            {product.name.length > 30
+              ? `${product.name.substring(0, 30)}...`
+              : product.name}
+          </Typography>
 
-        {/* Preço */}
-        <Typography
-          variant="body1"
-          color="textSecondary"
-          style={{ fontSize: `${fontSize}rem`, marginBottom: '10px'}}
-        >
-          Preço: R$ {product.price}
-        </Typography>
-        <Typography style={{ fontFamily: "sans-serif", fontWeight: "bold", marginBottom: '15px'}}>
+          {/* Preço */}
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            style={{ fontSize: `${fontSize}rem`, marginBottom: "10px" }}
+          >
+            R$ {product.price}
+          </Typography>
+          {/* <Typography style={{ fontFamily: "sans-serif", fontWeight: "bold", marginBottom: '15px'}}>
           {product.description.length > 30 ? `${product.description.slice(0, 30)}...` : product.description}
-        </Typography>
+        </Typography> */}
 
-        {/* Botão Adicionar */}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleAddToCart}
-          style={{ borderRadius: "1rem", fontSize: `${fontSize}rem` }}
-        >
-          Adicionar
-        </Button>
-        <Button onClick={handleClick}>View Details</Button>
+          {/* Botão Adicionar */}
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom:"20px" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddToCart}
+            style={{
+              fontSize: `${fontSize}rem`,
+              width: "100%",
+            }}
+          >
+            Adicionar
+          </Button>
+          {/* <Button onClick={handleClick}>View Details</Button> */}
+        </div>
       </CardContent>
     </Card>
   );
