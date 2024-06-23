@@ -37,6 +37,8 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
         width: "200px",
         overflow: "hidden",
         cursor: "pointer",
+        borderRadius: "5px",
+        margin: ".5rem",
       }}
       onClick={handleClick}
     >
@@ -58,7 +60,7 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding:"10px"
+          padding: "10px",
         }}
       >
         <div>
@@ -92,7 +94,13 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
 
           {/* Botão Adicionar */}
         </div>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom:"20px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "20px",
+          }}
+        >
           <Button
             variant="contained"
             color="primary"
