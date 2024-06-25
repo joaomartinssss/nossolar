@@ -18,6 +18,7 @@ import RetirarNaLoja from "./components/RetirarNaLoja";
 import EntregarEmCasa from "./components/EntregarEmCasa";
 import PageView from "./components/PageVIew";
 import ClientArea from "./components/clientArea";
+import ProductPage2 from "./components/ProductPage2";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -73,42 +74,42 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <TopNav
-        setIsCartOpen={setIsCartOpen}
-        cartItems={cartItems}
-        setCartItems={setCartItems}
-      />
-      <div
-        className="container"
-        style={{ display: "flex", flexGrow: 1, flexDirection: "column" }}
-      >
-        <Category style={{ flexGrow: 1 }} />
-        {!selectedProduct && (
-          <ProductGrid
-            products={products}
-            addToCart={addToCart}
-            onSelectProduct={setSelectedProduct}
-          />
-        )}
-        {selectedProduct && <ProductPage product={selectedProduct} />}
-      </div>
-      {isCartOpen && (
-        <Cart
+    <Router>
+      <div className="App">
+        <TopNav
+          setIsCartOpen={setIsCartOpen}
           cartItems={cartItems}
           setCartItems={setCartItems}
-          setCartOpen={setIsCartOpen}
         />
-      )}
-      <Rodape />
-      <ScrollToTopButton
-        onClick={scrollToTop}
-        variant="contained"
-        color="primary"
-      >
-        <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
-      </ScrollToTopButton>
-      <Router>
+        <div
+          className="container"
+          style={{ display: "flex", flexGrow: 1, flexDirection: "column" }}
+        >
+          <Category style={{ flexGrow: 1 }} />
+          {!selectedProduct && (
+            <ProductGrid
+              products={products}
+              addToCart={addToCart}
+              onSelectProduct={setSelectedProduct}
+            />
+          )}
+          {selectedProduct && <ProductPage product={selectedProduct} />}
+        </div>
+        {isCartOpen && (
+          <Cart
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+            setCartOpen={setIsCartOpen}
+          />
+        )}
+        <Rodape />
+        <ScrollToTopButton
+          onClick={scrollToTop}
+          variant="contained"
+          color="primary"
+        >
+          <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
+        </ScrollToTopButton>
         <Routes>
           <Route
             path="/FinalizePurchase"
@@ -122,13 +123,19 @@ function App() {
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/delivery" element={<Delivery />} />
-          <Route path="RetirarNaLoja" element={<RetirarNaLoja />} />
+          <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
           <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
           <Route path="/PageView" element={<PageView />} />
           <Route path="/AreaDoCliente" element={<ClientArea />} />
+          <Route
+            path="/ProductPage2"
+            element={
+              <ProductPage2 cartItems={cartItems} setCartItems={setCartItems} />
+            }
+          />
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 

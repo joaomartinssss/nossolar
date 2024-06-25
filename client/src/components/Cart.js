@@ -204,8 +204,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                 }}
               >
                 Total: R$ {calculateTotal().toFixed(2)}
-              </Typography>
-              <Router>
+              </Typography>              
                 <Link to={"/FinalizePurchase"}>
                   <Button
                     variant="contained"
@@ -219,7 +218,6 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                     Finalizar Compra
                   </Button>
                 </Link>
-              </Router>
             </Box>
             <Button
               variant="contained"

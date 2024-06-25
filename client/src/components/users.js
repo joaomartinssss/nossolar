@@ -29,7 +29,6 @@ const StyledTypography = styled(Typography)({
 
 const Users = ({}) => {
   return (
-    <Router>
       <StyledUsersContainer>
         <Avatar
           sx={{
@@ -65,7 +64,6 @@ const Users = ({}) => {
           </Link>
         </StyledButtonContainer>
       </StyledUsersContainer>
-    </Router>
   );
 };
 
