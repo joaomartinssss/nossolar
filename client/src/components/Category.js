@@ -92,18 +92,15 @@ const Categoria = () => {
           "bomboniere",
           "bazar",
           "automotivo",
+          "petshop",
           "mercearia",
           "limpeza",
           "laticinios",
           "bebes",
           "higiene",
           "congelados",
-          "japones",
-          "churrasco",
-          "doces",
           "utilidades",
-          // "frios",
-          "petshop",
+          "japones",          
         ].map((category) => (
           <Link
             key={category}
