@@ -74,10 +74,17 @@ const Rodape = () => {
               Suburbano:
             </Typography>
             <Typography>(11) 4142-8317</Typography>
-            <Typography>
-              Av. Lizete Geralda Calandrini Guimarães, 57 - Parque Suburbano,
-              Itapevi - SP, 06663-665
-            </Typography>
+            <Link
+              style={{ color: "white" }}
+              to={
+                "https://www.google.com.br/maps/place/Av.+Lizete+Geralda+Calandrini+Guimar%C3%A3es,+57+-+Parque+Suburbano,+Itapevi+-+SP,+06663-650/@-23.5635799,-46.9323652,17z/data=!3m1!4b1!4m6!3m5!1s0x94cf06ef8ed53ee9:0xe7222493b03bf7a9!8m2!3d-23.5635799!4d-46.9297903!16s%2Fg%2F11c1p8tp0_?entry=ttu"
+              }
+            >
+              <Typography>
+                Av. Lizete Geralda Calandrini Guimarães, 57 - Parque Suburbano,
+                Itapevi - SP, 06663-665
+              </Typography>
+            </Link>
             <Typography
               variant="h6"
               sx={{
@@ -88,10 +95,17 @@ const Rodape = () => {
               Vitápolis:
             </Typography>
             <Typography>(11) 4141-2746</Typography>
-            <Typography>
-              R. Cecília Pereira Alves, 105 - Jardim Vitapolis, Itapevi - SP,
-              06693-360
-            </Typography>
+            <Link
+              style={{ color: "white" }}
+              to={
+                "https://www.google.com.br/maps/place/R.+Cec%C3%ADlia+Pereira+Alves,+105+-+Jardim+Vitapolis,+Itapevi+-+SP,+06693-360/@-23.5338869,-46.9287245,17z/data=!3m1!4b1!4m6!3m5!1s0x94cf0420a0b9d1a7:0x2d9484fc772d0247!8m2!3d-23.5338869!4d-46.9261496!16s%2Fg%2F11f1yzbcfj?entry=ttu"
+              }
+            >
+              <Typography>
+                R. Cecília Pereira Alves, 105 - Jardim Vitapolis, Itapevi - SP,
+                06693-360
+              </Typography>
+            </Link>
           </div>
           <div style={estiloSecao}>
             <div style={{ marginBottom: "6rem" }}>
@@ -107,17 +121,19 @@ const Rodape = () => {
                   sx={{ color: "white", margin: ".5rem", fontSize: "2rem" }}
                 />
               </Link>
-              <Link>
+              {/* <Link>
                 <XIcon
                   sx={{ color: "white", margin: ".5rem", fontSize: "2rem" }}
                 />
-              </Link>
-              <Link>
+              </Link> */}
+              <Link
+                to={"https://www.facebook.com/supermercadosnossolaroficial/"}
+              >
                 <FacebookIcon
                   sx={{ color: "white", margin: ".5rem", fontSize: "2rem" }}
                 />
               </Link>
-              <Link>
+              <Link to={"https://wa.me/5511940862140"}>
                 <WhatsAppIcon
                   sx={{ color: "white", margin: ".5rem", fontSize: "2rem" }}
                 />
@@ -136,31 +152,3 @@ const Rodape = () => {
 };
 
 export default Rodape;
-{
-  /* <section style={estiloRodape}>
-      <h2>Sobre o Supermercado</h2>
-    </section> */
-}
-{
-  /* <p>
-  O Supermercado Nosso Lar é um estabelecimento familiar que oferece os
-  melhores produtos da região aos nossos clientes.
-</p>
-<p>
-  Nosso objetivo é proporcionar uma experiência de compras agradável e
-  conveniente, com preços acessíveis e uma ampla variedade de opções.
-</p>
-<p>Suburbano: (11) 4142-8317</p>
-<p>
-  Av. Lizete Geralda Calandrini Guimarães, 57 - Parque Suburbano, Itapevi
-  - SP, 06663-665
-</p>
-<p>Vitápolis: (11) 4141-2746</p>
-<p>
-  R. Cecília Pereira Alves, 105 - Jardim Vitapolis, Itapevi - SP,
-  06693-360
-</p>
-<footer>
-  <p>&copy; 2024 Supermercado Nosso Lar</p>
-</footer> */
-}
