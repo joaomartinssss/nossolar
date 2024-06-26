@@ -71,7 +71,7 @@ app.get('/categories', (req, res) => {
 
 app.get('/categories/:categoryId/products', (req, res) => {
     const categoryId = req.params.categoryId;
-    connection.query('SELECT * FROM products WHERE category_id = ?', categoryId, (error, results) => {
+    connection.query('SELECT * FROM products WHERE category_id = ?', [categoryId], (error, results) => {
         if (error) {
             console.error('Erro ao buscar produtos da categoria:', error);
             res.status(500).send('Erro ao buscar produtos da categoria');
@@ -107,10 +107,26 @@ app.get('/products', (req, res) => {
     });
 });
 
+app.get('/products/:productId', (req, res) => {
+    const productId = req.params.productId;
+    connection.query('SELECT * FROM products WHERE id = ?', [productId], (error, results) => {
+        if (error) {
+            console.error('Erro ao buscar produto:', error);
+            res.status(500).send('Erro ao buscar produto');
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).send('Produto não encontrado');
+            return;
+        }
+        res.json(results[0]);
+    });
+});
+
 app.put('/products/:productId', (req, res) => {
     const productId = req.params.productId;
-    const { name, categoryId } = req.body;
-    const updateProduct = { name, category_id: categoryId };
+    const { name, categoryId, image, description } = req.body;
+    const updateProduct = { name, category_id: categoryId, image, description };
 
     connection.query('UPDATE products SET ? WHERE id = ?', [updateProduct, productId], (error, results) => {
         if (error) {
@@ -125,7 +141,7 @@ app.put('/products/:productId', (req, res) => {
 app.delete('/categories/:categoryId', (req, res) => {
     const categoryId = req.params.categoryId;
 
-    connection.query('DELETE FROM categories WHERE id = ?', categoryId, (error, results) => {
+    connection.query('DELETE FROM categories WHERE id = ?', [categoryId], (error, results) => {
         if (error) {
             console.error('Erro ao excluir categoria:', error);
             res.status(500).send('Erro ao excluir categoria');
@@ -138,7 +154,7 @@ app.delete('/categories/:categoryId', (req, res) => {
 app.delete('/products/:productId', (req, res) => {
     const productId = req.params.productId;
 
-    connection.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
+    connection.query('DELETE FROM products WHERE id = ?', [productId], (error, results) => {
         if (error) {
             console.error('Erro ao excluir produto:', error);
             res.status(500).send('Erro ao excluir produto');
@@ -148,7 +164,7 @@ app.delete('/products/:productId', (req, res) => {
     });
 });
 
-app.delete('/products/', (req, res) => {
+app.delete('/products', (req, res) => {
     connection.query('DELETE FROM products', (error, results) => {
         if (error) {
             console.error('Erro ao excluir todos os produtos:', error);
@@ -158,27 +174,6 @@ app.delete('/products/', (req, res) => {
         res.status(200).json({ message: 'Todos os produtos excluídos com sucesso' });
     });
 });
-
-app.delete('/products/:productId', (req, res) => {
-    const productId = req.params.productId;
-
-    connection.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
-        if (error) {
-            console.error('Erro ao excluir produto:', error);
-            res.status(500).send('Erro ao excluir produto');
-            return;
-        }
-        res.status(200).json({ message: 'Produto excluído com sucesso' });
-    });
-});
-
-app.put('/products/:productId', (req, res) => {
-    const productId = req.params.productId;
-    const { name, categoryId, image, description } = req.body;
-    const updateProduct = { name, category_id: categoryId, image, description };
-});
-
-
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);

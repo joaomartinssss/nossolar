@@ -10,6 +10,7 @@ import { styled } from "@mui/system";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Cart from "./Cart";
 import Users from "./users";
+import { Link } from "react-router-dom";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -121,20 +122,30 @@ const TopNav = ({ cartItems, setCartItems }) => {
   };
 
   const scrollToBottom = () => {
-    window.scrollTo({ 
+    window.scrollTo({
       top: document.documentElement.scrollHeight,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
   return (
     <div style={{ position: "relative" }}>
       <NavigationBar>
-        <NavLink href="#" onClick={scrollToBottom}>Institucional</NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>Atendimento</NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>Nossas Lojas</NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>Folhetos</NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>Trabalhe Conosco</NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>
+          Institucional
+        </NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>
+          Atendimento
+        </NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>
+          Nossas Lojas
+        </NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>
+          Folhetos
+        </NavLink>
+        <NavLink href="#" onClick={scrollToBottom}>
+          Trabalhe Conosco
+        </NavLink>
       </NavigationBar>
       <AppBar position="static" style={{}}>
         <Toolbar
@@ -143,12 +154,14 @@ const TopNav = ({ cartItems, setCartItems }) => {
             padding: ".5rem 1rem",
             background: "#003599", //mudança feita para teste
           }}
-        >
-          <div            
-            style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
-          >
-          Supermercado Nosso Lar
-          </div>
+        >          
+          <Link to={"/"}>
+            <div
+              style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
+            >
+              Supermercado Nosso Lar
+            </div>
+          </Link>
           <SearchInput style={{ padding: ".2rem 5rem .2rem .1rem" }}>
             <SearchIconWrapper>
               <SearchIcon style={{ cursor: "pointer" }} />

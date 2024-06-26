@@ -1,0 +1,48 @@
+/* Estilos do contêiner de carregamento */
+.load-wrapp {
+    width: 100px;
+    height: 100px;
+    margin: 10px 10px 10px 650px;
+    padding: 20px 20px 20px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #CDD1DE;
+    align-items: center;
+  }
+  
+  .load-wrapp p {
+    padding: 0 0 20px;
+  }
+  
+  .line {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: #003599;
+    margin: 0 5px;
+  }
+  
+  /* Animações */
+  .load-3 .line:nth-last-child(1) {
+    animation: loadingC 0.6s 0.1s linear infinite;
+  }
+  .load-3 .line:nth-last-child(2) {
+    animation: loadingC 0.6s 0.2s linear infinite;
+  }
+  .load-3 .line:nth-last-child(3) {
+    animation: loadingC 0.6s 0.3s linear infinite;
+  }
+  
+  @keyframes loadingC {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(0, 15px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+  

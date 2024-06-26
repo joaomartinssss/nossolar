@@ -86,14 +86,40 @@ function App() {
           style={{ display: "flex", flexGrow: 1, flexDirection: "column" }}
         >
           <Category style={{ flexGrow: 1 }} />
+          <Routes>
+            <Route
+              path="/FinalizePurchase"
+              element={
+                <FinalizePurchase
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                />
+              }
+            />
+            <Route path="/cadastro" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/delivery" element={<Delivery />} />
+            <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
+            <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
+            <Route path="/PageView" element={<PageView />} />
+            <Route path="/AreaDoCliente" element={<ClientArea />} />
+            <Route
+              path="/ProductPage2/:productId"
+              element={
+                <ProductPage2
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                />
+              }
+            />
+          </Routes>
           {!selectedProduct && (
             <ProductGrid
               products={products}
               addToCart={addToCart}
               onSelectProduct={setSelectedProduct}
             />
-          )}
-          {selectedProduct && <ProductPage product={selectedProduct} />}
+          )}          
         </div>
         {isCartOpen && (
           <Cart
@@ -110,30 +136,6 @@ function App() {
         >
           <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
         </ScrollToTopButton>
-        <Routes>
-          <Route
-            path="/FinalizePurchase"
-            element={
-              <FinalizePurchase
-                cartItems={cartItems}
-                setCartItems={setCartItems}
-              />
-            }
-          />
-          <Route path="/cadastro" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/delivery" element={<Delivery />} />
-          <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
-          <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
-          <Route path="/PageView" element={<PageView />} />
-          <Route path="/AreaDoCliente" element={<ClientArea />} />
-          <Route
-            path="/ProductPage2"
-            element={
-              <ProductPage2 cartItems={cartItems} setCartItems={setCartItems} />
-            }
-          />
-        </Routes>
       </div>
     </Router>
   );

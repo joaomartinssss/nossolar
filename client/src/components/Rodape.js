@@ -41,7 +41,10 @@ const Rodape = () => {
           style={{ display: "flex", justifyContent: "space-between" }}
         >
           <div style={estiloSecao}>
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", textAlign: "center" }}
+            >
               Sobre
             </Typography>
             <Typography sx={{ marginTop: "2rem" }}>

@@ -3,9 +3,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, addToCart, onSelectProduct }) => {
   const [fontSize, setFontSize] = useState(1); // Font size state
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Ajustar font size para caber no card
@@ -26,6 +28,7 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
 
   const handleClick = () => {
     onSelectProduct(product);
+    navigate(`/ProductPage2/${product.id}`);
   };
 
   return (
@@ -108,11 +111,11 @@ const ProductCard = ({ product, addToCart, onSelectProduct }) => {
             style={{
               fontSize: `${fontSize}rem`,
               width: "100%",
+              background: "#003599",
             }}
           >
             Adicionar
           </Button>
-          {/* <Button onClick={handleClick}>View Details</Button> */}
         </div>
       </CardContent>
     </Card>
