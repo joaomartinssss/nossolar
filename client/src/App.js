@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TopNav from "./components/TopNav";
 import ProductGrid from "./components/ProductGrid";
+import CategoryProductGrid from "./components/CategoryProductGrid";
 import Cart from "./components/Cart";
 import Rodape from "./components/Rodape";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -37,6 +38,7 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showProductCardButtons, setShowProductCardButtons] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -112,14 +114,25 @@ function App() {
                 />
               }
             />
+            <Route
+              path="/categoria/:categoryId"
+              element={
+                <CategoryProductGrid
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                  setShowProductCardButtons={setShowProductCardButtons}
+                />
+              }
+            />
           </Routes>
           {!selectedProduct && (
             <ProductGrid
               products={products}
               addToCart={addToCart}
               onSelectProduct={setSelectedProduct}
+              showProductCardButtons={showProductCardButtons}
             />
-          )}          
+          )}
         </div>
         {isCartOpen && (
           <Cart

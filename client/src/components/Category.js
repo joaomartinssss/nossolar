@@ -7,6 +7,26 @@ const Categoria = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const containerRef = useRef(null);
 
+  const categoryMapping = {
+    hortifruti: 1,
+    padaria: 2,
+    açougue: 3,
+    bebidas: 4,
+    rotisseria: 5,
+    bomboniere: 6,
+    bazar: 7,
+    automotivo: 8,
+    petshop: 9,
+    mercearia: 10,
+    limpeza: 11,
+    laticinios: 12,
+    bebes: 13,
+    higiene: 14,
+    congelados: 15,
+    utilidades: 16,
+    japones: 17,
+  };
+
   const style = {
     container: {
       position: "relative",
@@ -33,7 +53,7 @@ const Categoria = () => {
       padding: "0.3rem 1rem",
       fontSize: "1rem",
       cursor: "pointer",
-      textDecoration: "none",      
+      textDecoration: "none",
     },
     buttonHover: {
       backgroundColor: "gold",
@@ -60,7 +80,7 @@ const Categoria = () => {
       right: 0,
       background: "none",
       color: "#003599",
-      borderRadius: "50px",      
+      borderRadius: "50px",
     },
   };
 
@@ -78,33 +98,11 @@ const Categoria = () => {
 
   return (
     <div style={style.container}>
-      {/* <KeyboardDoubleArrowLeftIcon
-        style={{ ...style.navButton, ...style.leftButton }}
-        onClick={scrollLeft}
-      ></KeyboardDoubleArrowLeftIcon> */}
       <section id="produtos" style={style.produtos} ref={containerRef}>
-        {[
-          "hortifruti",
-          "padaria",
-          "açougue",
-          "bebidas",
-          "rotisseria",
-          "bomboniere",
-          "bazar",
-          "automotivo",
-          "petshop",
-          "mercearia",
-          "limpeza",
-          "laticinios",
-          "bebes",
-          "higiene",
-          "congelados",
-          "utilidades",
-          "japones",          
-        ].map((category) => (
+        {Object.keys(categoryMapping).map((category) => (
           <Link
             key={category}
-            to={`/${category}`}
+            to={`/Categoria/${categoryMapping[category]}`}
             style={
               hoveredButton === category
                 ? { ...style.button, ...style.buttonHover }
@@ -117,10 +115,6 @@ const Categoria = () => {
           </Link>
         ))}
       </section>
-      {/* <KeyboardDoubleArrowRightIcon
-        style={{ ...style.navButton, ...style.rightButton }}
-        onClick={scrollRight}
-      ></KeyboardDoubleArrowRightIcon> */}
     </div>
   );
 };
