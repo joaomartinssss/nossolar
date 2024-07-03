@@ -20,6 +20,7 @@ import EntregarEmCasa from "./components/EntregarEmCasa";
 import PageView from "./components/PageVIew";
 import ClientArea from "./components/clientArea";
 import ProductPage2 from "./components/ProductPage2";
+import CreateProductPage from "./components/CreateProductPage";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -114,6 +115,7 @@ function App() {
                 />
               }
             />
+            <Route path="/createProduct" element={<CreateProductPage />} />
             <Route
               path="/categoria/:categoryId"
               element={

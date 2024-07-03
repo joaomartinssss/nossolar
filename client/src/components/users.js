@@ -29,41 +29,58 @@ const StyledTypography = styled(Typography)({
 
 const Users = ({}) => {
   return (
-      <StyledUsersContainer>
-        <Avatar
-          sx={{
-            bgcolor: "primary.main",
-            width: 45,
-            height: 45,
-            margin: "0 auto 1rem",
-          }}
-        >
-          <PersonIcon sx={{ fontSize: 35 }} />
-        </Avatar>
-        <StyledTypography variant="h6" style={{ color: "black" }}>
-          Seja Bem-vindo!
-        </StyledTypography>
-        <StyledButtonContainer>
-          <Link to="/login">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginBottom: "0.5rem", minWidth: "150px" }}
-            >
-              Entre
-            </Button>
-          </Link>
-          <Link to="/cadastro">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginBottom: "0.5rem", minWidth: "150px" }}
-            >
-              Cadastre-se
-            </Button>
-          </Link>
-        </StyledButtonContainer>
-      </StyledUsersContainer>
+    <StyledUsersContainer
+      sx={{
+        marginTop: "4rem",
+        background: "#E1E5F2",
+        border: "1px solid #003599",
+      }}
+    >
+      <Avatar
+        sx={{
+          bgcolor: "#003599",
+          width: 45,
+          height: 45,
+          margin: "0 auto 1rem",
+        }}
+      >
+        <PersonIcon sx={{ fontSize: 35 }} />
+      </Avatar>
+      <StyledTypography
+        variant="h6"
+        style={{ color: "black", fontWeight: "bold" }}
+      >
+        SEJA BEM VINDO!
+      </StyledTypography>
+      <StyledButtonContainer>
+        <Link to="/login">
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              marginBottom: "0.5rem",
+              minWidth: "150px",
+              background: "#003599",
+            }}
+          >
+            Entre
+          </Button>
+        </Link>
+        <Link to="/cadastro">
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              marginBottom: "0.5rem",
+              minWidth: "150px",
+              background: "#003599",
+            }}
+          >
+            Cadastre-se
+          </Button>
+        </Link>
+      </StyledButtonContainer>
+    </StyledUsersContainer>
   );
 };
 
