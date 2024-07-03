@@ -22,7 +22,7 @@ function CreateProductPage() {
       marginTop: ".5rem",
       marginBottom: ".5rem",
       boxShadow: "inset 0 0 1px black",
-      width: "30rem",
+      width: "40rem",
     },
     cardContent: {
       background: "white",
@@ -69,12 +69,14 @@ function CreateProductPage() {
           border: "3px solid #CDD1DE",
         }}
       >
-        <Box sx={{ display: "flex", border: "3px solid #CDD1DE" }}>
-          <img
-            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-1/318768361_487649283434966_4923966161297574562_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=zzM-ysoX78YQ7kNvgG60A-p&_nc_ht=scontent.fsdu3-1.fna&oh=00_AYBxLE6I_uDk7wsUHbKJQ3a5zysEse_I7Waij2YJ6gR_Dw&oe=668B9C95"
-            alt="Logo Nosso Lar"
-            style={style.image}
-          ></img>
+        <Box
+          sx={{
+            display: "flex",
+            border: "3px solid #CDD1DE",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Typography
             variant="h5"
             style={{
@@ -83,8 +85,13 @@ function CreateProductPage() {
               background: "white",
             }}
           >
-            Criar produto:
+            Criar produtos:
           </Typography>
+          <img
+            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-1/318768361_487649283434966_4923966161297574562_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=zzM-ysoX78YQ7kNvgG60A-p&_nc_ht=scontent.fsdu3-1.fna&oh=00_AYBxLE6I_uDk7wsUHbKJQ3a5zysEse_I7Waij2YJ6gR_Dw&oe=668B9C95"
+            alt="Logo Nosso Lar"
+            style={style.image}
+          ></img>
         </Box>
         <CardContent style={style.cardContent}>
           <Typography variant="h6" style={style.typography}>
@@ -92,7 +99,7 @@ function CreateProductPage() {
           </Typography>
           <InputBase style={style.inputBase} placeholder=""></InputBase>
           <Typography variant="h6" style={style.typography}>
-            Preço do Produto:
+            Preço do Produto: Não use ponto ou vírgula (4599 = R$45,99)
           </Typography>
           <InputBase style={style.inputBase} placeholder=""></InputBase>
           <Typography variant="h6" style={style.typography}>
@@ -136,12 +143,41 @@ function CreateProductPage() {
             Imagem do produto:
           </Typography>
           <InputBase style={style.inputBase} placeholder=""></InputBase>
-          <Button
-            variant="contained"
-            sx={{ background: "green", margin: "1rem" }}
-          >
-            Criar Produto
-          </Button>
+          <Box>
+            <Button
+              variant="contained"
+              sx={{
+                background: "red",
+                marginTop: "1rem",
+                marginLeft: ".5rem",
+              }}
+            >
+              Excluir Produtos
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                background: "gold",
+                marginTop: "1rem",
+                marginLeft: "1rem",
+                color: "#003599",
+                marginRight: ".5rem",
+              }}
+            >
+              Editar produtos
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                background: "green",
+                marginTop: "1rem",
+                marginRight: ".5rem",
+                marginLeft: ".5rem",
+              }}
+            >
+              Criar Produto
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </div>
@@ -149,3 +185,5 @@ function CreateProductPage() {
 }
 
 export default CreateProductPage;
+
+//Não use ponto ou vírgula (4599 = R$45,99)
