@@ -6,19 +6,23 @@ import {
   Typography,
   Button,
   Box,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
-import logoImage from "./NossoLar.png";
 
 function CreateProductPage() {
   const style = {
     inputBase: {
       border: "1px solid #AEB7B3",
       borderRadius: "3px",
-      padding: "0px 10rem 0px ",
+      padding: "0 .5rem",
       background: "#EEF0EB",
       marginTop: ".5rem",
       marginBottom: ".5rem",
       boxShadow: "inset 0 0 1px black",
+      width: "30rem",
     },
     cardContent: {
       background: "white",
@@ -94,7 +98,36 @@ function CreateProductPage() {
           <Typography variant="h6" style={style.typography}>
             Categoria do produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <FormControl
+            fullWidth
+            sx={{ marginTop: ".5rem", marginBottom: ".5rem" }}
+          >
+            <Select
+              displayEmpty
+              style={{
+                ...style.inputBase,
+              }}
+              inputProps={{ "arial-label": "Categoria" }}
+            >
+              <MenuItem value="hortifruti">Hortifruti</MenuItem>
+              <MenuItem value="Padaria">Padaria</MenuItem>
+              <MenuItem value="Açougue">Açougue</MenuItem>
+              <MenuItem value="Bebidas">Bebidas</MenuItem>
+              <MenuItem value="Rotisseria">Rotisseria</MenuItem>
+              <MenuItem value="Bomboniere">Bomboniere</MenuItem>
+              <MenuItem value="Bazar">Bazar</MenuItem>
+              <MenuItem value="Automotivo">Automotivo</MenuItem>
+              <MenuItem value="Petshop">Petshop</MenuItem>
+              <MenuItem value="Mercearia">Mercearia</MenuItem>
+              <MenuItem value="Limpeza">Limpeza</MenuItem>
+              <MenuItem value="Laticínios">Laticínios</MenuItem>
+              <MenuItem value="Bebês">Bebês</MenuItem>
+              <MenuItem value="Higiene">Higiene</MenuItem>
+              <MenuItem value="Congelados">Congelados</MenuItem>
+              <MenuItem value="Utilidades">Utilidades</MenuItem>
+              <MenuItem value="Japonês">Japonês</MenuItem>
+            </Select>
+          </FormControl>
           <Typography variant="h6" style={style.typography}>
             Descrição do produto:
           </Typography>
