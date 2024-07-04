@@ -10,16 +10,20 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Ajustar font size para caber no card
-    const cardHeight = document.getElementById(
-      `product-card-${product.id}`
-    ).offsetHeight;
-    const contentHeight = document.getElementById(
-      `product-card-content-${product.id}`
-    ).offsetHeight;
-    const fontSizeRatio = cardHeight / contentHeight;
-    setFontSize(fontSizeRatio > 1 ? 1 : fontSizeRatio); // Limitar tamanho máximo da fonte a 1
-  }, [product.id]);
+    if (product && product.id) {
+      // Ajustar font size para caber no card
+      const cardHeight = document.getElementById(
+        `product-card-${product.id}`
+      )?.offsetHeight;
+      const contentHeight = document.getElementById(
+        `product-card-content-${product.id}`
+      )?.offsetHeight;
+      if (cardHeight && contentHeight) {
+        const fontSizeRatio = cardHeight / contentHeight;
+        setFontSize(fontSizeRatio > 1 ? 1 : fontSizeRatio); // Limitar tamanho máximo da fonte a 1
+      }
+    }
+  }, [product]);
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
@@ -30,6 +34,10 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
     onSelectProduct(product);
     navigate(`/ProductPage2/${product.id}`);
   };
+
+  if (!product) {
+    return null; // ou algum componente de fallback
+  }
 
   return (
     <Card
@@ -47,8 +55,8 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
     >
       {/* Imagem */}
       <img
-        src={product.image}
-        alt={product.name}
+        src={product.image || "caminho-para-imagem-padrao.png"}
+        alt={product.name || "Produto"}
         style={{
           width: "100%",
           height: "200px",
@@ -78,9 +86,9 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
               marginBottom: "10px",
             }}
           >
-            {product.name.length > 30
+            {product.name?.length > 30
               ? `${product.name.substring(0, 30)}...`
-              : product.name}
+              : product.name || "Nome do produto"}
           </Typography>
 
           {/* Preço */}
@@ -91,11 +99,6 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
           >
             R$ {product.price}
           </Typography>
-          {/* <Typography style={{ fontFamily: "sans-serif", fontWeight: "bold", marginBottom: '15px'}}>
-          {product.description.length > 30 ? `${product.description.slice(0, 30)}...` : product.description}
-        </Typography> */}
-
-          {/* Botão Adicionar */}
         </div>
         <div
           style={{

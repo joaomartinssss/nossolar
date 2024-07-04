@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,6 +13,47 @@ import {
 } from "@mui/material";
 
 function CreateProductPage() {
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productImage, setProductImage] = useState("");
+
+  const handleCreateProduct = async () => {
+    const newProduct = {
+      name: productName,
+      price: productPrice,
+      category: productCategory,
+      description: productDescription,
+      image: productImage,
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/categories/${productCategory}/products`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newProduct),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Falha ao criar produto");
+      }
+
+      console.log("Produto criado com sucesso!");
+    } catch (error) {
+      console.log("Erro ao criar produto", error);
+    }
+  };
+
+  const handlePriceChange = (event) => {
+    setProductPrice(event.target.value);
+  };
+
   const style = {
     inputBase: {
       border: "1px solid #AEB7B3",
@@ -97,11 +138,19 @@ function CreateProductPage() {
           <Typography variant="h6" style={style.typography}>
             Nome do Produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            placeholder=""
+            onChange={(e) => setProductName(e.target.value)}
+          ></InputBase>
           <Typography variant="h6" style={style.typography}>
             Preço do Produto: Não use ponto ou vírgula (4599 = R$45,99)
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            placeholder=""
+            onChange={handlePriceChange}
+          ></InputBase>
           <Typography variant="h6" style={style.typography}>
             Categoria do produto:
           </Typography>
@@ -111,38 +160,45 @@ function CreateProductPage() {
           >
             <Select
               displayEmpty
-              style={{
-                ...style.inputBase,
-              }}
-              inputProps={{ "arial-label": "Categoria" }}
+              style={style.inputBase}
+              value={productCategory}
+              onChange={(e) => setProductCategory(Number(e.target.value))}
             >
-              <MenuItem value="hortifruti">Hortifruti</MenuItem>
-              <MenuItem value="Padaria">Padaria</MenuItem>
-              <MenuItem value="Açougue">Açougue</MenuItem>
-              <MenuItem value="Bebidas">Bebidas</MenuItem>
-              <MenuItem value="Rotisseria">Rotisseria</MenuItem>
-              <MenuItem value="Bomboniere">Bomboniere</MenuItem>
-              <MenuItem value="Bazar">Bazar</MenuItem>
-              <MenuItem value="Automotivo">Automotivo</MenuItem>
-              <MenuItem value="Petshop">Petshop</MenuItem>
-              <MenuItem value="Mercearia">Mercearia</MenuItem>
-              <MenuItem value="Limpeza">Limpeza</MenuItem>
-              <MenuItem value="Laticínios">Laticínios</MenuItem>
-              <MenuItem value="Bebês">Bebês</MenuItem>
-              <MenuItem value="Higiene">Higiene</MenuItem>
-              <MenuItem value="Congelados">Congelados</MenuItem>
-              <MenuItem value="Utilidades">Utilidades</MenuItem>
-              <MenuItem value="Japonês">Japonês</MenuItem>
+              <MenuItem value={1}>Hortifruti</MenuItem>
+              <MenuItem value={2}>Padaria</MenuItem>
+              <MenuItem value={3}>Açougue</MenuItem>
+              <MenuItem value={4}>Bebidas</MenuItem>
+              <MenuItem value={5}>Rotisseria</MenuItem>
+              <MenuItem value={6}>Bomboniere</MenuItem>
+              <MenuItem value={7}>Bazar</MenuItem>
+              <MenuItem value={8}>Automotivo</MenuItem>
+              <MenuItem value={9}>Petshop</MenuItem>
+              <MenuItem value={10}>Mercearia</MenuItem>
+              <MenuItem value={11}>Limpeza</MenuItem>
+              <MenuItem value={12}>Laticínios</MenuItem>
+              <MenuItem value={13}>Bebês</MenuItem>
+              <MenuItem value={14}>Higiene</MenuItem>
+              <MenuItem value={15}>Congelados</MenuItem>
+              <MenuItem value={16}>Utilidades</MenuItem>
+              <MenuItem value={17}>Japonês</MenuItem>
             </Select>
           </FormControl>
           <Typography variant="h6" style={style.typography}>
             Descrição do produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            placeholder=""
+            onChange={(e) => setProductDescription(e.target.value)}
+          ></InputBase>
           <Typography variant="h6" style={style.typography}>
             Imagem do produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            placeholder=""
+            onChange={(e) => setProductImage(e.target.value)}
+          ></InputBase>
           <Box>
             <Button
               variant="contained"
@@ -174,6 +230,7 @@ function CreateProductPage() {
                 marginRight: ".5rem",
                 marginLeft: ".5rem",
               }}
+              onClick={handleCreateProduct}
             >
               Criar Produto
             </Button>
