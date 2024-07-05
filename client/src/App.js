@@ -21,6 +21,7 @@ import PageView from "./components/PageVIew";
 import ClientArea from "./components/clientArea";
 import ProductPage2 from "./components/ProductPage2";
 import CreateProductPage from "./components/CreateProductPage";
+import ProductControl from "./ProductControl";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -116,6 +117,7 @@ function App() {
               }
             />
             <Route path="/createProduct" element={<CreateProductPage />} />
+            <Route path="/ProductControl" element={<ProductControl />} />
             <Route
               path="/categoria/:categoryId"
               element={

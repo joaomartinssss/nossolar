@@ -118,6 +118,11 @@ function CreateProductPage() {
             justifyContent: "center",
           }}
         >
+          <img
+            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-1/318768361_487649283434966_4923966161297574562_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=zzM-ysoX78YQ7kNvgG60A-p&_nc_ht=scontent.fsdu3-1.fna&oh=00_AYBxLE6I_uDk7wsUHbKJQ3a5zysEse_I7Waij2YJ6gR_Dw&oe=668B9C95"
+            alt="Logo Nosso Lar"
+            style={style.image}
+          ></img>
           <Typography
             variant="h5"
             style={{
@@ -126,13 +131,8 @@ function CreateProductPage() {
               background: "white",
             }}
           >
-            Criar produtos:
+            Página de criação de produtos:
           </Typography>
-          <img
-            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-1/318768361_487649283434966_4923966161297574562_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=zzM-ysoX78YQ7kNvgG60A-p&_nc_ht=scontent.fsdu3-1.fna&oh=00_AYBxLE6I_uDk7wsUHbKJQ3a5zysEse_I7Waij2YJ6gR_Dw&oe=668B9C95"
-            alt="Logo Nosso Lar"
-            style={style.image}
-          ></img>
         </Box>
         <CardContent style={style.cardContent}>
           <Typography variant="h6" style={style.typography}>
