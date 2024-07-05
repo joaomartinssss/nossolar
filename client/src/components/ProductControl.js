@@ -13,7 +13,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Link } from "react-router-dom";
 
-function EditProductPage() {
+function ProductControl() {
   const style = {
     inputBase: {
       border: "1px solid #AEB7B3",
@@ -154,7 +154,7 @@ function EditProductPage() {
                 <Typography sx={{ width: "20%", textAlign: "right" }}>
                   R$ {product.price}
                 </Typography>
-                <Link>
+                <Link to={"/editProduct"}>
                   <EditOutlinedIcon
                     sx={{ color: "black", marginLeft: "1rem" }}
                   />
@@ -171,4 +171,4 @@ function EditProductPage() {
   );
 }
 
-export default EditProductPage;
+export default ProductControl;
