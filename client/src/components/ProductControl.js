@@ -6,6 +6,7 @@ import {
   Button,
   Box,
   InputBase,
+  Modal,
 } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -57,6 +58,8 @@ function ProductControl() {
 
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteProductId, setDeleteProductId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -71,6 +74,30 @@ function ProductControl() {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleDelete = (productId) => {
+    setDeleteProductId(productId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    axios
+      .delete(`http://localhost:3001/products/${deleteProductId}`)
+      .then((response) => {
+        setProducts(
+          products.filter((product) => product.id !== deleteProductId)
+        );
+        setShowDeleteModal(false);
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir produto:", error);
+        setShowDeleteModal(false);
+      });
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
   };
 
   return (
@@ -228,12 +255,49 @@ function ProductControl() {
                   </Link>
                   <DeleteForeverOutlinedIcon
                     sx={{ color: "red", marginLeft: "1rem" }}
+                    onClick={() => handleDelete(product.id)}
                   />
                 </Box>
               ))}
           </Box>
         </CardContent>
       </Card>
+      <Modal open={showDeleteModal} onClose={cancelDelete}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "white",
+            border: "2px solid gray",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: "5px",
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            Tem certeza que deseja excluir esse produto?
+          </Typography>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              onClick={cancelDelete}
+              variant="contained"
+              sx={{ background: "gray" }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              onClick={confirmDelete}
+              variant="contained"
+              sx={{ ml: 2, background: "red" }}
+            >
+              Excluir
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 }
