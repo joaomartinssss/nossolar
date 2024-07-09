@@ -163,7 +163,7 @@ function EditProduct() {
             onChange={(e) => setName(e.target.value)}
           ></InputBase>
           <Typography variant="h6" style={style.typography}>
-            Preço do Produto: Não use ponto ou vírgula (4599 = R$45,99)
+            Preço do Produto: Use ponto em vez de virgula (4.99 = R$ 4,99)
           </Typography>
           <InputBase
             style={style.inputBase}
