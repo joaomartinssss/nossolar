@@ -148,10 +148,34 @@ function ProductControl() {
           ></InputBase>
           <Box
             sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "50rem",
+              marginTop: "0.5rem",
+              padding: "0.5rem",
+            }}
+          >
+            <Typography
+              sx={{ width: "10%", fontWeight: "bold", marginLeft: "0.5rem" }}
+            >
+              ID:
+            </Typography>
+            <Typography sx={{ width: "30%", fontWeight: "bold" }}>
+              Nome:
+            </Typography>
+            <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+              Descrição:
+            </Typography>
+            <Typography sx={{ width: "20%", fontWeight: "bold" }}>
+              Preço:
+            </Typography>
+          </Box>
+          <Box
+            sx={{
               maxHeight: "70vh",
               overflowY: "auto",
               width: "100%",
-              marginTop: "1rem",
               marginBottom: "1rem",
             }}
           >
@@ -173,6 +197,15 @@ function ProductControl() {
                     borderRadius: "4px",
                   }}
                 >
+                  <Typography
+                    sx={{
+                      width: "10%",
+                      fontWeight: "bold",
+                      marginLeft: "0.5rem",
+                    }}
+                  >
+                    {product.id}
+                  </Typography>
                   <Typography sx={{ width: "30%", fontWeight: "bold" }}>
                     {product.name}
                   </Typography>
@@ -181,8 +214,8 @@ function ProductControl() {
                   </Typography>
                   <Typography
                     sx={{
-                      width: "20%",
-                      textAlign: "right",
+                      width: "10%",
+                      textAlign: "left",
                       fontWeight: "bold",
                     }}
                   >
