@@ -137,6 +137,9 @@ function ProductPage2({ cartItems, setCartItems }) {
               >
                 Adicionar ao Carrinho
               </Button>
+              <Typography sx={{ color: "gray", marginTop: ".5rem" }}>
+                {product.description}
+              </Typography>
             </div>
           </CardContent>
         </Card>

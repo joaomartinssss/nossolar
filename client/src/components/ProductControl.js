@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function ProductControl() {
   const style = {
@@ -42,6 +43,7 @@ function ProductControl() {
       flexDirection: "column",
       alignItems: "flex-start",
       display: "flex",
+      overFlowY: "auto",
     },
     typography: {
       textAlign: "left",
@@ -54,12 +56,18 @@ function ProductControl() {
     },
   };
 
-  // Mock data for products
-  const products = [
-    { id: 1, name: "Produto 1", description: "Descrição 1", price: "45,99" },
-    { id: 2, name: "Produto 2", description: "Descrição 2", price: "30,00" },
-    // Add more products as needed
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/products")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar produtos:", error);
+      });
+  }, []);
 
   return (
     <div
@@ -148,15 +156,17 @@ function ProductControl() {
                 <Typography sx={{ width: "30%", fontWeight: "bold" }}>
                   {product.name}
                 </Typography>
-                <Typography sx={{ width: "50%" }}>
+                <Typography sx={{ width: "50%", color: "gray" }}>
                   {product.description}
                 </Typography>
-                <Typography sx={{ width: "20%", textAlign: "right" }}>
+                <Typography
+                  sx={{ width: "20%", textAlign: "right", fontWeight: "bold" }}
+                >
                   R$ {product.price}
                 </Typography>
                 <Link to={"/editProduct"}>
                   <EditOutlinedIcon
-                    sx={{ color: "black", marginLeft: "1rem" }}
+                    sx={{ color: "#003599", marginLeft: "1rem" }}
                   />
                 </Link>
                 <DeleteForeverOutlinedIcon

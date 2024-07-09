@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,10 +11,53 @@ import {
   InputLabel,
   MenuItem,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import axios from "axios";
 
 function EditProduct() {
+  const { productId } = useParams();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/products/${productId}`)
+      .then((response) => {
+        const product = response.data;
+        setName(product.name);
+        setPrice(product.price);
+        setCategory(product.category);
+        setDescription(product.description);
+        setImage(product.image);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar produto:", error);
+      });
+  }, [productId]);
+
+  const handleSave = () => {
+    const updatedProduct = {
+      name,
+      categoryId: category,
+      image,
+      description,
+      price,
+    };
+
+    axios
+      .put(`https://localhost:3001/products/${productId}`, updatedProduct)
+      .then((response) => {
+        console.log("Produto atualizado com sucesso:", response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar produto:", error);
+      });
+  };
+
   const style = {
     inputBase: {
       border: "1px solid #AEB7B3",
@@ -101,11 +144,19 @@ function EditProduct() {
           <Typography variant="h6" style={style.typography}>
             Nome do Produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          ></InputBase>
           <Typography variant="h6" style={style.typography}>
             Preço do Produto: Não use ponto ou vírgula (4599 = R$45,99)
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          ></InputBase>
           <Typography variant="h6" style={style.typography}>
             Categoria do produto:
           </Typography>
@@ -113,7 +164,12 @@ function EditProduct() {
             fullWidth
             sx={{ marginTop: ".5rem", marginBottom: ".5rem" }}
           >
-            <Select displayEmpty style={style.inputBase}>
+            <Select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              displayEmpty
+              style={style.inputBase}
+            >
               <MenuItem value={1}>Hortifruti</MenuItem>
               <MenuItem value={2}>Padaria</MenuItem>
               <MenuItem value={3}>Açougue</MenuItem>
@@ -136,11 +192,19 @@ function EditProduct() {
           <Typography variant="h6" style={style.typography}>
             Descrição do produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></InputBase>
           <Typography variant="h6" style={style.typography}>
             Imagem do produto:
           </Typography>
-          <InputBase style={style.inputBase} placeholder=""></InputBase>
+          <InputBase
+            style={style.inputBase}
+            value={image}
+            onChange={(e) => e.target.value}
+          ></InputBase>
           <Box>
             <Link to={"/ProductControl"}>
               <Button
@@ -162,6 +226,7 @@ function EditProduct() {
                 marginRight: ".5rem",
                 marginLeft: ".5rem",
               }}
+              onClick={handleSave}
             >
               Salvar
             </Button>

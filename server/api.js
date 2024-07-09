@@ -185,8 +185,17 @@ app.get("/products/:productId", (req, res) => {
 
 app.put("/products/:productId", (req, res) => {
   const productId = req.params.productId;
-  const { name, categoryId, image, description } = req.body;
-  const updateProduct = { name, category_id: categoryId, image, description };
+  const { name, categoryId, image, description, price } = req.body;
+  console.log("Dados recebidos na requisição:", req.body)
+  const updateProduct = {
+    name,
+    category_id: categoryId,
+    image,
+    description,
+    price,
+  };
+
+  console.log("Dados recebidos para atualização:", updateProduct);
 
   db.query(
     "UPDATE products SET ? WHERE id = ?",
@@ -197,7 +206,11 @@ app.put("/products/:productId", (req, res) => {
         res.status(500).send("Erro ao atualizar produto");
         return;
       }
-      res.status(200).json({ message: "Produto atualizado com sucesso" });
+      if (results.affetedRows === 0) {
+        res.status(404).send("Produto não encontrado");
+      } else {
+        res.status(200).send("Produto atualizado com sucesso");
+      }
     }
   );
 });
