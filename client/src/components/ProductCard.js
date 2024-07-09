@@ -35,6 +35,13 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
     navigate(`/ProductPage2/${product.id}`);
   };
 
+  const formatPrice = (price) => {
+    return price.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
+
   if (!product) {
     return null; // ou algum componente de fallback
   }
@@ -95,9 +102,14 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
           <Typography
             variant="body1"
             color="textSecondary"
-            style={{ fontSize: `${fontSize}rem`, marginBottom: "10px" }}
+            style={{
+              fontSize: `${fontSize}rem`,
+              marginBottom: "10px",
+              fontWeight: "bold",
+              fontFamily: "sans-serif",
+            }}
           >
-            R$ {product.price}
+            {formatPrice(product.price)}
           </Typography>
         </div>
         <div

@@ -45,6 +45,13 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     );
   };
 
+  const formatPrice = (price) => {
+    return price.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
+
   // Verificar se o carrinho está vazio
   const isEmptyCart = cartItems.length === 0;
 
@@ -166,7 +173,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                       variant="body1"
                       style={{ color: "black", fontWeight: "bold" }}
                     >
-                      R$ {(item.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.price * item.quantity)}
                     </Typography>
                   </Grid>
                   <Grid item xs={2}>
@@ -203,21 +210,21 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                   borderRadius: "5px",
                 }}
               >
-                Total: R$ {calculateTotal().toFixed(2)}
-              </Typography>              
-                <Link to={"/FinalizePurchase"}>
-                  <Button
-                    variant="contained"
-                    style={{
-                      background: "green",
-                      color: "white",
-                      padding: "0.5rem 1rem",
-                      marginTop: "1rem",
-                    }}
-                  >
-                    Finalizar Compra
-                  </Button>
-                </Link>
+                Total: {formatPrice(calculateTotal())}
+              </Typography>
+              <Link to={"/FinalizePurchase"}>
+                <Button
+                  variant="contained"
+                  style={{
+                    background: "green",
+                    color: "white",
+                    padding: "0.5rem 1rem",
+                    marginTop: "1rem",
+                  }}
+                >
+                  Finalizar Compra
+                </Button>
+              </Link>
             </Box>
             <Button
               variant="contained"
