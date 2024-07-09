@@ -5,7 +5,6 @@ import {
   Typography,
   Button,
   Box,
-  Input,
   InputBase,
 } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
@@ -43,7 +42,7 @@ function ProductControl() {
       flexDirection: "column",
       alignItems: "flex-start",
       display: "flex",
-      overFlowY: "auto",
+      overflowX: "auto",
     },
     typography: {
       textAlign: "left",
@@ -57,6 +56,7 @@ function ProductControl() {
   };
 
   const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     axios
@@ -68,6 +68,10 @@ function ProductControl() {
         console.error("Erro ao buscar produtos:", error);
       });
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   return (
     <div
@@ -90,7 +94,7 @@ function ProductControl() {
           width: "90%",
           height: "90%",
           background: "white",
-          overFlowY: "auto",
+          overflowY: "auto",
           alignItems: "flex-start",
           border: "3px solid #CDD1DE",
         }}
@@ -137,43 +141,63 @@ function ProductControl() {
           <Typography style={{ ...style.typography, marginTop: "1rem" }}>
             Pesquisar por produtos:
           </Typography>
-          <InputBase style={style.inputBaseSearch}></InputBase>
-          <Box>
-            {products.map((product) => (
-              <Box
-                key={product.id}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "50rem",
-                  marginTop: "0.5rem",
-                  padding: "0.5rem",
-                  background: "#EEF0EB",
-                  borderRadius: "4px",
-                }}
-              >
-                <Typography sx={{ width: "30%", fontWeight: "bold" }}>
-                  {product.name}
-                </Typography>
-                <Typography sx={{ width: "50%", color: "gray" }}>
-                  {product.description}
-                </Typography>
-                <Typography
-                  sx={{ width: "20%", textAlign: "right", fontWeight: "bold" }}
+          <InputBase
+            style={style.inputBaseSearch}
+            value={searchTerm}
+            onChange={handleSearchChange}
+          ></InputBase>
+          <Box
+            sx={{
+              maxHeight: "70vh",
+              overflowY: "auto",
+              width: "100%",
+              marginTop: "1rem",
+              marginBottom: "1rem",
+            }}
+          >
+            {products
+              .filter((product) =>
+                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((product) => (
+                <Box
+                  key={product.id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "50rem",
+                    marginTop: "0.5rem",
+                    padding: "0.5rem",
+                    background: "#EEF0EB",
+                    borderRadius: "4px",
+                  }}
                 >
-                  R$ {product.price}
-                </Typography>
-                <Link to={"/editProduct"}>
-                  <EditOutlinedIcon
-                    sx={{ color: "#003599", marginLeft: "1rem" }}
+                  <Typography sx={{ width: "30%", fontWeight: "bold" }}>
+                    {product.name}
+                  </Typography>
+                  <Typography sx={{ width: "50%", color: "gray" }}>
+                    {product.description}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      width: "20%",
+                      textAlign: "right",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    R$ {product.price}
+                  </Typography>
+                  <Link to={"/editProduct"}>
+                    <EditOutlinedIcon
+                      sx={{ color: "#003599", marginLeft: "1rem" }}
+                    />
+                  </Link>
+                  <DeleteForeverOutlinedIcon
+                    sx={{ color: "red", marginLeft: "1rem" }}
                   />
-                </Link>
-                <DeleteForeverOutlinedIcon
-                  sx={{ color: "red", marginLeft: "1rem" }}
-                />
-              </Box>
-            ))}
+                </Box>
+              ))}
           </Box>
         </CardContent>
       </Card>
