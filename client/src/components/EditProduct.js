@@ -10,8 +10,10 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  Alert,
+  Snackbar,
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function EditProduct() {
@@ -21,6 +23,9 @@ function EditProduct() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // Estado para mensagem de sucesso
+  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado para controlar a exibição do Snackbar
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -50,11 +55,20 @@ function EditProduct() {
     axios
       .put(`http://localhost:3001/products/${productId}`, updatedProduct)
       .then((response) => {
-        console.log("Produto atualizado com sucesso:", response.data);
+        setSuccessMessage("Produto atualizado com sucesso!"); // Define a mensagem de sucesso
+        setOpenSnackbar(true); // Abre o Snackbar
+
+        setTimeout(() => {
+          navigate("/ProductControl");
+        }, 4000);
       })
       .catch((error) => {
         console.error("Erro ao atualizar produto:", error);
       });
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   const style = {
@@ -202,7 +216,7 @@ function EditProduct() {
           <InputBase
             style={style.inputBase}
             value={image}
-            onChange={(e) => e.target.value}
+            onChange={(e) => setImage(e.target.value)}
           ></InputBase>
           <Box>
             <Link to={"/ProductControl"}>
@@ -232,10 +246,22 @@ function EditProduct() {
           </Box>
         </CardContent>
       </Card>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
 
 export default EditProduct;
-
-//Não use ponto ou vírgula (4599 = R$45,99)
