@@ -93,7 +93,12 @@ const NavLink = styled("a")({
   fontWeight: "bold",
 });
 
-const TopNav = ({ cartItems, setCartItems }) => {
+const TopNav = ({
+  cartItems,
+  setCartItems,
+  searchTerm,
+  handleSearchChange,
+}) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
   const [openUsersCard, setOpenUsersCard] = useState();
@@ -154,7 +159,7 @@ const TopNav = ({ cartItems, setCartItems }) => {
             padding: ".5rem 1rem",
             background: "#003599", //mudança feita para teste
           }}
-        >          
+        >
           <Link to={"/"}>
             <div
               style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
@@ -170,6 +175,8 @@ const TopNav = ({ cartItems, setCartItems }) => {
               placeholder="Pesquisar por produtos"
               inputProps={{ "aria-label": "search" }}
               style={{ paddingLeft: "2rem" }}
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
           </SearchInput>
           <div>

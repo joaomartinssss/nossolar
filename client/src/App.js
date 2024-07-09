@@ -42,6 +42,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showProductCardButtons, setShowProductCardButtons] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -78,6 +79,14 @@ function App() {
     });
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Router>
       <div className="App">
@@ -85,6 +94,8 @@ function App() {
           setIsCartOpen={setIsCartOpen}
           cartItems={cartItems}
           setCartItems={setCartItems}
+          searchTerm={searchTerm}
+          handleSearchChange={handleSearchChange}
         />
         <div
           className="container"
@@ -133,7 +144,7 @@ function App() {
           </Routes>
           {!selectedProduct && (
             <ProductGrid
-              products={products}
+              products={filteredProducts}
               addToCart={addToCart}
               onSelectProduct={setSelectedProduct}
               showProductCardButtons={showProductCardButtons}
