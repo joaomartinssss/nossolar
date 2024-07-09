@@ -221,7 +221,7 @@ function ProductControl() {
                   >
                     R$ {product.price}
                   </Typography>
-                  <Link to={"/editProduct"}>
+                  <Link to={`/editProduct/${product.id}`}>
                     <EditOutlinedIcon
                       sx={{ color: "#003599", marginLeft: "1rem" }}
                     />

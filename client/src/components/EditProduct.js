@@ -12,7 +12,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 
 function EditProduct() {
@@ -43,13 +42,13 @@ function EditProduct() {
     const updatedProduct = {
       name,
       categoryId: category,
-      image,
-      description,
       price,
+      description,
+      image,
     };
 
     axios
-      .put(`https://localhost:3001/products/${productId}`, updatedProduct)
+      .put(`http://localhost:3001/products/${productId}`, updatedProduct)
       .then((response) => {
         console.log("Produto atualizado com sucesso:", response.data);
       })

@@ -130,7 +130,7 @@ function App() {
             />
             <Route path="/createProduct" element={<CreateProductPage />} />
             <Route path="/ProductControl" element={<ProductControl />} />
-            <Route path="/EditProduct" element={<EditProduct />} />
+            <Route path="/EditProduct/:productId" element={<EditProduct />} />
             <Route
               path="/categoria/:categoryId"
               element={
