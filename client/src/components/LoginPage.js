@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const style = {
   backGround: {
@@ -49,6 +51,8 @@ const style = {
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -59,12 +63,22 @@ function LoginPage() {
       });
       // Armazene o token no localStorage
       localStorage.setItem("token", res.data.token);
-      // Redirecionar o usuário para a página inicial após o login
-      navigate("/");
+      // Define a mensagem de sucesso e abre o Snackbar
+      setSuccessMessage("Login realizado com sucesso!");
+      setOpenSnackbar(true);
+
+      // Redirecionar o usuário para a página inicial após 3 segundos
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (err) {
       console.error("Erro ao fazer login", err);
       alert("Email ou senha incorretos");
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -123,6 +137,20 @@ function LoginPage() {
           </Link>
         </CardContent>
       </Card>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
