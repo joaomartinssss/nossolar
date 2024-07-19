@@ -10,8 +10,8 @@ router.post("/register", async (req, res) => {
   //remove os espaços e formata os dados
   name = name.trim();
   email = email.trim();
-  cep = cep.replace(/\s+/g, '');
-  telefone = telefone.replace(/\s+/g, '');
+  cep = cep.replace(/\s+/g, "");
+  telefone = telefone.replace(/\s+/g, "");
 
   //validação adicional pode ser adicionada aqui se necessário
 
@@ -80,6 +80,19 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     console.error(err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
+router.get("/user/:id", async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) {
+      return res.status(404).json({ msg: "Usuário não encontrado" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error("Erro ao buscar usuário", err);
     res.status(500).send("Erro no servidor");
   }
 });
