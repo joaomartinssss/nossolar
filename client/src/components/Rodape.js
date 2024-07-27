@@ -7,16 +7,20 @@ import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 const Rodape = () => {
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
   const estiloRodape = {
     width: "100%",
     backgroundColor: "#003599",
     color: "aliceblue",
     padding: "1rem",
-    // margin: 0,
     textAlign: "center",
     display: "flex",
+    flexDirection: isMobile ? "column" : "row",
     justifyContent: "space-between",
     marginTop: "1rem",
   };
@@ -38,7 +42,11 @@ const Rodape = () => {
         }}
       >
         <CardContent
-          style={{ display: "flex", justifyContent: "space-between" }}
+          style={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            justifyContent: "space-between",
+          }}
         >
           <div style={estiloSecao}>
             <Typography
@@ -121,11 +129,6 @@ const Rodape = () => {
                   sx={{ color: "white", margin: ".5rem", fontSize: "2rem" }}
                 />
               </Link>
-              {/* <Link>
-                <XIcon
-                  sx={{ color: "white", margin: ".5rem", fontSize: "2rem" }}
-                />
-              </Link> */}
               <Link
                 to={"https://www.facebook.com/supermercadosnossolaroficial/"}
               >
