@@ -129,25 +129,25 @@ function ProductPage2({ cartItems, setCartItems }) {
               <Typography
                 variant="h4"
                 gutterBottom
-                style={{ fontWeight: "bold" }}
+                style={{ fontWeight: "bold", fontSize: isMobile ? "35px" : "" }}
               >
                 {product.name}
               </Typography>
               <Typography
                 variant="body1"
                 gutterBottom
-                style={{ fontWeight: "bold" }}
+                style={{ fontWeight: "bold", fontSize: isMobile ? "30px" : "" }}
               >
                 R$ {product.price}
               </Typography>
               <Button
                 variant="contained"
-                style={{ background: "#004BA8", fontWeight: "bold" }}
+                style={{ background: "#004BA8", fontWeight: "bold", fontSize: isMobile ? "18px" : ""}}
                 onClick={handleAddToCart}
               >
                 Adicionar ao Carrinho
               </Button>
-              <Typography sx={{ color: "gray", marginTop: ".5rem" }}>
+              <Typography sx={{ color: "gray", marginTop: ".5rem", fontSize: isMobile ? "20px" : "" }}>
                 {product.description}
               </Typography>
             </div>
