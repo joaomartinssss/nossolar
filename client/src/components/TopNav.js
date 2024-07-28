@@ -11,6 +11,8 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Cart from "./Cart";
 import Users from "./users";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -133,6 +135,8 @@ const TopNav = ({
     });
   };
 
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
   return (
     <div style={{ position: "relative" }}>
       <NavigationBar>
@@ -158,16 +162,18 @@ const TopNav = ({
             justifyContent: "space-between",
             padding: ".5rem 1rem",
             background: "#003599", //mudança feita para teste
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
           }}
         >
           <Link to={"/"}>
             <div
-              style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
+              style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem", marginBottom: isMobile ? "1rem" : "0" }}
             >
               Supermercado Nosso Lar
             </div>
           </Link>
-          <SearchInput style={{ padding: ".2rem 5rem .2rem .1rem" }}>
+          <SearchInput style={{ padding: ".2rem 5rem .2rem .1rem", marginBottom: isMobile ? "1rem" : "0" }}>
             <SearchIconWrapper>
               <SearchIcon style={{ cursor: "pointer" }} />
             </SearchIconWrapper>
@@ -186,6 +192,7 @@ const TopNav = ({
                   display: "flex",
                   alignItems: "center",
                   position: "relative",
+                  marginBottom: isMobile ? "0.3rem" : "0"
                 }}
               >
                 <IconButton
