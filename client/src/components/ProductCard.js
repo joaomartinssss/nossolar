@@ -4,10 +4,14 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
   const [fontSize, setFontSize] = useState(1); // Font size state
   const navigate = useNavigate();
+
+  const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
     if (product && product.id) {
@@ -51,7 +55,7 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
       variant="outlined"
       id={`product-card-${product.id}`}
       style={{
-        minHeight: "400px",
+        // minHeight: "300px",
         width: "200px",
         overflow: "hidden",
         cursor: "pointer",
@@ -66,7 +70,7 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
         alt={product.name || "Produto"}
         style={{
           width: "100%",
-          height: "200px",
+          height: isMobile ? "150px" : "200px",
           padding: "10px, 10px, 10px, 10px",
         }}
       />
