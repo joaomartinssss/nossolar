@@ -17,6 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import InputBase from "@mui/material/InputBase";
 import InputMask from "react-input-mask";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 const style = {
   card: {
@@ -192,6 +194,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
 
   const [showPickupOptions, setShowPickupOptions] = useState(false);
   const [showDeliveryOPtions, setShowDeliveryOptions] = useState(false);
+  const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
     const valorCompra = cartItems.reduce(
@@ -242,6 +245,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "1rem",
+          flexDirection: isMobile ? "column" : "row"
         }}
       >
         <CardContent>
