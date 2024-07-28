@@ -38,14 +38,14 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`,
 }));
 
-const CartContainer = styled("div")(({ theme, isOpen }) => ({
+const CartContainer = styled("div")(({ theme, isOpen, isMobile }) => ({
   position: "fixed",
   boxSizing: "border-box",
   top: 0,
   right: 0,
   zIndex: 999,
   padding: "2rem 1rem",
-  width: "30vw",
+  width: useMediaQuery(breakPoints.mobile) ? "95%" : "30vw",
   height: "100vh",
   backgroundColor: "white",
   boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
@@ -168,12 +168,22 @@ const TopNav = ({
         >
           <Link to={"/"}>
             <div
-              style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem", marginBottom: isMobile ? "1rem" : "0" }}
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+                marginBottom: isMobile ? "1rem" : "0",
+              }}
             >
               Supermercado Nosso Lar
             </div>
           </Link>
-          <SearchInput style={{ padding: ".2rem 5rem .2rem .1rem", marginBottom: isMobile ? "1rem" : "0" }}>
+          <SearchInput
+            style={{
+              padding: ".2rem 5rem .2rem .1rem",
+              marginBottom: isMobile ? "1rem" : "0",
+            }}
+          >
             <SearchIconWrapper>
               <SearchIcon style={{ cursor: "pointer" }} />
             </SearchIconWrapper>
@@ -192,7 +202,7 @@ const TopNav = ({
                   display: "flex",
                   alignItems: "center",
                   position: "relative",
-                  marginBottom: isMobile ? "0.3rem" : "0"
+                  marginBottom: isMobile ? "0.3rem" : "0",
                 }}
               >
                 <IconButton

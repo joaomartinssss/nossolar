@@ -8,6 +8,8 @@ import {
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
   const handleIncrement = (itemId) => {
@@ -63,10 +65,15 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
     return name.length > length ? name.slice(0, length) + "..." : name;
   };
 
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
   return (
     <div
       className="cart"
-      style={{ position: "relative", paddingBottom: "3rem" }}
+      style={{
+        position: "relative",
+        paddingBottom: "3rem",
+      }}
     >
       {isEmptyCart ? (
         <div
@@ -196,6 +203,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                 margin: "0rem 2rem 0rem 1rem",
                 alignItems: "center", // Alinha verticalmente o texto e o botão
                 width: "100%",
+                flexDirection: isMobile ? "column" : "row",
               }}
             >
               <Typography
@@ -238,7 +246,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                 transform: "translateX(-50%)",
                 zIndex: "999",
                 width: "90%",
-                maxWidth: "500px",
+                maxWidth: isMobile ? "300px" : "500px",
                 marginTop: "2rem",
               }}
               onClick={HandleclearCart}
@@ -256,7 +264,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
               transform: "translateX(-50%)",
               zIndex: "999",
               width: "90%",
-              maxWidth: "500px",
+              maxWidth: isMobile ? "300px" : "500px",
               marginBottom: "1rem",
               marginTop: "2rem",
             }}
