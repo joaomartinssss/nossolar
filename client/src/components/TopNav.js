@@ -45,7 +45,7 @@ const CartContainer = styled("div")(({ theme, isOpen, isMobile }) => ({
   right: 0,
   zIndex: 999,
   padding: "2rem 1rem",
-  width: useMediaQuery(breakPoints.mobile) ? "95%" : "30vw",
+  width: isMobile ? "95%" : "30vw",
   height: "100vh",
   backgroundColor: "white",
   boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
@@ -70,11 +70,13 @@ const CartIndicator = styled("div")({
   fontSize: 12,
 });
 
-const NavigationBar = styled("div")({
+const NavigationBar = styled("div")(({ isMobile }) => ({
   backgroundColor: "red",
   padding: "0.8rem 0",
   textAlign: "center",
-});
+  display: isMobile ? "flex" : "",
+  overflowX: isMobile ? "auto" : "",
+}));
 
 const NavLink = styled("a")({
   color: "white",
@@ -139,7 +141,7 @@ const TopNav = ({
 
   return (
     <div style={{ position: "relative" }}>
-      <NavigationBar>
+      <NavigationBar isMobile={isMobile}>
         <NavLink href="#" onClick={scrollToBottom}>
           Institucional
         </NavLink>
@@ -147,7 +149,7 @@ const TopNav = ({
           Atendimento
         </NavLink>
         <NavLink href="#" onClick={scrollToBottom}>
-          Nossas Lojas
+          Lojas
         </NavLink>
         <NavLink href="#" onClick={scrollToBottom}>
           Folhetos
@@ -217,7 +219,7 @@ const TopNav = ({
                     <CartIndicator>{indicatorContent}</CartIndicator>
                   )}
                 </IconButton>
-                <CartContainer isOpen={isCartOpen}>
+                <CartContainer isOpen={isCartOpen} isMobile={isMobile}>
                   <Cart
                     cartItems={cartItems}
                     setCartItems={setCartItems}
