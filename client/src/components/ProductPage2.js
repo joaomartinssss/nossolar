@@ -8,12 +8,16 @@ import Rodape from "./Rodape";
 import Categoria from "./Category";
 import Loading3 from "./Loading3";
 import Erro from "./Error";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 function ProductPage2({ cartItems, setCartItems }) {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -92,7 +96,13 @@ function ProductPage2({ cartItems, setCartItems }) {
             padding: "20px",
           }}
         >
-          <CardContent style={{ display: "flex", alignItems: "center" }}>
+          <CardContent
+            style={{
+              display: "flex",
+              alignItems: isMobile ? "flex-start" : "center",
+              flexDirection: isMobile ? "column" : "row",
+            }}
+          >
             <Link to={"/"}>
               <IconButton>
                 <ArrowBackIcon />
@@ -103,7 +113,7 @@ function ProductPage2({ cartItems, setCartItems }) {
                 src={product.image}
                 alt={product.name}
                 style={{
-                  width: "400px",
+                  width: isMobile ? "300px" : "400px",
                   border: " solid 5px #D8DDDE",
                   borderRadius: "10px",
                 }}
