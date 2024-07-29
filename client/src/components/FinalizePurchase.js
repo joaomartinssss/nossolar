@@ -245,7 +245,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "1rem",
-          flexDirection: isMobile ? "column" : "row"
+          flexDirection: isMobile ? "column" : "row",
         }}
       >
         <CardContent>
@@ -276,7 +276,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
       <Card style={style.card} sx={{ background: "#BCD3F2" }}>
         <CardContent style={style.cardContent}>
           <Grid container>
-            <Grid item xs={9} sx={{ pr: 4 }}>
+            <Grid item xs={isMobile ? 12 : 9} sx={{ pr: isMobile ? 0 : 4 }}>
               {cartItems.map((item) => (
                 <ProductRow
                   key={item.id}
@@ -289,11 +289,12 @@ function BlackOverlay({ cartItems, setCartItems }) {
             </Grid>
             <Grid
               item
-              xs={3}
+              xs={isMobile ? 12 : 3}
               sx={{
                 background: "#E5E7E6",
                 borderRadius: "5px",
                 border: "1px solid #A3A9AA",
+                marginLeft: isMobile ? "0.5rem" : 0,
               }}
             >
               <Grid>
@@ -337,16 +338,29 @@ function BlackOverlay({ cartItems, setCartItems }) {
                 >
                   OPÇÕES DE ENTREGA:
                 </Typography>
-                <Box style={{ ...style.buttonFlexContainer }}>
+                <Box
+                  style={{
+                    ...style.buttonFlexContainer,
+                    flexDirection: isMobile ? "column" : "row",
+                  }}
+                >
                   <Button
-                    sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
+                    sx={{
+                      padding: isMobile ? "10px" : "5px 10px",
+                      fontFamily: "sans-serif",
+                      margin: isMobile ? "0.5rem 1rem" : 0,
+                    }}
                     variant="contained"
                     onClick={handleDeliveryClick}
                   >
                     Receber em casa
                   </Button>
                   <Button
-                    sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
+                    sx={{
+                      padding: isMobile ? "10px" : "5px 10px",
+                      fontFamily: "sans-serif",
+                      margin: isMobile ? "0.5rem 1rem" : 0,
+                    }}
                     variant="contained"
                     onClick={handlePickupClick}
                   >
@@ -566,46 +580,58 @@ function BlackOverlay({ cartItems, setCartItems }) {
                 >
                   TOTAL A PAGAR: R$ {totals.total.toFixed(2)}
                 </Typography>
-                <Box style={{ ...style.buttonFlexContainer }}>
+                <Box
+                  style={{
+                    ...style.buttonFlexContainer,
+                    flexDirection: isMobile ? "column" : "row",
+                    alignItems: "center",
+                    justifyContent: isMobile ? "center" : "space-between",
+                  }}
+                >
                   <Link to={"/"}>
                     <Button
                       variant="contained"
-                      sx={{ padding: "5px 10px", fontFamily: "sans-serif" }}
+                      sx={{
+                        padding: "5px 10px",
+                        fontFamily: "sans-serif",
+                        margin: isMobile ? "0.5rem 1rem" : "0",
+                      }}
                     >
                       Continuar Comprando
                     </Button>
                   </Link>
+                  <Box
+                    sx={{
+                      margin: isMobile ? "0.5rem 1rem" : "0",
+                      display: "flex",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      sx={{
+                        background: "#D10000",
+                        fontFamily: "unset",
+                      }}
+                      onClick={HandleclearCart}
+                    >
+                      Deletar Carrinho
+                      <DeleteForeverOutlinedIcon />
+                    </Button>
+                  </Box>
                   <Link to={"/delivery"}>
                     <Button
                       style={style.button}
                       variant="contained"
                       sx={{
-                        padding: "5px 10px",
+                        padding: isMobile ? "5% 20%" : "5px 10px",
                         fontFamily: "sans-serif",
+                        margin: isMobile ? "0.5rem 1rem" : "0",
                       }}
                     >
                       Confirmar
                     </Button>
                   </Link>
-                </Box>
-                <Box
-                  sx={{
-                    margin: "1rem",
-                    display: "flex",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    sx={{
-                      background: "#D10000",
-                      fontFamily: "unset",
-                    }}
-                    onClick={HandleclearCart}
-                  >
-                    Deletar Carrinho
-                    <DeleteForeverOutlinedIcon />
-                  </Button>
                 </Box>
               </Box>
             </Grid>
