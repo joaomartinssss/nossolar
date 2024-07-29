@@ -424,12 +424,16 @@ function BlackOverlay({ cartItems, setCartItems }) {
                           fontFamily: "unset",
                           textAlign: "center",
                           padding: "5px",
+                          fontSize: isMobile ? "1.3rem" : "",
                         }}
                       >
                         Nome completo:
                       </Typography>
                       <InputBase
-                        style={style.inputBase}
+                        style={{
+                          ...style.inputBase,
+                          padding: isMobile ? "10px" : "",
+                        }}
                         placeholder="Ex: José Silva de Silva"
                       ></InputBase>
                       <Grid container spacing={2}>
@@ -440,6 +444,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                               fontFamily: "unset",
                               textAlign: "center",
                               padding: "5px",
+                              fontSize: isMobile ? "1.3rem" : "",
                             }}
                           >
                             Telefone:
@@ -461,6 +466,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                               fontFamily: "unset",
                               textAlign: "center",
                               padding: "5px",
+                              fontSize: isMobile ? "1.3rem" : "",
                             }}
                           >
                             CEP:
@@ -482,6 +488,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                           fontFamily: "unset",
                           textAlign: "center",
                           padding: "5px",
+                          fontSize: isMobile ? "1.3rem" : "",
                         }}
                       >
                         Rua:
@@ -498,6 +505,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                               fontFamily: "unset",
                               textAlign: "center",
                               padding: "5px",
+                              fontSize: isMobile ? "1.3rem" : "",
                             }}
                           >
                             Número:
@@ -514,6 +522,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                               fontFamily: "unset",
                               textAlign: "center",
                               padding: "5px",
+                              fontSize: isMobile ? "1.3rem" : "",
                             }}
                           >
                             Complemento:
