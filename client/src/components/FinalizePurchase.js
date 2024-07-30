@@ -381,16 +381,36 @@ function BlackOverlay({ cartItems, setCartItems }) {
                     >
                       RETIRAR EM:
                     </Typography>
-                    <Box sx={style.buttonFlexContainer}>
+                    <Box
+                      sx={{
+                        ...style.buttonFlexContainer,
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
                       <Button
                         variant="contained"
-                        sx={{ fontFamily: "sans-serif" }}
+                        sx={{
+                          fontFamily: "sans-serif",
+                          minWidth: isMobile ? "300px" : "",
+                          maxHeight: isMobile ? "30px" : "",
+                          minHeight: isMobile ? "40px" : "",
+                          width: "90%",
+                          margin: "0.5rem"
+                        }}
                       >
                         Vitápolis
                       </Button>
                       <Button
                         variant="contained"
-                        sx={{ fontFamily: "sans-serif" }}
+                        sx={{
+                          fontFamily: "sans-serif",
+                          minWidth: isMobile ? "300px" : "300px",
+                          maxHeight: isMobile ? "30px" : "",
+                          minHeight: isMobile ? "40px" : "",
+                          width: "90%",
+                          margin: "0.5rem"
+                        }}
                       >
                         Suburbano
                       </Button>
@@ -418,26 +438,29 @@ function BlackOverlay({ cartItems, setCartItems }) {
                         margin: "1rem",
                       }}
                     >
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          fontFamily: "unset",
-                          textAlign: "center",
-                          padding: "5px",
-                          fontSize: isMobile ? "1.3rem" : "",
-                        }}
-                      >
-                        Nome completo:
-                      </Typography>
-                      <InputBase
-                        style={{
-                          ...style.inputBase,
-                          padding: isMobile ? "10px" : "",
-                        }}
-                        placeholder="Ex: José Silva de Silva"
-                      ></InputBase>
                       <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              fontFamily: "unset",
+                              textAlign: "center",
+                              padding: "5px",
+                              fontSize: isMobile ? "1.3rem" : "",
+                            }}
+                          >
+                            Nome completo:
+                          </Typography>
+                          <InputBase
+                            style={{
+                              ...style.inputBase,
+                              padding: isMobile ? "10px" : "",
+                            }}
+                            fullWidth
+                            placeholder="Ex: José Silva de Silva"
+                          ></InputBase>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
                           <Typography
                             sx={{
                               fontWeight: "bold",
@@ -454,12 +477,16 @@ function BlackOverlay({ cartItems, setCartItems }) {
                             style={{
                               ...style.inputBase,
                               padding: "0.5rem",
-                              width: "100%",
+                              minWidth: isMobile ? "300px" : "",
+                              maxHeight: isMobile ? "30px" : "",
+                              minHeight: isMobile ? "40px" : "",
+                              width: "97%",
                             }}
+                            fullWidth
                             placeholder="Insira seu telefone aqui"
                           ></InputMask>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                           <Typography
                             sx={{
                               fontWeight: "bold",
@@ -476,29 +503,40 @@ function BlackOverlay({ cartItems, setCartItems }) {
                             style={{
                               ...style.inputBase,
                               padding: "0.5rem",
-                              width: "100%",
+                              minWidth: isMobile ? "300px" : "",
+                              maxHeight: isMobile ? "30px" : "",
+                              minHeight: isMobile ? "40px" : "",
+                              width: "97%",
                             }}
+                            fullWidth
                             placeholder="Insira seu CEP aqui..."
                           ></InputMask>
                         </Grid>
-                      </Grid>
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          fontFamily: "unset",
-                          textAlign: "center",
-                          padding: "5px",
-                          fontSize: isMobile ? "1.3rem" : "",
-                        }}
-                      >
-                        Rua:
-                      </Typography>
-                      <InputBase
-                        style={style.inputBase}
-                        placeholder="Ex: Av: Pedro Paulino..."
-                      ></InputBase>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              fontFamily: "unset",
+                              textAlign: "center",
+                              padding: "5px",
+                              fontSize: isMobile ? "1.3rem" : "",
+                            }}
+                          >
+                            Rua:
+                          </Typography>
+                          <InputBase
+                            style={{
+                              ...style.inputBase,
+                              minWidth: isMobile ? "300px" : "",
+                              maxHeight: isMobile ? "30px" : "",
+                              minHeight: isMobile ? "50px" : "",
+                              width: "100%",
+                            }}
+                            fullWidth
+                            placeholder="Ex: Av: Pedro Paulino..."
+                          ></InputBase>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
                           <Typography
                             sx={{
                               fontWeight: "bold",
@@ -511,11 +549,18 @@ function BlackOverlay({ cartItems, setCartItems }) {
                             Número:
                           </Typography>
                           <InputBase
-                            style={{ ...style.inputBase, width: "100%" }}
+                            style={{
+                              ...style.inputBase,
+                              width: "100%",
+                              minWidth: isMobile ? "300px" : "",
+                              maxHeight: isMobile ? "30px" : "",
+                              minHeight: isMobile ? "50px" : "",
+                            }}
+                            fullWidth
                             placeholder="Número..."
                           ></InputBase>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                           <Typography
                             sx={{
                               fontWeight: "bold",
@@ -528,14 +573,27 @@ function BlackOverlay({ cartItems, setCartItems }) {
                             Complemento:
                           </Typography>
                           <InputBase
-                            style={{ ...style.inputBase, width: "100%" }}
+                            style={{
+                              ...style.inputBase,
+                              width: "100%",
+                              minWidth: isMobile ? "300px" : "",
+                              maxHeight: isMobile ? "30px" : "",
+                              minHeight: isMobile ? "50px" : "",
+                            }}
+                            fullWidth
                             placeholder="Opcional"
                           ></InputBase>
                         </Grid>
                       </Grid>
                       <Button
                         variant="contained"
-                        sx={{ margin: "1.5rem", background: "green" }}
+                        sx={{
+                          margin: "1.5rem",
+                          background: "green",
+                          minWidth: isMobile ? "330px" : "300px",
+                          maxHeight: isMobile ? "30px" : "30px",
+                          minHeight: isMobile ? "50px" : "40px",
+                        }}
                       >
                         Salvar Endereço
                       </Button>
@@ -592,9 +650,9 @@ function BlackOverlay({ cartItems, setCartItems }) {
                 <Box
                   style={{
                     ...style.buttonFlexContainer,
-                    flexDirection: isMobile ? "column" : "row",
+                    flexDirection: isMobile ? "column" : "column",
                     alignItems: "center",
-                    justifyContent: isMobile ? "center" : "space-between",
+                    justifyContent: isMobile ? "center" : "center",
                   }}
                 >
                   <Link to={"/"}>
@@ -603,7 +661,10 @@ function BlackOverlay({ cartItems, setCartItems }) {
                       sx={{
                         padding: "5px 10px",
                         fontFamily: "sans-serif",
-                        margin: isMobile ? "0.5rem 1rem" : "0",
+                        margin: isMobile ? "0.5rem 1rem" : "0.5rem",
+                        minWidth: isMobile ? "300px" : "300px",
+                        maxHeight: isMobile ? "30px" : "30px",
+                        minHeight: isMobile ? "40px" : "40px",
                       }}
                     >
                       Continuar Comprando
@@ -621,6 +682,10 @@ function BlackOverlay({ cartItems, setCartItems }) {
                       sx={{
                         background: "#D10000",
                         fontFamily: "unset",
+                        margin: isMobile ? "0.5rem 1rem" : "0.5rem",
+                        minWidth: isMobile ? "300px" : "300px",
+                        maxHeight: isMobile ? "30px" : "30px",
+                        minHeight: isMobile ? "40px" : "40px",
                       }}
                       onClick={HandleclearCart}
                     >
@@ -635,7 +700,10 @@ function BlackOverlay({ cartItems, setCartItems }) {
                       sx={{
                         padding: isMobile ? "5% 20%" : "5px 10px",
                         fontFamily: "sans-serif",
-                        margin: isMobile ? "0.5rem 1rem" : "0",
+                        margin: isMobile ? "0.5rem 1rem" : "0.5rem",
+                        minWidth: isMobile ? "300px" : "300px",
+                        maxHeight: isMobile ? "30px" : "30px",
+                        minHeight: isMobile ? "40px" : "40px",
                       }}
                     >
                       Confirmar
