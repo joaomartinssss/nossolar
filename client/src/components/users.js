@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { styled } from "@mui/system";
 import { Button, Typography, Avatar } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
+import breakPoints from "./BreakPoints";
+import { useMediaQuery } from "@mui/material";
 
 const StyledUsersContainer = styled("div")({
   position: "absolute",
@@ -28,10 +30,12 @@ const StyledTypography = styled(Typography)({
 });
 
 const Users = ({}) => {
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
   return (
     <StyledUsersContainer
       sx={{
-        marginTop: "4rem",
+        marginTop: isMobile ? "2.5rem" : "4rem",
         background: "#E1E5F2",
         border: "1px solid #003599",
       }}

@@ -11,7 +11,12 @@ import Category from "./components/Category";
 import "./App.css";
 import ProductPage from "./components/ProductPage";
 import FinalizePurchase from "./components/FinalizePurchase";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import Delivery from "./components/Delivery";
@@ -43,6 +48,7 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showProductCardButtons, setShowProductCardButtons] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -64,6 +70,15 @@ function App() {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/" || path.startsWith("/categoria")) {
+      setShowProductCardButtons(true);
+    } else {
+      setShowProductCardButtons(false);
+    }
+  }, [location]);
 
   const addToCart = (product) => {
     setCartItems((prevCartItems) => [
@@ -88,87 +103,88 @@ function App() {
   );
 
   return (
-    <Router>
-      <div className="App">
-        <TopNav
-          setIsCartOpen={setIsCartOpen}
-          cartItems={cartItems}
-          setCartItems={setCartItems}
-          searchTerm={searchTerm}
-          handleSearchChange={handleSearchChange}
-        />
-        <div
-          className="container"
-          style={{ display: "flex", flexGrow: 1, flexDirection: "column" }}
-        >
-          <Category style={{ flexGrow: 1 }} />
-          <Routes>
-            <Route
-              path="/FinalizePurchase"
-              element={
-                <FinalizePurchase
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                />
-              }
-            />
-            <Route path="/cadastro" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/delivery" element={<Delivery />} />
-            <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
-            <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
-            <Route path="/PageView" element={<PageView />} />
-            <Route path="/AreaDoCliente" element={<ClientArea />} />
-            <Route
-              path="/ProductPage2/:productId"
-              element={
-                <ProductPage2
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                />
-              }
-            />
-            <Route path="/createProduct" element={<CreateProductPage />} />
-            <Route path="/ProductControl" element={<ProductControl />} />
-            <Route path="/EditProduct/:productId" element={<EditProduct />} />
-            <Route
-              path="/categoria/:categoryId"
-              element={
-                <CategoryProductGrid
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                  setShowProductCardButtons={setShowProductCardButtons}
-                />
-              }
-            />
-          </Routes>
-          {!selectedProduct && (
-            <ProductGrid
-              products={filteredProducts}
-              addToCart={addToCart}
-              onSelectProduct={setSelectedProduct}
-              showProductCardButtons={showProductCardButtons}
-            />
-          )}
-        </div>
-        {isCartOpen && (
-          <Cart
-            cartItems={cartItems}
-            setCartItems={setCartItems}
-            setCartOpen={setIsCartOpen}
+    <div className="App">
+      <TopNav
+        setIsCartOpen={setIsCartOpen}
+        cartItems={cartItems}
+        setCartItems={setCartItems}
+        searchTerm={searchTerm}
+        handleSearchChange={handleSearchChange}
+      />
+      <div
+        className="container"
+        style={{ display: "flex", flexGrow: 1, flexDirection: "column" }}
+      >
+        <Category style={{ flexGrow: 1 }} />
+        <Routes>
+          <Route
+            path="/FinalizePurchase"
+            element={
+              <FinalizePurchase
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
+            }
+          />
+          <Route path="/cadastro" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/delivery" element={<Delivery />} />
+          <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
+          <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
+          <Route path="/PageView" element={<PageView />} />
+          <Route path="/AreaDoCliente" element={<ClientArea />} />
+          <Route
+            path="/ProductPage2/:productId"
+            element={
+              <ProductPage2 cartItems={cartItems} setCartItems={setCartItems} />
+            }
+          />
+          <Route path="/createProduct" element={<CreateProductPage />} />
+          <Route path="/ProductControl" element={<ProductControl />} />
+          <Route path="/EditProduct/:productId" element={<EditProduct />} />
+          <Route
+            path="/categoria/:categoryId"
+            element={
+              <CategoryProductGrid
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+                setShowProductCardButtons={setShowProductCardButtons}
+              />
+            }
+          />
+        </Routes>
+        {!selectedProduct && (
+          <ProductGrid
+            products={filteredProducts}
+            addToCart={addToCart}
+            onSelectProduct={setSelectedProduct}
+            showProductCardButtons={showProductCardButtons}
           />
         )}
-        <Rodape />
-        <ScrollToTopButton
-          onClick={scrollToTop}
-          variant="contained"
-          color="primary"
-        >
-          <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
-        </ScrollToTopButton>
       </div>
-    </Router>
+      {isCartOpen && (
+        <Cart
+          cartItems={cartItems}
+          setCartItems={setCartItems}
+          setCartOpen={setIsCartOpen}
+        />
+      )}
+      <Rodape />
+      <ScrollToTopButton
+        onClick={scrollToTop}
+        variant="contained"
+        color="primary"
+      >
+        <ArrowUpwardIcon sx={{ fontSize: "30px" }} />
+      </ScrollToTopButton>
+    </div>
   );
 }
 
-export default App;
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;
