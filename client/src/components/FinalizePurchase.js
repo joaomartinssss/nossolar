@@ -67,6 +67,7 @@ const style = {
     background: "#E5E7E6",
     border: "1px solid #A3A9AA",
     borderRadius: "3px",
+    padding: "10px",
   },
   link: {
     textDecoration: "none",
@@ -103,6 +104,8 @@ const style = {
 };
 
 function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
   return (
     <Grid container alignItems="center" style={style.grid} sx={{}}>
       <Grid item xs={2}>
@@ -116,15 +119,20 @@ function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
         />
       </Grid>
       <Grid item xs={3}>
-        <Typography sx={{ fontWeight: "bold" }}>{item.name}</Typography>
+        <Typography
+          sx={{ fontWeight: "bold", marginLeft: isMobile ? "1rem" : "" }}
+        >
+          {item.name}
+        </Typography>
       </Grid>
       <Grid
         item
-        xs={2}
+        xs={3}
         style={{
           display: "flex",
           alignItems: "center",
           borderRadius: "5px",
+          marginLeft: isMobile ? "1rem" : "",
         }}
       >
         <IconButton
@@ -140,15 +148,18 @@ function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
           <AddIcon sx={{ color: "#14248A" }} />
         </IconButton>
       </Grid>
-      <Grid item xs={2}>
-        <Typography sx={{ fontWeight: "bold" }}>
-          {(item.price * item.quantity).toFixed(2)}
-        </Typography>
-      </Grid>
       <Grid item xs={1}>
         <IconButton onClick={() => handleRemove(item.id)}>
-          <DeleteForeverOutlinedIcon sx={{ color: "red" }} />
+          <DeleteForeverOutlinedIcon
+            sx={{ color: "red", marginLeft: "3rem" }}
+          />
         </IconButton>
+      </Grid>
+      <Grid item xs={6} sx={{ marginLeft: isMobile ? "2rem" : "" }}>
+        <Typography sx={{ fontWeight: "bold" }}>
+          {" "}
+          Total: R$ {(item.price * item.quantity).toFixed(2)}
+        </Typography>
       </Grid>
     </Grid>
   );
@@ -396,7 +407,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                           maxHeight: isMobile ? "30px" : "",
                           minHeight: isMobile ? "40px" : "",
                           width: "90%",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                       >
                         Vitápolis
@@ -409,7 +420,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                           maxHeight: isMobile ? "30px" : "",
                           minHeight: isMobile ? "40px" : "",
                           width: "90%",
-                          margin: "0.5rem"
+                          margin: "0.5rem",
                         }}
                       >
                         Suburbano
@@ -507,6 +518,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                               maxHeight: isMobile ? "30px" : "",
                               minHeight: isMobile ? "40px" : "",
                               width: "97%",
+                              padding: isMobile ? "" : "",
                             }}
                             fullWidth
                             placeholder="Insira seu CEP aqui..."
