@@ -10,6 +10,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useMediaQuery } from "@material-ui/core";
+import breakPoints from "./BreakPoints";
 
 const style = {
   backGround: {
@@ -19,6 +21,8 @@ const style = {
     color: "black",
     fontWeight: "bold",
     margin: "10px",
+    marginBottom: "1.5rem",
+    marginTop: "1.5rem",
   },
   button: {
     color: "white",
@@ -44,7 +48,7 @@ const style = {
   },
   card: {
     backgroundColor: "white", // Cor do Card
-    padding: "20px", // Espaçamento interno do Card
+    padding: "60px", // Espaçamento interno do Card
   },
 };
 
@@ -54,6 +58,8 @@ function LoginPage() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
+
+  const isMobile = useMediaQuery(breakPoints.mobile);
 
   const handleLogin = async () => {
     try {
@@ -84,7 +90,7 @@ function LoginPage() {
   return (
     <div
       style={{
-        background: "#78C0E0",
+        background: "#CDD1DE",
         position: "fixed",
         top: 0,
         left: 0,
@@ -100,14 +106,24 @@ function LoginPage() {
           <PersonIcon style={style.personIcon} />
           <Typography style={style.text}>Insira seu Email.</Typography>
           <InputBase
-            style={style.inputBase}
+            style={{
+              ...style.inputBase,
+              width: isMobile ? "300px" : "250px",
+              height: isMobile ? "50px" : "40px",
+              padding: "1rem",
+            }}
             placeholder="user@exemplo.com..."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></InputBase>
           <Typography style={style.text}>Insira sua Senha.</Typography>
           <InputBase
-            style={style.inputBase}
+            style={{
+              ...style.inputBase,
+              width: isMobile ? "300px" : "250px",
+              height: isMobile ? "50px" : "40px",
+              padding: "1rem",
+            }}
             type="password"
             placeholder="Senha..."
             value={senha}
@@ -115,7 +131,14 @@ function LoginPage() {
           ></InputBase>
           <Link to={""}>
             <Box>
-              <Button style={{ marginBottom: "1rem", marginTop: "0" }}>
+              <Button
+                style={{
+                  marginBottom: "1rem",
+                  marginTop: "1rem",
+                  fontWeight: "bold",
+                  fontSize: "1.1rem",
+                }}
+              >
                 Esqueci a Senha
               </Button>
             </Box>
@@ -123,7 +146,13 @@ function LoginPage() {
           <Box>
             <Button
               variant="contained"
-              style={{ ...style.button, background: "green" }}
+              style={{
+                ...style.button,
+                background: "green",
+                width: isMobile ? "350px" : "250px",
+                height: isMobile ? "50px" : "40px",
+                fontWeight: "bold",
+              }}
               onClick={handleLogin}
             >
               Entrar
@@ -131,7 +160,15 @@ function LoginPage() {
           </Box>
           <Typography style={style.text}>Ainda não possui cadastro?</Typography>
           <Link to={"/cadastro"}>
-            <Button variant="contained" style={{ ...style.button }}>
+            <Button
+              variant="contained"
+              style={{
+                ...style.button,
+                width: isMobile ? "350px" : "250px",
+                height: isMobile ? "50px" : "40px",
+                fontWeight: "bold",
+              }}
+            >
               Cadastre-se
             </Button>
           </Link>
