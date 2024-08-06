@@ -28,6 +28,7 @@ import ProductPage2 from "./components/ProductPage2";
 import CreateProductPage from "./components/CreateProductPage";
 import ProductControl from "./components/ProductControl";
 import EditProduct from "./components/EditProduct";
+import Payment from "./payment";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -128,7 +129,7 @@ function App() {
           />
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/delivery" element={<Delivery />} />
+          <Route path="/Pagamento" element={<Payment />} />
           <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
           <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
           <Route path="/PageView" element={<PageView />} />

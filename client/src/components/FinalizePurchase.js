@@ -705,7 +705,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                       <DeleteForeverOutlinedIcon />
                     </Button>
                   </Box>
-                  <Link to={"/delivery"}>
+                  <Link to={"/Pagamento"}>
                     <Button
                       style={style.button}
                       variant="contained"
