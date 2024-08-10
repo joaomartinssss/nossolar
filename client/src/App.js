@@ -19,7 +19,6 @@ import {
 } from "react-router-dom";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
-import Delivery from "./components/Delivery";
 import RetirarNaLoja from "./components/RetirarNaLoja";
 import EntregarEmCasa from "./components/EntregarEmCasa";
 import PageView from "./components/PageVIew";

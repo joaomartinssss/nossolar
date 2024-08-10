@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
+import { useMediaQuery } from "@mui/material";
+import breakPoints from "./BreakPoints";
 
 const style = {
   card: {
@@ -18,7 +20,8 @@ const style = {
   text: {
     color: "black",
     fontWeight: "bold",
-    margin: "10px",
+    margin: "1.2rem",
+    textAlign: "center  ",
   },
   button: {
     color: "white",
@@ -90,15 +93,17 @@ function RegisterPage() {
     }
   };
 
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
   return (
     <div
       style={{
-        background: "#78C0E0",
+        background: "#CDD1DE",
         position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
-        height: "100vh",
+        height: isMobile ? "108vh" : "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -108,7 +113,7 @@ function RegisterPage() {
       <Card style={style.card}>
         <CardContent style={style.cardContent}>
           <PersonIcon style={style.personIcon} />
-          <Typography style={style.text} variant="h5">
+          <Typography style={{ ...style.text, width: "120%" }} variant="h5">
             Cadastre-se no Supermercado Nosso Lar
           </Typography>
           <form onSubmit={handleSubmit}>
@@ -123,7 +128,13 @@ function RegisterPage() {
                 Insira seu Nome completo:
               </Typography>
               <InputBase
-                style={style.inputBase}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "250px" : "100%",
+                  height: isMobile ? "40px" : "40px",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 placeholder="Ex: José Silva de Silva"
                 name="name"
                 value={formData.name}
@@ -132,7 +143,13 @@ function RegisterPage() {
               <Typography style={style.text}>Insira seu CEP:</Typography>
               <InputMask
                 mask="99999 - 999"
-                style={{ ...style.inputBase, padding: "0.5rem" }}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 1rem" : "0.5rem",
+                  width: isMobile ? "200px" : "100%",
+                  height: isMobile ? "40px" : "",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 placeholder="Insira seu CEP aqui..."
                 name="cep"
                 value={formData.cep}
@@ -141,7 +158,13 @@ function RegisterPage() {
               <Typography style={style.text}>Insira seu telefone</Typography>
               <InputMask
                 mask="(99) 99999 - 9999"
-                style={{ ...style.inputBase, padding: "0.5rem" }}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 1rem" : "0.5rem",
+                  width: isMobile ? "200px" : "100%",
+                  height: isMobile ? "40px" : "",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 placeholder="(11) 91234 - 5678"
                 name="telefone"
                 value={formData.telefone}
@@ -149,7 +172,13 @@ function RegisterPage() {
               ></InputMask>
               <Typography style={style.text}>Insira seu Email:</Typography>
               <InputBase
-                style={style.inputBase}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "250px" : "100%",
+                  height: isMobile ? "40px" : "35px",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 placeholder="user@exemplo.com..."
                 name="email"
                 value={formData.email}
@@ -157,7 +186,13 @@ function RegisterPage() {
               ></InputBase>
               <Typography style={style.text}>Insira sua Senha:</Typography>
               <InputBase
-                style={style.inputBase}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "250px" : "100%",
+                  height: isMobile ? "40px" : "40px",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 type="password"
                 placeholder="Senha..."
                 name="senha"
@@ -167,17 +202,29 @@ function RegisterPage() {
               <Typography style={style.text}>Insira seu CPF:</Typography>
               <InputMask
                 mask="999.999.999-99"
-                style={{ ...style.inputBase, padding: "0.5rem" }}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "220px" : "100%",
+                  height: isMobile ? "40px" : "",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 placeholder="Ex: 123.456.789-00"
                 name="cpf"
                 value={formData.cpf}
                 onChange={handleChange}
               ></InputMask>
-              <Typography style={style.text}>
+              <Typography style={{ ...style.text, width: "100%" }}>
                 Insira sua data de nascimento:
               </Typography>
               <InputBase
-                style={style.inputBase}
+                style={{
+                  ...style.inputBase,
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "250px" : "100%",
+                  height: isMobile ? "40px" : "40px",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 type="date"
                 InputLabelProps={{
                   shrink: true,
@@ -189,21 +236,36 @@ function RegisterPage() {
               <Button
                 variant="contained"
                 type="submit"
-                style={{ ...style.button, background: "green" }}
+                style={{
+                  ...style.button,
+                  background: "green",
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "250px" : "300px",
+                  height: isMobile ? "40px" : "",
+                  textAlign: isMobile ? "center" : "",
+                  marginTop: "2rem",
+                }}
                 sx={{ marginTop: "15px" }}
               >
                 Confirmar
               </Button>
             </Box>
           </form>
-          <Typography style={style.text} sx={{ marginTop: "20px" }}>
+          <Typography style={{ ...style.text, width: "100%"}} variant="h6">
             Possui Cadastro?
           </Typography>
           <Box>
             <Link to={"/login"}>
               <Button
                 style={style.button}
-                sx={{ marginBottom: "20px", marginTop: "10px" }}
+                sx={{
+                  marginBottom: "20px",
+                  marginTop: "10px",
+                  padding: isMobile ? "0 0.5rem" : "0.5rem",
+                  width: isMobile ? "250px" : "300px",
+                  height: isMobile ? "40px" : "",
+                  textAlign: isMobile ? "center" : "",
+                }}
                 variant="contained"
               >
                 Acesse sua conta
