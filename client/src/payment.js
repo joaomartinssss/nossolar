@@ -45,7 +45,6 @@ function Payment() {
     <div
       style={{
         background: "#CDD1DE",
-        position: "fixed",
         top: 0,
         display: "flex",
         flexDirection: "column",
