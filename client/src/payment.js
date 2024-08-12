@@ -1,8 +1,16 @@
+import { useState } from "react";
 import { Card, Typography, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import Rodape from "./components/Rodape";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-function payment() {
+function Payment() {
+  const [selectOption, setSelectOption] = useState("");
+
+  const handleSelect = (option) => {
+    setSelectOption(option);
+  };
+
   const style = {
     image: {
       width: "100px",
@@ -12,11 +20,27 @@ function payment() {
     button: {
       margin: "1rem",
     },
+    selectButton: {
+      margin: "1rem",
+      backgroundColor: "gold",
+      color: "black",
+      fontWeight: "bold",
+    },
+    confirmButton: {
+      margin: "1rem",
+      backgroundColor: "green",
+      color: "#fff",
+      width: "300px",
+    },
     typography: {
       textAlign: "left",
       fontWeight: "bold",
     },
+    icon: {
+      marginLeft: "1rem",
+    },
   };
+
   return (
     <div
       style={{
@@ -76,17 +100,40 @@ function payment() {
           Formas de Pagamento:
         </Typography>
         <Box sx={{ marginTop: "1rem" }}>
-          <Button style={style.button} variant="contained">
+          <Button
+            style={
+              selectOption === "retirada" ? style.selectButton : style.button
+            }
+            variant="contained"
+            onClick={() => handleSelect("retirada")}
+          >
             Pagar na retirada
+            {selectOption === "retirada" && (
+              <CheckCircleOutlineIcon style={style.icon} />
+            )}
           </Button>
-          <Button style={style.button} variant="contained">
+          <Button
+            style={
+              selectOption === "entrega" ? style.selectButton : style.button
+            }
+            variant="contained"
+            onClick={() => handleSelect("entrega")}
+          >
             Pagar na Entrega
+            {selectOption === "entrega" && (
+              <CheckCircleOutlineIcon style={style.icon} />
+            )}
           </Button>
         </Box>
+        {selectOption && (
+          <Button style={style.confirmButton} variant="contained">
+            Confirmar
+          </Button>
+        )}
       </Card>
       <Rodape />
     </div>
   );
 }
 
-export default payment;
+export default Payment;
