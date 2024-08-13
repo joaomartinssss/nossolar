@@ -12,8 +12,8 @@ function AdmPage() {
   };
 
   return (
-    <div className="div">
-      <Card className="card">
+    <div className="divadm">
+      <Card className="cardadm">
         <Typography variant="h4" sx={{ fontWeight: "bold", marginTop: "2rem" }}>
           Página de Administração do Supermercado Nosso Lar
         </Typography>
@@ -23,9 +23,16 @@ function AdmPage() {
               Pagina de Controle de Produtos
             </Button>
           </Link>
-          <Button style={style.button} variant="contained">
-            Visualizar Pedidos
-          </Button>
+          <Link to={"/PedidosPendentes"}>
+            <Button style={style.button} variant="contained">
+              Visualizar Pedidos Pendentes
+            </Button>
+          </Link>
+          <Link to={"/Delivery"}>
+            <Button style={style.button} variant="contained">
+              Visualizar Pedidos Prontos
+            </Button>
+          </Link>
           <Link
             to={
               "https://wa.me/5511980607358?text=João,+preciso+de+uma+ajuda+no+sistema"

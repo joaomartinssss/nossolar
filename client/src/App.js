@@ -146,7 +146,7 @@ function App() {
                   />
                 }
               />
-              <Route path="/Pedidos" element={<Order />} />
+              <Route path="/PedidosPendentes" element={<Order />} />
               <Route path="/Delivery" element={<DeliveryPage />} />
               <Route path="/ADM" element={<AdmPage />} />
               <Route path="/createProduct" element={<CreateProductPage />} />
