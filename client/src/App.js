@@ -28,6 +28,7 @@ import EditProduct from "./components/EditProduct";
 import Payment from "./components/Payment";
 import FinalizePurchase from "./components/FinalizePurchase";
 import AdmPage from "./components/AdmPage";
+import Order from "./components/OrderPage";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -145,6 +146,7 @@ function App() {
                   />
                 }
               />
+              <Route path="/Pedidos" element={<Order />} />
               <Route path="/Delivery" element={<DeliveryPage />} />
               <Route path="/ADM" element={<AdmPage />} />
               <Route path="/createProduct" element={<CreateProductPage />} />
