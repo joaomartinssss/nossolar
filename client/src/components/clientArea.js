@@ -64,9 +64,15 @@ function ClientArea() {
       }}
     >
       <Card sx={style.card}>
-        <Typography variant="h5" sx={{ fontWeight: "bold", margin: "1.5rem" }}>
-          Área do Cliente
-        </Typography>
+        <Box sx={{ marginTop: "1rem", display: "flex" }}>
+          <PersonIcon sx={{ fontSize: "2rem", color: "#003599" }} />
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: "bold", marginLeft: "0.5rem" }}
+          >
+            Área do Cliente
+          </Typography>
+        </Box>
         <Box
           sx={{
             justifyContent: "center",
@@ -109,6 +115,12 @@ function ClientArea() {
               Endereço: Rua Sebastião Mamede Nº:251 apto: 12B - Conjunto
               Habitacional setor D
             </Typography>
+            <Button
+              variant="contained"
+              sx={{ background: "green", marginTop: "1rem" }}
+            >
+              Salvar Alterações
+            </Button>
           </CardContent>
           <CardContent sx={style.cardContent}>
             <Typography variant="h6" sx={style.typography}>

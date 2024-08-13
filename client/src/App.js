@@ -146,6 +146,7 @@ function App() {
                   />
                 }
               />
+              <Route path="/areaDoCliente" element={<ClientArea />} />
               <Route path="/PedidosPendentes" element={<Order />} />
               <Route path="/Delivery" element={<DeliveryPage />} />
               <Route path="/ADM" element={<AdmPage />} />
