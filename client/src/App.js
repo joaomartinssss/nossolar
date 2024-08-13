@@ -20,12 +20,12 @@ import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import RetirarNaLoja from "./components/RetirarNaLoja";
 import EntregarEmCasa from "./components/EntregarEmCasa";
-import PageView from "./components/PageView";
+import DeliveryPage from "./components/DeliveryPage";
 import ClientArea from "./components/clientArea";
 import CreateProductPage from "./components/CreateProductPage";
 import ProductControl from "./components/ProductControl";
 import EditProduct from "./components/EditProduct";
-import Payment from "./payment";
+import Payment from "./components/Payment";
 import FinalizePurchase from "./components/FinalizePurchase";
 import AdmPage from "./components/AdmPage";
 
@@ -145,7 +145,7 @@ function App() {
                   />
                 }
               />
-              <Route path="/PageView" element={<PageView />} />
+              <Route path="/Delivery" element={<DeliveryPage />} />
               <Route path="/ADM" element={<AdmPage />} />
               <Route path="/createProduct" element={<CreateProductPage />} />
               <Route path="/ProductControl" element={<ProductControl />} />

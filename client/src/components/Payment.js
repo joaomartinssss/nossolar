@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Typography, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import Rodape from "./components/Rodape";
+import Rodape from "./Rodape";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function Payment() {
