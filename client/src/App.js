@@ -20,13 +20,14 @@ import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import RetirarNaLoja from "./components/RetirarNaLoja";
 import EntregarEmCasa from "./components/EntregarEmCasa";
-import PageView from "./components/PageVIew";
+import PageView from "./components/PageView";
 import ClientArea from "./components/clientArea";
 import CreateProductPage from "./components/CreateProductPage";
 import ProductControl from "./components/ProductControl";
 import EditProduct from "./components/EditProduct";
 import Payment from "./payment";
 import FinalizePurchase from "./components/FinalizePurchase";
+import AdmPage from "./components/AdmPage";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -144,6 +145,8 @@ function App() {
                   />
                 }
               />
+              <Route path="/PageView" element={<PageView />} />
+              <Route path="/ADM" element={<AdmPage />} />
               <Route path="/createProduct" element={<CreateProductPage />} />
               <Route path="/ProductControl" element={<ProductControl />} />
               <Route path="/EditProduct/:productId" element={<EditProduct />} />
