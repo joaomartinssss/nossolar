@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 const style = {
   card: {
@@ -29,7 +30,7 @@ const style = {
     boxSizing: "border-box",
     display: "inline-flex",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
   personIcon: {
     fontSize: 30,
@@ -45,6 +46,7 @@ const style = {
     alignItems: "center",
     flexDirection: "column",
     padding: "1rem",
+    alignItems: "center",
   },
 };
 
@@ -54,7 +56,7 @@ function ClientArea() {
       style={{
         top: 0,
         left: 0,
-        background: "green",
+        background: "lightblue",
         width: "100%",
         height: "100%",
         position: "fixed",
@@ -123,12 +125,16 @@ function ClientArea() {
             </Button>
           </CardContent>
           <CardContent sx={style.cardContent}>
-            <Typography variant="h6" sx={style.typography}>
-              Histórico de Compras
-            </Typography>
-            <Typography variant="h6" sx={style.typography}>
-              Endereços Salvos
-            </Typography>
+            <Link style={{ width: "35rem", color: "black" }}>
+              <Typography variant="h6" sx={style.typography}>
+                Histórico de Compras
+              </Typography>
+            </Link>
+            <Link style={{ width: "35rem", color: "black" }}>
+              <Typography variant="h6" sx={style.typography}>
+                Endereços Salvos
+              </Typography>
+            </Link>
           </CardContent>
         </Box>
       </Card>

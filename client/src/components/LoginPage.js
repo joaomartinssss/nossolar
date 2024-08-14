@@ -103,6 +103,17 @@ function LoginPage() {
     >
       <Card style={style.card}>
         <CardContent style={style.cardContent}>
+          <Typography
+            variant={isMobile ? "h5" : "h5"}
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "1rem",
+              fontSize: isMobile ? "1.5rem" : "2rem",
+              textAlign: "center",
+            }}
+          >
+            Entre no Supermercado Nosso Lar
+          </Typography>
           <PersonIcon style={style.personIcon} />
           <Typography style={style.text}>Insira seu Email.</Typography>
           <InputBase

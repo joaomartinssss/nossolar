@@ -29,6 +29,7 @@ import Payment from "./components/Payment";
 import FinalizePurchase from "./components/FinalizePurchase";
 import AdmPage from "./components/AdmPage";
 import Order from "./components/OrderPage";
+import HistoryPurchase from "./components/HistoryPurchase";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -146,6 +147,7 @@ function App() {
                   />
                 }
               />
+              <Route path="/HistoricoDeCompras" element={<HistoryPurchase />} />
               <Route path="/areaDoCliente" element={<ClientArea />} />
               <Route path="/PedidosPendentes" element={<Order />} />
               <Route path="/Delivery" element={<DeliveryPage />} />
