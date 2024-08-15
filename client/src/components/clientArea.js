@@ -1,4 +1,5 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -51,6 +52,27 @@ const style = {
 };
 
 function ClientArea() {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/auth/user/3"
+        );
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados do usuário", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!userData) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <div
       style={{
@@ -90,32 +112,31 @@ function ClientArea() {
               Informações Pessoais:
             </Typography>
             <Typography variant="h6" style={style.typography}>
-              Nome: João Victor Martins da Silva
+              Nome: {userData.name}
               <Button sx={{ color: "#7C7C7C" }}>
                 <EditIcon />
               </Button>
             </Typography>
             <Typography variant="h6" style={style.typography}>
-              CEP: 06663-055
+              CEP: {userData.cep}
               <Button sx={{ color: "#7C7C7C" }}>
                 <EditIcon />
               </Button>
             </Typography>
             <Typography variant="h6" style={style.typography}>
-              Telefone: (11) 98060-7358
+              Telefone: {userData.telefone}
               <Button sx={{ color: "#7C7C7C" }}>
                 <EditIcon />
               </Button>
             </Typography>
             <Typography variant="h6" style={style.typography}>
-              Email: jvictor77761@gmail.com
+              Email: {userData.email}
             </Typography>
             <Typography variant="h6" style={style.typography}>
-              CPF: 539.720.298-37
+              CPF: {userData.cpf}
             </Typography>
             <Typography variant="h6" style={style.typography}>
-              Endereço: Rua Sebastião Mamede Nº:251 apto: 12B - Conjunto
-              Habitacional setor D
+              Endereço: {userData.endereco}
             </Typography>
             <Button
               variant="contained"
@@ -125,7 +146,10 @@ function ClientArea() {
             </Button>
           </CardContent>
           <CardContent sx={style.cardContent}>
-            <Link to={"/historicoDeCompras"} style={{ width: "35rem", color: "black" }}>
+            <Link
+              to={"/historicoDeCompras"}
+              style={{ width: "35rem", color: "black" }}
+            >
               <Typography variant="h6" sx={style.typography}>
                 Histórico de Compras
               </Typography>
