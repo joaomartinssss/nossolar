@@ -125,7 +125,7 @@ function ClientArea() {
             </Button>
           </CardContent>
           <CardContent sx={style.cardContent}>
-            <Link style={{ width: "35rem", color: "black" }}>
+            <Link to={"/historicoDeCompras"} style={{ width: "35rem", color: "black" }}>
               <Typography variant="h6" sx={style.typography}>
                 Histórico de Compras
               </Typography>

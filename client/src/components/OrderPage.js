@@ -8,9 +8,12 @@ import {
   Box,
 } from "@mui/material";
 import "./OrderPage.css";
+import breakPoints from "./BreakPoints";
+import { useMediaQuery } from "@mui/material";
 
 function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const isMobile = useMediaQuery(breakPoints.mobile);
 
   const pendingOrders = [
     {
@@ -31,8 +34,8 @@ function Order() {
   };
 
   return (
-    <div className="div">
-      <Card className="card">
+    <div className={isMobile ? "div mobile" : "div"}>
+      <Card className={isMobile ? "card mobile" : "card"}>
         <CardContent>
           <Typography
             variant="h4"
@@ -54,7 +57,7 @@ function Order() {
                     width: "100%",
                     color: "black",
                     padding: "10px 35%",
-                    border: "1px solid blue",
+                    border: "1px solid blue",                    
                     ":hover": {
                       backgroundColor: "#E5E7E6",
                       border: "1px solid blue",
@@ -62,7 +65,14 @@ function Order() {
                     },
                   }}
                 >
-                  <Typography sx={{ fontWeight: "bold", textAlign: "center" }}>
+                  <Typography
+                    sx={{
+                      fontWeight: isMobile ? "bold" : "bold",
+                      textAlign: "center",
+                      width: isMobile ? "90%" : "40rem",
+                      height: isMobile ? "3rem" : "3rem",
+                    }}
+                  >
                     Pedido #{order.id}
                   </Typography>
                 </Button>

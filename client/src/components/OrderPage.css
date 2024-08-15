@@ -1,3 +1,4 @@
+/* Estilos padrão para desktop */
 .div {
   background-color: #78c0e0;
   position: fixed;
@@ -21,4 +22,17 @@
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+}
+
+/* Media Query para dispositivos móveis */
+@media (max-width: 768px) {
+  .div {
+    padding: 1rem;
+  }
+
+  .card {
+    width: 80%;
+    margin: 1rem;
+    padding: 1rem;
+  }
 }
