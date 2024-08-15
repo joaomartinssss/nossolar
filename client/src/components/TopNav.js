@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -13,6 +13,7 @@ import Users from "./users";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
+import axios from "axios";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -106,6 +107,22 @@ const TopNav = ({
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
   const [openUsersCard, setOpenUsersCard] = useState();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/auth/user/3"
+        );
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados do usuário", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleClose = () => {
     setOpenUsersCard(false);
@@ -226,7 +243,9 @@ const TopNav = ({
                     setCartOpen={setIsCartOpen}
                   />
                 </CartContainer>
-                <Link to={"/login"}>
+                <Link
+                  to={userData && userData.name ? "/areaDoCliente" : "/login"}
+                >
                   <IconButton
                     size="large"
                     color="primary"
@@ -242,7 +261,9 @@ const TopNav = ({
                         color: "#D3D3D3",
                       }}
                     >
-                      Entre ou cadastre-se
+                      {userData && userData.name
+                        ? userData.name
+                        : "Entre ou cadastre-se"}
                     </span>
                     <AccountCircleIcon />
                   </IconButton>
