@@ -100,7 +100,7 @@ function Order() {
             sx={{
               fontWeight: "bold",
               margin: "1rem",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "2rem",
+              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
             }}
           >
             Detalhes do Pedido #{selectedOrder.id}
@@ -110,7 +110,7 @@ function Order() {
             sx={{
               margin: "1rem",
               fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "2rem",
+              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
             }}
           >
             Status: {selectedOrder.status}
@@ -120,7 +120,7 @@ function Order() {
             sx={{
               margin: "1rem",
               fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "2rem",
+              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
             }}
           >
             Forma de Pagamento: {selectedOrder.paymentOption}
@@ -130,7 +130,7 @@ function Order() {
             sx={{
               margin: "1rem",
               fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "2rem",
+              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
             }}
           >
             Opção de Entrega: {selectedOrder.deliveryOption}
@@ -140,13 +140,24 @@ function Order() {
               variant="h6"
               sx={{
                 fontWeight: "bold",
-                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "2rem",
+                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
               }}
             >
               Itens do Pedido:
             </Typography>
             {selectedOrder.items.map((item, index) => (
-              <Typography key={index} variant="body2" sx={{ margin: "0.5rem", fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "2rem" }}>
+              <Typography
+                key={index}
+                variant="body2"
+                sx={{
+                  margin: "0.5rem",
+                  fontSize: isMobile
+                    ? "1.5rem"
+                    : isTablet
+                    ? "2.5rem"
+                    : "1.5rem",
+                }}
+              >
                 {item.name} - {item.quantity} x {item.price}
               </Typography>
             ))}
