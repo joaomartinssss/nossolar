@@ -142,12 +142,27 @@ function ProductPage2({ cartItems, setCartItems }) {
               </Typography>
               <Button
                 variant="contained"
-                style={{ background: "#004BA8", fontWeight: "bold", fontSize: isMobile ? "18px" : ""}}
+                sx={{
+                  color: "white", // Cor padrão do texto
+                  fontWeight: "bold",
+                  fontSize: isMobile ? "18px" : "",
+                  "&:hover": {
+                    backgroundColor: "white", // Cor de fundo no hover
+                    color: "#1976d2", // Cor do texto no hover
+                    border: "1.5px solid #1976d2", // Cor da borda no hover
+                  },
+                }}
                 onClick={handleAddToCart}
               >
                 Adicionar ao Carrinho
               </Button>
-              <Typography sx={{ color: "gray", marginTop: ".5rem", fontSize: isMobile ? "20px" : "" }}>
+              <Typography
+                sx={{
+                  color: "gray",
+                  marginTop: ".5rem",
+                  fontSize: isMobile ? "20px" : "",
+                }}
+              >
                 {product.description}
               </Typography>
             </div>

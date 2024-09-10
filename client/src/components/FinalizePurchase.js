@@ -40,11 +40,6 @@ const style = {
     fontWeight: "bold",
     margin: "10px",
   },
-  button: {
-    backgroundColor: "green",
-    color: "white",
-  },
-
   spacer: {
     flexGrow: 1, // This will take up the remaining space and push the button down
   },
@@ -391,12 +386,19 @@ function BlackOverlay({ cartItems, setCartItems }) {
                     <Button
                       variant="contained"
                       sx={{
+                        fontWeight: "bold",
                         padding: "5px 10px",
                         fontFamily: "sans-serif",
                         margin: isMobile ? "0.5rem 1rem" : "0.5rem",
                         minWidth: isMobile ? "300px" : "300px",
                         maxHeight: isMobile ? "30px" : "30px",
                         minHeight: isMobile ? "40px" : "40px",
+                        "&:hover": {
+                          backgroundColor: "white", // Cor de fundo no hover
+                          color: "#1976d2", // Cor do texto no hover
+                          border: "1px solid #1976d2", // Cor da borda no hover
+                          fontWeight: "bold",
+                        },
                       }}
                     >
                       Continuar Comprando
@@ -418,6 +420,12 @@ function BlackOverlay({ cartItems, setCartItems }) {
                         minWidth: isMobile ? "300px" : "300px",
                         maxHeight: isMobile ? "30px" : "30px",
                         minHeight: isMobile ? "40px" : "40px",
+                        "&:hover": {
+                          backgroundColor: "white", // Cor de fundo no hover
+                          color: "red", // Cor do texto no hover
+                          border: "1px solid red", // Cor da borda no hover
+                          fontWeight: "bold",
+                        },
                       }}
                       onClick={HandleclearCart}
                     >
@@ -427,15 +435,22 @@ function BlackOverlay({ cartItems, setCartItems }) {
                   </Box>
                   <Link to={"/Pagamento"}>
                     <Button
-                      style={style.button}
                       variant="contained"
                       sx={{
+                        background: "green",
+                        color: "white",
                         padding: isMobile ? "5% 20%" : "5px 10px",
                         fontFamily: "sans-serif",
                         margin: isMobile ? "0.5rem 1rem" : "0.5rem",
                         minWidth: isMobile ? "300px" : "300px",
                         maxHeight: isMobile ? "30px" : "30px",
                         minHeight: isMobile ? "40px" : "40px",
+                        "&:hover": {
+                          background: "white", // Cor de fundo no hover
+                          color: "green", // Cor do texto no hover
+                          border: "1px solid green", // Cor da borda no hover
+                          fontWeight: "bold",
+                        },
                       }}
                     >
                       Confirmar

@@ -128,10 +128,16 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
               variant="contained"
               color="primary"
               onClick={handleAddToCart}
-              style={{
+              sx={{
                 fontSize: `${fontSize}rem`,
                 width: "100%",
-                background: "#003599",
+                color: "",
+                fontWeight: "bold",            
+                "&:hover": {
+                  backgroundColor: "white", // Cor de fundo quando hover
+                  color: "#1976d2", // Cor do texto quando hover
+                  border: " 1px solid #1976d2", // Cor da borda quando hover
+                },
               }}
             >
               Adicionar
