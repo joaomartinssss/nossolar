@@ -1,14 +1,41 @@
-import { useState } from "react";
-import { Card, Typography, Button, Box } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  Card,
+  Typography,
+  Button,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import Rodape from "./Rodape";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CloseIcon from "@mui/icons-material/Close";
+import PixIcon from "@mui/icons-material/Pix";
+import PaymentIcon from "@mui/icons-material/Payment";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import breakPoints from "./BreakPoints";
+import { useMediaQuery } from "@mui/material";
 
 function Payment() {
   const [selectOption, setSelectOption] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const isMobile = useMediaQuery(breakPoints.mobile);
+
+  useEffect(() => {
+    setOpenDialog(true);
+  }, []);
 
   const handleSelect = (option) => {
     setSelectOption(option);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
 
   const style = {
@@ -22,9 +49,8 @@ function Payment() {
     },
     selectButton: {
       margin: "1rem",
-      backgroundColor: "gold",
-      color: "black",
-      fontWeight: "bold",
+      backgroundColor: "blue",
+      color: "white",
     },
     confirmButton: {
       margin: "1rem",
@@ -53,6 +79,66 @@ function Payment() {
         overflowX: "auto",
       }}
     >
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ textAlign: "center", fontWeight: "bold" }}
+          >
+            Aviso
+          </Typography>
+          <IconButton
+            aria-label="close"
+            onClick={handleCloseDialog}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: "#003599",
+              display: isMobile ? "none" : "block",
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography sx={{ fontWeight: "bold", textAlign: "center" }}>
+            No momento não podemos realizar entregas, apenas retirada!
+          </Typography>
+        </DialogContent>
+        <DialogActions
+          sx={{
+            justifyContent: isMobile ? "center" : "center",
+          }}
+        >
+          <Button
+            variant="outlinec"
+            onClick={handleCloseDialog}
+            color="primary"
+            sx={{
+              margin: "1rem",
+              color: "red",
+              border: "1px solid red",
+              fontWeight: "bold",
+              width: isMobile ? "100%" : "auto",
+              "&:hover": {
+                backgroundColor: "red", // Cor de fundo ao passar o mouse
+                color: "white", // Cor do texto ao passar o mouse
+                border: "1px solid red", // Manter a borda vermelha
+              },
+            }}
+          >
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Box
         sx={{
           display: "flex",
@@ -69,7 +155,7 @@ function Payment() {
       >
         <Link to={"/"}>
           <img
-            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-6/318768361_487649283434966_4923966161297574562_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=iScLN_uATQcQ7kNvgFGCc-E&_nc_ht=scontent.fsdu3-1.fna&oh=00_AYCp337wpAEbbMFA9cap3516GfSUwBGVd5OBRUVJNO6o3Q&oe=66D88813"
+            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-6/318768361_487649283434966_4923966161297574562_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=vB82178ChRoQ7kNvgHyOB6F&_nc_ht=scontent.fsdu3-1.fna&_nc_gid=AsJo2QaL_XcKJpgoaRCkr11&oh=00_AYDxB29xn5jt1smBGNL_WsiB1_5p6LEAAYh6I_MMi51ncA&oe=66E62793"
             alt="Logo Nosso Lar"
             style={style.image}
           ></img>
@@ -98,28 +184,61 @@ function Payment() {
         <Typography style={style.typography} variant="h5">
           Formas de Pagamento:
         </Typography>
-        <Box sx={{ marginTop: "1rem" }}>
+        <Typography sx={{ color: "#A29C9B", marginTop: "0.5rem" }}>
+          No momento, aceitamos o pagamento somente na retirada com as opções
+          abaixo!
+        </Typography>
+        <Box
+          sx={{
+            marginTop: "1rem",
+            display: isMobile ? "flex" : "flex",
+            flexDirection: isMobile ? "column" : "column",
+            width: isMobile ? "100%" : "30%",
+          }}
+        >
           <Button
             style={
-              selectOption === "retirada" ? style.selectButton : style.button
+              selectOption === "debito" ? style.selectButton : style.button
             }
-            variant="contained"
-            onClick={() => handleSelect("retirada")}
+            variant="outlined"
+            onClick={() => handleSelect("debito")}
           >
-            Pagar na retirada
-            {selectOption === "retirada" && (
+            Débito <PaymentIcon sx={{ marginLeft: "5px" }} />
+            {selectOption === "debito" && (
               <CheckCircleOutlineIcon style={style.icon} />
             )}
           </Button>
           <Button
             style={
-              selectOption === "entrega" ? style.selectButton : style.button
+              selectOption === "credito" ? style.selectButton : style.button
             }
-            variant="contained"
-            onClick={() => handleSelect("entrega")}
+            variant="outlined"
+            onClick={() => handleSelect("credito")}
           >
-            Pagar na Entrega
-            {selectOption === "entrega" && (
+            Crédito <PaymentIcon sx={{ marginLeft: "5px" }} />
+            {selectOption === "credito" && (
+              <CheckCircleOutlineIcon style={style.icon} />
+            )}
+          </Button>
+          <Button
+            style={selectOption === "pix" ? style.selectButton : style.button}
+            variant="outlined"
+            onClick={() => handleSelect("pix")}
+          >
+            Pix <PixIcon sx={{ marginLeft: "5px" }} />
+            {selectOption === "pix" && (
+              <CheckCircleOutlineIcon style={style.icon} />
+            )}
+          </Button>
+          <Button
+            style={
+              selectOption === "dinheiro" ? style.selectButton : style.button
+            }
+            variant="outlined"
+            onClick={() => handleSelect("dinheiro")}
+          >
+            Dinheiro <LocalAtmIcon sx={{ marginLeft: "5px" }} />
+            {selectOption === "dinheiro" && (
               <CheckCircleOutlineIcon style={style.icon} />
             )}
           </Button>
