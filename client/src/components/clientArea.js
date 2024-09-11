@@ -19,6 +19,7 @@ const style = {
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
+    overflowY: "auto",
   },
   typography: {
     fontWeight: "bold",
@@ -39,7 +40,7 @@ const style = {
   },
   cardContent: {
     border: "1px solid black",
-    width: "50%",
+    width: "40rem",
     height: "90%",
     margin: "1rem",
     borderRadius: "5px",
@@ -88,11 +89,15 @@ function ClientArea() {
       }}
     >
       <Card sx={style.card}>
-        <Box sx={{ marginTop: "1rem", display: "flex" }}>
+        <Box sx={{ marginTop: "1rem", display: "flex", marginTop: "2rem" }}>
           <PersonIcon sx={{ fontSize: "2rem", color: "#003599" }} />
           <Typography
             variant="h5"
-            sx={{ fontWeight: "bold", marginLeft: "0.5rem" }}
+            sx={{
+              fontWeight: "bold",
+              marginLeft: "0.5rem",
+              marginBottom: "1rem",
+            }}
           >
             Área do Cliente
           </Typography>
@@ -102,6 +107,7 @@ function ClientArea() {
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
+            flexDirection: "column",
           }}
         >
           <CardContent sx={style.cardContent}>
@@ -140,7 +146,7 @@ function ClientArea() {
             </Typography>
             <Button
               variant="contained"
-              sx={{ background: "green", marginTop: "1rem" }}
+              sx={{ background: "green", marginTop: "1rem", width: "80%" }}
             >
               Salvar Alterações
             </Button>
@@ -148,14 +154,47 @@ function ClientArea() {
           <CardContent sx={style.cardContent}>
             <Link
               to={"/historicoDeCompras"}
-              style={{ width: "35rem", color: "black" }}
+              style={{ width: "100%", color: "black", textDecoration: "none" }}
             >
-              <Typography variant="h6" sx={style.typography}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  borderRadius: "5px",
+                  border: "1px solid black",
+                  marginBottom: "0.5rem",
+                  background: "#DBDDE6",
+                  padding: "5px",
+                  width: "100%",
+                  boxSizing: "border-box",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "left",
+                }}
+              >
                 Histórico de Compras
               </Typography>
             </Link>
-            <Link style={{ width: "35rem", color: "black" }}>
-              <Typography variant="h6" sx={style.typography}>
+            <Link
+              style={{ width: "100%", color: "black", textDecoration: "none" }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  borderRadius: "5px",
+                  border: "1px solid black",
+                  background: "#DBDDE6",
+                  padding: "5px",
+                  width: "100%",
+                  boxSizing: "border-box",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "0.5rem",
+                }}
+              >
                 Endereços Salvos
               </Typography>
             </Link>
