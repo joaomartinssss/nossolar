@@ -11,6 +11,8 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
+import breakPoints from "./BreakPoints";
+import { useMediaQuery } from "@mui/material";
 
 const style = {
   card: {
@@ -54,6 +56,8 @@ const style = {
 
 function ClientArea() {
   const [userData, setUserData] = useState(null);
+
+  const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,43 +114,65 @@ function ClientArea() {
             flexDirection: "column",
           }}
         >
-          <CardContent sx={style.cardContent}>
+          <CardContent sx={{ ...style.cardContent }}>
             <Typography
               variant="h5"
               style={{ fontWeight: "bold", margin: "1rem" }}
             >
               Informações Pessoais:
             </Typography>
-            <Typography variant="h6" style={style.typography}>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
               Nome: {userData.name}
               <Button sx={{ color: "#7C7C7C" }}>
                 <EditIcon />
               </Button>
             </Typography>
-            <Typography variant="h6" style={style.typography}>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
               CEP: {userData.cep}
               <Button sx={{ color: "#7C7C7C" }}>
                 <EditIcon />
               </Button>
             </Typography>
-            <Typography variant="h6" style={style.typography}>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
               Telefone: {userData.telefone}
               <Button sx={{ color: "#7C7C7C" }}>
                 <EditIcon />
               </Button>
             </Typography>
-            <Typography variant="h6" style={style.typography}>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
               Email: {userData.email}
             </Typography>
-            <Typography variant="h6" style={style.typography}>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
               CPF: {userData.cpf}
             </Typography>
-            <Typography variant="h6" style={style.typography}>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
               Endereço: {userData.endereco}
             </Typography>
             <Button
               variant="contained"
-              sx={{ background: "green", marginTop: "1rem", width: "80%" }}
+              sx={{
+                background: "green",
+                marginTop: "1rem",
+                width: isMobile ? "60%" : "80%",
+              }}
             >
               Salvar Alterações
             </Button>
@@ -154,7 +180,13 @@ function ClientArea() {
           <CardContent sx={style.cardContent}>
             <Link
               to={"/historicoDeCompras"}
-              style={{ width: "100%", color: "black", textDecoration: "none" }}
+              style={{
+                width: isMobile ? "100%" : "100%",
+                display: "flex",
+                justifyContent: isMobile ? "center" : "flex-start",
+                textDecoration: "none",
+                marginBottom: isMobile ? "0.5rem" : "0",
+              }}
             >
               <Typography
                 variant="h6"
@@ -162,22 +194,26 @@ function ClientArea() {
                   fontWeight: "bold",
                   borderRadius: "5px",
                   border: "1px solid black",
-                  marginBottom: "0.5rem",
                   background: "#DBDDE6",
                   padding: "5px",
-                  width: "100%",
+                  width: isMobile ? "60%" : "100%",
                   boxSizing: "border-box",
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  textAlign: "left",
+                  marginBottom: "0.5rem",
                 }}
               >
                 Histórico de Compras
               </Typography>
             </Link>
             <Link
-              style={{ width: "100%", color: "black", textDecoration: "none" }}
+              style={{
+                width: isMobile ? "100%" : "100%",
+                display: "flex",
+                justifyContent: isMobile ? "center" : "flex-start",
+                textDecoration: "none",
+              }}
             >
               <Typography
                 variant="h6"
@@ -187,7 +223,7 @@ function ClientArea() {
                   border: "1px solid black",
                   background: "#DBDDE6",
                   padding: "5px",
-                  width: "100%",
+                  width: isMobile ? "60%" : "100%",
                   boxSizing: "border-box",
                   display: "inline-flex",
                   alignItems: "center",
