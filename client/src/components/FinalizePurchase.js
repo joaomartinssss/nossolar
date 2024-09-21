@@ -17,6 +17,7 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
 import ProductRow from "./finalizePurchase/ProductRow";
+import TopNavFP from "./finalizePurchase/TopNavFP";
 
 const style = {
   card: {
@@ -183,40 +184,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
         overflowX: "hidden",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "1rem",
-          flexDirection: isMobile ? "column" : "row",
-        }}
-      >
-        <CardContent>
-          <Link to={"/"} style={style.link}>
-            <Typography
-              variant="h6"
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                fontSize: "1.5rem",
-                textDecoration: "none",
-              }}
-            >
-              Supermercado Nosso Lar
-            </Typography>
-          </Link>
-        </CardContent>
-        <Link to={""} style={style.link}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <PersonIcon sx={{ color: "#D3D3D3", fontSize: "2rem" }} />
-            <Typography sx={{ color: "#D3D3D3", marginLeft: "5px" }}>
-              Nome Do Cliente
-            </Typography>
-          </Box>
-        </Link>
-      </div>
-
+      <TopNavFP />
       <Card style={style.card} sx={{ background: "#BCD3F2" }}>
         <CardContent style={style.cardContent}>
           <Grid container>
