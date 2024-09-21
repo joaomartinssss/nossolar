@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
+import ProductRow from "./finalizePurchase/ProductRow";
 
 const style = {
   card: {
@@ -95,67 +96,7 @@ const style = {
   },
 };
 
-function ProductRow({ item, handleIncrement, handleDecrement, handleRemove }) {
-  const isMobile = useMediaQuery(breakPoints.mobile);
-
-  return (
-    <Grid container alignItems="center" style={style.grid} sx={{}}>
-      <Grid item xs={2}>
-        <img
-          src={item.image}
-          alt={item.name}
-          style={{
-            borderRadius: "50%",
-            maxWidth: "60px",
-          }}
-        />
-      </Grid>
-      <Grid item xs={3}>
-        <Typography
-          sx={{ fontWeight: "bold", marginLeft: isMobile ? "1rem" : "" }}
-        >
-          {item.name}
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          borderRadius: "5px",
-          marginLeft: isMobile ? "1rem" : "",
-        }}
-      >
-        <IconButton
-          sx={{ margin: "5px 0" }}
-          onClick={() => handleDecrement(item.id)}
-        >
-          <RemoveIcon sx={{ color: "red" }} />
-        </IconButton>
-        <Typography sx={{ margin: "0 5px", fontWeight: "bold" }}>
-          {item.quantity}
-        </Typography>
-        <IconButton onClick={() => handleIncrement(item.id)}>
-          <AddIcon sx={{ color: "#14248A" }} />
-        </IconButton>
-      </Grid>
-      <Grid item xs={1}>
-        <IconButton onClick={() => handleRemove(item.id)}>
-          <DeleteForeverOutlinedIcon
-            sx={{ color: "red", marginLeft: "3rem" }}
-          />
-        </IconButton>
-      </Grid>
-      <Grid item xs={6} sx={{ marginLeft: isMobile ? "2rem" : "" }}>
-        <Typography sx={{ fontWeight: "bold" }}>
-          {" "}
-          Total: R$ {(item.price * item.quantity).toFixed(2)}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-}
+<ProductRow />;
 
 function BlackOverlay({ cartItems, setCartItems }) {
   const handleIncrement = (itemId) => {
