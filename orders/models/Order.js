@@ -25,6 +25,10 @@ const Order = sequelize.define(
       allowNull: false,
       defaultValue: Sequelize.NOW,
     },
+    total: { //adicionando o campo total
+        type: DataTypes.FLOAT, // ou  DOUBLE dependendo da precisão necessaria
+        allowNull: false,
+    }
   },
   {
     timestamps: false,

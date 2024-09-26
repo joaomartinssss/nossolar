@@ -18,11 +18,27 @@ app.post("/orders", async (req, res) => {
   console.log("Dados do pedido:", req.body);
 
   try {
+    //calcular o total somando o preço * quantidade para cada item
+    let total = 0;
+
+    //Busca os produtos e calcula o total
+    for (let item of items) {
+      const product = await Product.findByPk(item.product_id);
+      if (!product) {
+        return res
+          .status(400)
+          .json({ error: `Produto com ID ${item.product_id} não encontrado` });
+      }
+      total += product.price * item.quantity; // Assumindo que o modelo Product tem um campo 'price'
+    }
+
+    //cria o novo pedido com o total calculado
     const newOrder = await Order.create({
       user_id,
       payment_method,
       status,
       type,
+      total,
     });
 
     console.log("Pedido criado com ID:", newOrder.id);
