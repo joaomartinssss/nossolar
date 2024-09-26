@@ -81,6 +81,21 @@ app.put("/orders/:id", async (req, res) => {
   }
 });
 
+// Rota para deletar todos os pedidos
+app.delete("/orders", async (req, res) => {
+  try {
+    await Order.destroy({ where: {} }); // Apaga todos os pedidos
+    res
+      .status(200)
+      .json({ message: "Todos os pedidos foram deletados com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar todos os pedidos:", error);
+    res
+      .status(500)
+      .json({ error: "Erro ao deletar pedidos", details: error.message });
+  }
+});
+
 // Iniciar o servidor
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
