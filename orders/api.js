@@ -2,6 +2,7 @@ const express = require("express");
 const sequelize = require("./config/database");
 const Order = require("./models/Order");
 const OrderItem = require("./models/OrderItem");
+const Product = require("./models/Product");
 
 const app = express();
 app.use(express.json());
@@ -49,10 +50,16 @@ app.post("/orders", async (req, res) => {
 // Rota para buscar todos os pedidos
 app.get("/orders", async (req, res) => {
   try {
-    const orders = await Order.findAll({ include: OrderItem });
+    const orders = await Order.findAll({
+      include: {
+        model: OrderItem,
+        include: Product, // Inclui os detalhes dos produtos
+      },
+    });
     res.status(200).json(orders);
   } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar pedidos" });
+    console.error("Erro ao buscar pedidos:", error);
+    res.status(500).json({ error: "Erro ao buscar pedidos", error });
   }
 });
 
