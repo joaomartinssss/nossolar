@@ -229,6 +229,9 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                     padding: "0.5rem 1rem",
                     marginTop: "1rem",
                   }}
+                  onClick={() => {
+                    setCartOpen(false); // Oculta o carrinho
+                  }}
                 >
                   Finalizar Compra
                 </Button>
