@@ -13,8 +13,9 @@ const Order = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
+      defaultValue: "pendente",
     },
     type: {
       type: DataTypes.STRING,
@@ -25,10 +26,11 @@ const Order = sequelize.define(
       allowNull: false,
       defaultValue: Sequelize.NOW,
     },
-    total: { //adicionando o campo total
-        type: DataTypes.FLOAT, // ou  DOUBLE dependendo da precisão necessaria
-        allowNull: false,
-    }
+    total: {
+      //adicionando o campo total
+      type: DataTypes.FLOAT, // ou  DOUBLE dependendo da precisão necessaria
+      allowNull: false,
+    },
   },
   {
     timestamps: false,

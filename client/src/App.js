@@ -197,7 +197,12 @@ function App() {
 
       {isSpecialRoute && (
         <Routes>
-          <Route path="/Pagamento" element={<Payment />} />
+          <Route
+            path="/Pagamento"
+            element={
+              <Payment cartItems={cartItems} setCartItems={setCartItems} />
+            }
+          />
           <Route path="/RetirarNaLoja" element={<RetirarNaLoja />} />
           <Route path="/ReceberEmCasa" element={<EntregarEmCasa />} />
         </Routes>

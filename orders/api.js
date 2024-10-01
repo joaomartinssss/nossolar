@@ -3,8 +3,10 @@ const sequelize = require("./config/database");
 const Order = require("./models/Order");
 const OrderItem = require("./models/OrderItem");
 const Product = require("./models/Product");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Sincronizar o banco de dados
@@ -35,9 +37,9 @@ app.post("/orders", async (req, res) => {
     //cria o novo pedido com o total calculado
     const newOrder = await Order.create({
       user_id,
-      payment_method,
-      status,
-      type,
+      payment_method: payment_method,
+      status: "pendente",
+      type: type,
       total,
     });
 

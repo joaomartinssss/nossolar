@@ -21,10 +21,6 @@ import TopNavFP from "./finalizePurchase/TopNavFP";
 
 const style = {
   card: {
-    // marginBottom: "10rem",
-    // display: "flex",
-    // flexDirection: "column",
-    // height: "auto",
     width: "100%",
     height: "100dvh",
     overflowY: "auto",
@@ -34,8 +30,6 @@ const style = {
     flexDirection: "column",
     height: "100%",
     position: "relative",
-    // paddingBottom: "2rem",
-    // marginTop:"10rem"
   },
   text: {
     color: "black",
@@ -342,7 +336,12 @@ function BlackOverlay({ cartItems, setCartItems }) {
                       <DeleteForeverOutlinedIcon />
                     </Button>
                   </Box>
-                  <Link to={"/Pagamento"}>
+                  <Link
+                    to={{
+                      pathname: "/Pagamento",
+                      state: { cartItems: cartItems },
+                    }}
+                  >
                     <Button
                       variant="contained"
                       sx={{
@@ -362,7 +361,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                         },
                       }}
                     >
-                      Confirmar
+                      continuar
                     </Button>
                   </Link>
                 </Box>

@@ -19,12 +19,21 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 
 function Payment() {
   const [selectOption, setSelectOption] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const isMobile = useMediaQuery(breakPoints.mobile);
+
+  useEffect(() => {
+    const receivedCartItems = window.location.state?.cartItems;
+    if (receivedCartItems) {
+      setCartItems(receivedCartItems);
+    }
+  }, []);
 
   useEffect(() => {
     setOpenDialog(true);
@@ -36,6 +45,42 @@ function Payment() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+  };
+
+  // const newOrder = {
+  //   user_id: userId,
+  //   payment_method: selectOption,
+  //   type: "retirada",
+  //   items: itemId,
+  //   quantity: quantity,
+  // };
+
+  const userId1 = 1;
+
+  const handleCreateOrder = async () => {
+    if (!selectOption) {
+      alert("Por favor, selecione uma forma de pagamento!");
+      return;
+    }
+
+    const newOrder = {
+      user_id: userId1,
+      payment_method: selectOption,
+      type: "retirada",
+      items: cartItems.map((item) => ({
+        product_id: item.product_id,
+        quantity: item.quantity,
+      })),
+    };
+
+    try {
+      const res = await axios.post("http://localhost:4000/orders", newOrder);
+      console.log("Pedido criado com sucesso", res.data);
+      alert("Pedido realizado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao criar pedido:", err);
+      alert("Erro ao realizar pedido. Tente novamente");
+    }
   };
 
   const style = {
@@ -244,7 +289,11 @@ function Payment() {
           </Button>
         </Box>
         {selectOption && (
-          <Button style={style.confirmButton} variant="contained">
+          <Button
+            style={style.confirmButton}
+            variant="contained"
+            onClick={handleCreateOrder}
+          >
             Confirmar
           </Button>
         )}
