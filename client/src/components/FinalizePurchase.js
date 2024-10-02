@@ -94,6 +94,10 @@ const style = {
 <ProductRow />;
 
 function BlackOverlay({ cartItems, setCartItems }) {
+  const handlePaymentClick = () => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  };
+
   const handleIncrement = (itemId) => {
     const updateCartItems = cartItems.map((item) => {
       if (item.id === itemId) {
@@ -360,6 +364,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                           fontWeight: "bold",
                         },
                       }}
+                      onClick={handlePaymentClick}
                     >
                       continuar
                     </Button>

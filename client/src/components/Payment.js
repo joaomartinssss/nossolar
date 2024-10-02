@@ -10,7 +10,7 @@ import {
   DialogActions,
   IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Rodape from "./Rodape";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
@@ -24,16 +24,9 @@ import axios from "axios";
 function Payment() {
   const [selectOption, setSelectOption] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState()
 
   const isMobile = useMediaQuery(breakPoints.mobile);
-
-  useEffect(() => {
-    const receivedCartItems = window.location.state?.cartItems;
-    if (receivedCartItems) {
-      setCartItems(receivedCartItems);
-    }
-  }, []);
 
   useEffect(() => {
     setOpenDialog(true);
@@ -47,13 +40,12 @@ function Payment() {
     setOpenDialog(false);
   };
 
-  // const newOrder = {
-  //   user_id: userId,
-  //   payment_method: selectOption,
-  //   type: "retirada",
-  //   items: itemId,
-  //   quantity: quantity,
-  // };
+  useEffect(() => {
+    const savedCartItems = localStorage.getItem("cartItems");
+    if (savedCartItems) {
+      setCartItems(JSON.parse(savedCartItems));
+    }
+  }, []);
 
   const userId1 = 1;
 
@@ -63,14 +55,21 @@ function Payment() {
       return;
     }
 
+    if (!cartItems || cartItems.length === 0) {
+      alert("Carrinho vazio! Adicione itens ao carrinho antes de continuar.");
+      return;
+    }
+
+    const formattedCartItems = cartItems.map((item) => ({
+      product_id: item.id,
+      quantity: item.quantity,
+    }));
+
     const newOrder = {
       user_id: userId1,
       payment_method: selectOption,
       type: "retirada",
-      items: cartItems.map((item) => ({
-        product_id: item.product_id,
-        quantity: item.quantity,
-      })),
+      items: formattedCartItems,
     };
 
     try {
