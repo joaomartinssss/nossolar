@@ -24,7 +24,7 @@ import axios from "axios";
 function Payment() {
   const [selectOption, setSelectOption] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
-  const [cartItems, setCartItems] = useState()
+  const [cartItems, setCartItems] = useState();
 
   const isMobile = useMediaQuery(breakPoints.mobile);
 
@@ -76,6 +76,9 @@ function Payment() {
       const res = await axios.post("http://localhost:4000/orders", newOrder);
       console.log("Pedido criado com sucesso", res.data);
       alert("Pedido realizado com sucesso!");
+
+      //salvar os items do pedido em localStorage
+      localStorage.setItem("orderItems", JSON.stringify(formattedCartItems));
     } catch (err) {
       console.error("Erro ao criar pedido:", err);
       alert("Erro ao realizar pedido. Tente novamente");
@@ -199,7 +202,7 @@ function Payment() {
       >
         <Link to={"/"}>
           <img
-            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-6/318768361_487649283434966_4923966161297574562_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=vB82178ChRoQ7kNvgHyOB6F&_nc_ht=scontent.fsdu3-1.fna&_nc_gid=AsJo2QaL_XcKJpgoaRCkr11&oh=00_AYDxB29xn5jt1smBGNL_WsiB1_5p6LEAAYh6I_MMi51ncA&oe=66E62793"
+            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-6/318768361_487649283434966_4923966161297574562_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=7TKcQRWdGNMQ7kNvgHoG6tD&_nc_ht=scontent.fsdu3-1.fna&_nc_gid=AKhI9BMdyPuhrsXqQDNSMUn&oh=00_AYDhWbiLzaYKpBG8KriZBgxqYTT4o38J45yHwLqRrTmFIQ&oe=67032893"
             alt="Logo Nosso Lar"
             style={style.image}
           ></img>

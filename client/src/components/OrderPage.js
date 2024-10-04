@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,25 +10,42 @@ import {
 import "./OrderPage.css";
 import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 
 function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orders, setOrders] = useState([]);
   const isMobile = useMediaQuery(breakPoints.mobile);
   const isTablet = useMediaQuery(breakPoints.tablet);
+  const [orderItems, setOrderItems] = useState([]);
 
-  const pendingOrders = [
-    {
-      id: "093",
-      status: "Em Preparo",
-      paymentOption: "Pagar na Retirada",
-      deliveryOption: "Retirada",
-      items: [
-        { name: "Produto 3", quantity: 1, price: "R$15,00" },
-        { name: "Produto 4", quantity: 2, price: "R$25,00" },
-      ],
-    },
-    // Adicione outros pedidos aqui
-  ];
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")).map(
+    (item) => ({
+      ...item,
+      price: Number(item.price),
+    })
+  );
+
+  useEffect(() => {
+    const savedOrderItems = localStorage.getItem("orderItems");
+    if (savedOrderItems) {
+      setOrderItems(JSON.parse(savedOrderItems));
+    }
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/orders");
+      console.log("Pedidos retornados da API:", response.data); // Adicione isto para verificar os dados
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar pedidos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
@@ -56,7 +73,7 @@ function Order() {
           }}
         >
           <Grid container spacing={2}>
-            {pendingOrders.map((order) => (
+            {orders.map((order) => (
               <Grid item xs={12} key={order.id}>
                 <Button
                   variant="outlined"
@@ -123,7 +140,7 @@ function Order() {
               fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
             }}
           >
-            Forma de Pagamento: {selectedOrder.paymentOption}
+            Forma de Pagamento: {selectedOrder.payment_method}
           </Typography>
           <Typography
             variant="body1"
@@ -133,7 +150,7 @@ function Order() {
               fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
             }}
           >
-            Opção de Entrega: {selectedOrder.deliveryOption}
+            Opção de Entrega: {selectedOrder.type}
           </Typography>
           <Box sx={{ margin: "1rem", textAlign: "center" }}>
             <Typography
@@ -145,22 +162,33 @@ function Order() {
             >
               Itens do Pedido:
             </Typography>
-            {selectedOrder.items.map((item, index) => (
+            {selectedOrder.OrderItems && selectedOrder.OrderItems.length > 0 ? (
+              selectedOrder.OrderItems.map((item, index) => (
+                <Typography
+                  key={index}
+                  variant="body2"
+                  sx={{
+                    margin: "0.5rem",
+                    fontSize: isMobile
+                      ? "1.5rem"
+                      : isTablet
+                      ? "2.5rem"
+                      : "1.5rem",
+                  }}
+                >
+                  {item.Product.name} - {item.quantity} x R${" "}
+                  {Number(item.Product.price).toFixed(2)}
+                </Typography>
+              ))
+            ) : (
               <Typography
-                key={index}
                 variant="body2"
-                sx={{
-                  margin: "0.5rem",
-                  fontSize: isMobile
-                    ? "1.5rem"
-                    : isTablet
-                    ? "2.5rem"
-                    : "1.5rem",
-                }}
+                sx={{ margin: "0.5rem", fontSize: "1.5rem" }}
               >
-                {item.name} - {item.quantity} x {item.price}
+                Nenhum item encontrado neste pedido.
               </Typography>
-            ))}
+            )}
+
             <Button
               variant="contained"
               sx={{
