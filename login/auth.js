@@ -76,7 +76,18 @@ router.post("/login", async (req, res) => {
     };
     jwt.sign(payload, "segredoDoToken", { expiresIn: 3600 }, (err, token) => {
       if (err) throw err;
-      res.json({ token });
+      res.json({
+        token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          cep: user.cep,
+          cpf: user.cpf,
+          data_nascimento: user.data_nascimento,
+          telefone: user.telefone,
+        },
+      });
     });
   } catch (err) {
     console.error(err.message);

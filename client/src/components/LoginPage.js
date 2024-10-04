@@ -69,11 +69,24 @@ function LoginPage() {
       });
       // Armazene o token no localStorage
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); //Salva o usuário
+
+      //exibir os dados do usuario no alert
+      // const userData = res.data.user;
+      // alert(`Dados do usuario:\n
+      //   ID: ${userData.id}\n
+      //   Nome: ${userData.name}\n
+      //   Email: ${userData.email}\n
+      //   CEP: ${userData.cep}\n
+      //   CPF: ${userData.cpf}\n
+      //   Data de Nascimento: ${userData.data_nascimento}\n
+      //   Telefone: ${userData.telefone}`);
+
       // Define a mensagem de sucesso e abre o Snackbar
       setSuccessMessage("Login realizado com sucesso!");
       setOpenSnackbar(true);
 
-      // Redirecionar o usuário para a página inicial após 3 segundos
+      //Redirecionar o usuário para a página inicial após 3 segundos
       setTimeout(() => {
         navigate("/");
       }, 3000);
