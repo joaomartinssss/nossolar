@@ -25,6 +25,8 @@ function Payment() {
   const [selectOption, setSelectOption] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [cartItems, setCartItems] = useState();
+  const [userData, setUserData] = useState(null);
+  const [fetchedUserData, setFetchedUserData] = useState(null); // Nova constante para armazenar os dados da requisição
 
   const isMobile = useMediaQuery(breakPoints.mobile);
 
@@ -47,7 +49,29 @@ function Payment() {
     }
   }, []);
 
-  const userId1 = 1;
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("user"); // Renomeado para storedUserData para evitar confusão
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData)); // Converta para JSON e atualize o estado
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      // Verifica se userData existe e tem o campo id
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+          );
+          setFetchedUserData(response.data); // Armazena os dados da requisição em fetchedUserData
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userData]);
 
   const handleCreateOrder = async () => {
     if (!selectOption) {
@@ -65,23 +89,28 @@ function Payment() {
       quantity: item.quantity,
     }));
 
-    const newOrder = {
-      user_id: userId1,
-      payment_method: selectOption,
-      type: "retirada",
-      items: formattedCartItems,
-    };
+    if (fetchedUserData && fetchedUserData.id) {
+      // Verifica se fetchedUserData está preenchido
+      const newOrder = {
+        user_id: fetchedUserData.id, // Usa o id armazenado em fetchedUserData
+        payment_method: selectOption,
+        type: "retirada",
+        items: formattedCartItems,
+      };
 
-    try {
-      const res = await axios.post("http://localhost:4000/orders", newOrder);
-      console.log("Pedido criado com sucesso", res.data);
-      alert("Pedido realizado com sucesso!");
+      try {
+        const res = await axios.post("http://localhost:4000/orders", newOrder);
+        console.log("Pedido criado com sucesso", res.data);
+        alert("Pedido realizado com sucesso!");
 
-      //salvar os items do pedido em localStorage
-      localStorage.setItem("orderItems", JSON.stringify(formattedCartItems));
-    } catch (err) {
-      console.error("Erro ao criar pedido:", err);
-      alert("Erro ao realizar pedido. Tente novamente");
+        // Salvar os items do pedido em localStorage
+        localStorage.setItem("orderItems", JSON.stringify(formattedCartItems));
+      } catch (err) {
+        console.error("Erro ao criar pedido:", err);
+        alert("Erro ao realizar pedido. Tente novamente");
+      }
+    } else {
+      alert("Erro ao recuperar os dados do usuário. Tente novamente.");
     }
   };
 

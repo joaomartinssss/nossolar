@@ -60,19 +60,28 @@ function ClientArea() {
   const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/auth/user/3"
-        );
-        setUserData(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar dados do usuário", error);
-      }
-    };
-
-    fetchData();
+    const userData = localStorage.getItem("user"); //Busque o usuario armazenado
+    if (userData) {
+      setUserData(JSON.parse(userData)); //Converta para JSON e atualize o estado
+    }
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      // Verifica se userData existe e tem o campo id
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+          );
+          setUserData(response.data); // Atualize o estado com os dados do servidor
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userData]);
 
   if (!userData) {
     return <div>Carregando...</div>;
