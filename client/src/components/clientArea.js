@@ -169,12 +169,12 @@ function ClientArea() {
             >
               CPF: {userData.cpf}
             </Typography>
-            <Typography
+            {/* <Typography
               variant="h6"
               style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
             >
               Endereço: {userData.endereco}
-            </Typography>
+            </Typography> */}
             <Button
               variant="contained"
               sx={{
@@ -224,7 +224,7 @@ function ClientArea() {
                 textDecoration: "none",
               }}
             >
-              <Typography
+              {/* <Typography
                 variant="h6"
                 sx={{
                   fontWeight: "bold",
@@ -241,7 +241,7 @@ function ClientArea() {
                 }}
               >
                 Endereços Salvos
-              </Typography>
+              </Typography> */}
             </Link>
           </CardContent>
         </Box>

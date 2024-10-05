@@ -18,6 +18,7 @@ import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
 import ProductRow from "./finalizePurchase/ProductRow";
 import TopNavFP from "./finalizePurchase/TopNavFP";
+import axios from "axios";
 
 const style = {
   card: {
@@ -94,6 +95,32 @@ const style = {
 <ProductRow />;
 
 function BlackOverlay({ cartItems, setCartItems }) {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user"); //Busque o usuario armazenado
+    if (userData) {
+      setUserData(JSON.parse(userData)); //Converta para JSON e atualize o estado
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      // Verifica se userData existe e tem o campo id
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+          );
+          setUserData(response.data); // Atualize o estado com os dados do servidor
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userData]);
+
   const handlePaymentClick = () => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
@@ -219,21 +246,26 @@ function BlackOverlay({ cartItems, setCartItems }) {
                 >
                   DADOS PESSOAIS:
                 </Typography>
-                <Typography
-                  style={style.clientDados}
-                  sx={{ marginTop: "1rem" }}
-                >
-                  Email: joaozinho77@gmail.com
-                </Typography>
-                <Typography style={style.clientDados}>
-                  Nome: Joãozinho Martins
-                </Typography>
-                <Typography style={style.clientDados}>
-                  Endereço: Rua Sebastião Mamede Nº 251
-                </Typography>
-                <Typography style={style.clientDados}>
-                  Telefone: (11) 98060-7358
-                </Typography>
+                {userData ? ( // Adicione esta verificação condicional
+                  <>
+                    <Typography
+                      style={style.clientDados}
+                      sx={{ marginTop: "1rem" }}
+                    >
+                      {`Email: ${userData.email}`}
+                    </Typography>
+                    <Typography style={style.clientDados}>
+                      {`Nome: ${userData.name}`}
+                    </Typography>
+                    <Typography style={style.clientDados}>
+                      {`Telefone: ${userData.telefone}`}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography style={style.clientDados}>
+                    Carregando dados do usuário...
+                  </Typography>
+                )}
               </Grid>
               <Box
                 sx={{
