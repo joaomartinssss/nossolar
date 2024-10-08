@@ -10,8 +10,19 @@ import { Box } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
+import OpenDialog from "./finalizePurchase/ClearCartConditional";
 
 const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const handleIncrement = (itemId) => {
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === itemId) {
@@ -252,7 +263,7 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
                 maxWidth: isMobile ? "300px" : "500px",
                 marginTop: "2rem",
               }}
-              onClick={HandleclearCart}
+              onClick={handleOpenDialog}
             >
               Deletar Carrinho <DeleteForeverOutlinedIcon />
             </Button>
@@ -277,6 +288,11 @@ const Cart = ({ cartItems, setCartItems, setCartOpen }) => {
           </Button>
         </div>
       )}
+      <OpenDialog
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+        HandleclearCart={HandleclearCart}
+      />
     </div>
   );
 };
