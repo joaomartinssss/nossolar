@@ -9,6 +9,7 @@ const ProductGrid = ({
   addToCart,
   onSelectProduct,
   showProductCardButtons,
+  cartItems = [],
 }) => {
   const isMobile = useMediaQuery(breakPoints.mobile);
 
@@ -40,6 +41,7 @@ const ProductGrid = ({
             addToCart={addToCart}
             onSelectProduct={onSelectProduct}
             showButtons={showProductCardButtons}
+            cartItems={cartItems}
           />
         </Grid>
       ))}

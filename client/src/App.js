@@ -174,6 +174,7 @@ function App() {
                 addToCart={addToCart}
                 onSelectProduct={setSelectedProduct}
                 showProductCardButtons={showProductCardButtons}
+                cartItems={cartItems}
               />
             )}
           </div>

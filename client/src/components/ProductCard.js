@@ -6,11 +6,19 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
-const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
+const ProductCard = ({
+  product,
+  addToCart,
+  onSelectProduct,
+  showButtons,
+  cartItems,
+}) => {
   const [fontSize, setFontSize] = useState(1); // Font size state
   const navigate = useNavigate();
-
+  const [openSnackBar, setOpenSnackBar] = useState(false);
   const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
@@ -31,7 +39,20 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
 
   const handleAddToCart = (event) => {
     event.stopPropagation();
-    addToCart(product);
+
+    const productInCart = Array.isArray(cartItems)
+      ? cartItems.find((item) => item.id === product.id)
+      : null;
+
+    if (productInCart) {
+      setOpenSnackBar(true);
+    } else {
+      addToCart(product);
+    }
+  };
+
+  const handleCloseSnackBar = () => {
+    setOpenSnackBar(false);
   };
 
   const handleClick = () => {
@@ -132,7 +153,7 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
                 fontSize: `${fontSize}rem`,
                 width: "100%",
                 color: "",
-                fontWeight: "bold",            
+                fontWeight: "bold",
                 "&:hover": {
                   backgroundColor: "white", // Cor de fundo quando hover
                   color: "#1976d2", // Cor do texto quando hover
@@ -145,6 +166,26 @@ const ProductCard = ({ product, addToCart, onSelectProduct, showButtons }) => {
           )}
         </div>
       </CardContent>
+      <Snackbar
+        open={openSnackBar}
+        onClose={handleCloseSnackBar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        autoHideDuration={3000}
+      >
+        <MuiAlert
+          onClose={handleCloseSnackBar}
+          severity="error"
+          sx={{
+            width: "100%",
+            backgroundColor: "#EDD2E0",
+            fontSize: "1.2rem",
+            color: "black",
+            border: "1px solid red",
+          }} // Cor de fundo vermelha e tamanho maior
+        >
+          Produto já está no carrinho!
+        </MuiAlert>
+      </Snackbar>
     </Card>
   );
 };
