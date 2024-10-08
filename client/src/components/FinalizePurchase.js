@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Rodape from "./Rodape";
-import { Link } from "react-router-dom";
-import PersonIcon from "@mui/icons-material/Person";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
+import { Link, useNavigate } from "react-router-dom";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
 import ProductRow from "./finalizePurchase/ProductRow";
 import TopNavFP from "./finalizePurchase/TopNavFP";
 import axios from "axios";
+import OpenDialog from "./finalizePurchase/ClearCartConditional";
 
 const style = {
   card: {
@@ -96,6 +87,16 @@ const style = {
 
 function BlackOverlay({ cartItems, setCartItems }) {
   const [userData, setUserData] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate();
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   useEffect(() => {
     const userData = localStorage.getItem("user"); //Busque o usuario armazenado
@@ -152,6 +153,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
 
   const HandleclearCart = () => {
     setCartItems([]);
+    navigate("/");
   };
 
   const [totals, setTotals] = useState({
@@ -366,7 +368,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
                           fontWeight: "bold",
                         },
                       }}
-                      onClick={HandleclearCart}
+                      onClick={handleOpenDialog}
                     >
                       Deletar Carrinho
                       <DeleteForeverOutlinedIcon />
@@ -408,6 +410,11 @@ function BlackOverlay({ cartItems, setCartItems }) {
         </CardContent>
       </Card>
       <Rodape />
+      <OpenDialog
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+        HandleclearCart={HandleclearCart}
+      />
     </div>
   );
 }
