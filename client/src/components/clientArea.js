@@ -3,16 +3,21 @@ import axios from "axios";
 import {
   Card,
   CardContent,
-  Grid,
   Typography,
   Box,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 const style = {
   card: {
@@ -56,6 +61,8 @@ const style = {
 
 function ClientArea() {
   const [userData, setUserData] = useState(null);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const navigate = useNavigate();
 
   const isMobile = useMediaQuery(breakPoints.mobile);
 
@@ -82,6 +89,22 @@ function ClientArea() {
       fetchData();
     }
   }, [userData]);
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
+
+  const handleCloseConfirmDialog = (confirm) => {
+    setOpenConfirmDialog(false);
+    if (confirm) {
+      handleLogOut();
+    }
+  };
 
   if (!userData) {
     return <div>Carregando...</div>;
@@ -169,22 +192,112 @@ function ClientArea() {
             >
               CPF: {userData.cpf}
             </Typography>
+            <Typography
+              variant="h6"
+              style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
+            >
+              Endereço: {userData.endereco}{" "}
+              <Button sx={{ color: "#7C7C7C" }}>
+                <EditIcon />
+              </Button>
+            </Typography>
             {/* <Typography
               variant="h6"
               style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
             >
               Endereço: {userData.endereco}
             </Typography> */}
-            <Button
-              variant="contained"
+            <Box
               sx={{
-                background: "green",
-                marginTop: "1rem",
-                width: isMobile ? "60%" : "80%",
+                display: "flex",
+                flexDirection: isMobile ? "column" : "row",
+                width: "85%",
+                alignItems: "center",
               }}
             >
-              Salvar Alterações
-            </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  background: "green",
+                  marginTop: "0.5rem",
+                  width: isMobile ? "20rem" : "100%",
+                  margin: "1rem",
+                  height: "3rem",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "white", // Cor de fundo no hover
+                    color: "green", // Cor do texto no hover
+                    border: "1px solid green", // Cor da borda no hover
+                    fontWeight: "bold",
+                  },
+                }}
+              >
+                Salvar Alterações
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  background: "red",
+                  marginTop: "0.5rem",
+                  width: isMobile ? "60%" : "50%",
+                  height: "3rem",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "white", // Cor de fundo no hover
+                    color: "red", // Cor do texto no hover
+                    border: "1px solid red", // Cor da borda no hover
+                    fontWeight: "bold",
+                  },
+                }}
+                onClick={handleOpenConfirmDialog}
+              >
+                Sair
+              </Button>
+            </Box>
+            {/* Diálogo de Confirmação */}
+            <Dialog
+              open={openConfirmDialog}
+              onClose={() => handleCloseConfirmDialog(false)}
+            >
+              <DialogTitle sx={{ fontWeight: "bold", textAlign: "center" }}>
+                AVISO!
+              </DialogTitle>
+              <IconButton
+                sx={{ position: "absolute", top: 8, right: 8 }}
+                onClick={() => handleCloseConfirmDialog(false)}
+              >
+                <CloseIcon />
+              </IconButton>
+              <DialogContent>
+                <Typography sx={{ fontWeight: "bold", textAlign: "center" }}>
+                  Tem certeza que deseja sair da conta?
+                </Typography>
+              </DialogContent>
+              <DialogActions
+                sx={{
+                  justifyContent: isMobile ? "center" : "center",
+                }}
+              >
+                <Button
+                  onClick={() => handleCloseConfirmDialog(true)}
+                  sx={{
+                    background: "red",
+                    marginBottom: "0.5rem",
+                    fontWeight: "bold",
+                    color: "white",
+                    alignItems: "center",
+                    "&:hover": {
+                      backgroundColor: "white", // Cor de fundo no hover
+                      color: "red", // Cor do texto no hover
+                      border: "1px solid red", // Cor da borda no hover
+                      fontWeight: "bold",
+                    },
+                  }}
+                >
+                  Confirmar
+                </Button>
+              </DialogActions>
+            </Dialog>
           </CardContent>
           <CardContent sx={style.cardContent}>
             <Link
@@ -210,7 +323,6 @@ function ClientArea() {
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  marginBottom: "0.5rem",
                 }}
               >
                 Histórico de Compras

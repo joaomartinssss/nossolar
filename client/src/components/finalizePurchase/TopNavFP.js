@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "../BreakPoints";
+import axios from "axios";
 
 const style = {
   card: {
@@ -92,6 +93,32 @@ const style = {
 };
 
 function TopNavFP() {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user"); //Busque o usuario armazenado
+    if (userData) {
+      setUserData(JSON.parse(userData)); //Converta para JSON e atualize o estado
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      // Verifica se userData existe e tem o campo id
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+          );
+          setUserData(response.data); // Atualize o estado com os dados do servidor
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userData]);
+
   const isMobile = useMediaQuery(breakPoints.mobile);
   return (
     <div
@@ -120,10 +147,14 @@ function TopNavFP() {
       </CardContent>
       <Link to={""} style={style.link}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <PersonIcon sx={{ color: "#D3D3D3", fontSize: "2rem" }} />
-          <Typography sx={{ color: "#D3D3D3", marginLeft: "5px" }}>
-            Nome Do Cliente
+          <Typography
+            sx={{ color: "white", marginLeft: "5px", fontWeight: "bold" }}
+          >
+            {userData ? `${userData.name}` : "Carregando..."}
           </Typography>
+          <PersonIcon
+            sx={{ color: "white", fontSize: "2rem", fontWeight: "bold" }}
+          />
         </Box>
       </Link>
     </div>
