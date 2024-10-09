@@ -105,6 +105,11 @@ function Payment() {
 
         // Salvar os items do pedido em localStorage
         localStorage.setItem("orderItems", JSON.stringify(formattedCartItems));
+
+        //remover os itens do carrinho
+        localStorage.removeItem("cartItems");
+        setCartItems([]);
+        
       } catch (err) {
         console.error("Erro ao criar pedido:", err);
         alert("Erro ao realizar pedido. Tente novamente");
