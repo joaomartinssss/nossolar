@@ -31,6 +31,7 @@ import AdmPage from "./components/AdmPage";
 import Order from "./components/OrderPage";
 import HistoryPurchase from "./components/HistoryPurchase";
 import ShowUserData from "./components/showUserData";
+import PrivateRoute from "./components/PERMISSIONADM/PrivateRoute";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -52,6 +53,12 @@ function App() {
   const [showProductCardButtons, setShowProductCardButtons] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
+  const [userId, setUserId] = useState(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user ? user.id : null; //pega o ID do usuario do localStorage
+  });
+
+  const isAdmin = userId === 4; //verifica se o usuario é ADM
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -151,12 +158,46 @@ function App() {
               <Route path="/ShowUserData" element={<ShowUserData />} />
               <Route path="/HistoricoDeCompras" element={<HistoryPurchase />} />
               <Route path="/areaDoCliente" element={<ClientArea />} />
-              <Route path="/PedidosPendentes" element={<Order />} />
-              <Route path="/Delivery" element={<DeliveryPage />} />
-              <Route path="/ADM" element={<AdmPage />} />
-              <Route path="/createProduct" element={<CreateProductPage />} />
-              <Route path="/ProductControl" element={<ProductControl />} />
-              <Route path="/EditProduct/:productId" element={<EditProduct />} />
+              <Route
+                path="/PedidosPendentes"
+                element={<PrivateRoute element={<Order />} isAdmin={isAdmin} />}
+              />
+              <Route
+                path="/Delivery"
+                element={
+                  <PrivateRoute element={<DeliveryPage />} isAdmin={isAdmin} />
+                }
+              />
+              <Route
+                path="/ADM"
+                element={
+                  <PrivateRoute element={<AdmPage />} isAdmin={isAdmin} />
+                }
+              />
+              <Route
+                path="/createProduct"
+                element={
+                  <PrivateRoute
+                    element={<CreateProductPage />}
+                    isAdmin={isAdmin}
+                  />
+                }
+              />
+              <Route
+                path="/ProductControl"
+                element={
+                  <PrivateRoute
+                    element={<ProductControl />}
+                    isAdmin={isAdmin}
+                  />
+                }
+              />
+              <Route
+                path="/EditProduct/:productId"
+                element={
+                  <PrivateRoute element={<EditProduct />} isAdmin={isAdmin} />
+                }
+              />
               <Route
                 path="/categoria/:categoryId"
                 element={

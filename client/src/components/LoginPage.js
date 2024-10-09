@@ -70,17 +70,7 @@ function LoginPage() {
       // Armazene o token no localStorage
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user)); //Salva o usuário
-
-      //exibir os dados do usuario no alert
-      // const userData = res.data.user;
-      // alert(`Dados do usuario:\n
-      //   ID: ${userData.id}\n
-      //   Nome: ${userData.name}\n
-      //   Email: ${userData.email}\n
-      //   CEP: ${userData.cep}\n
-      //   CPF: ${userData.cpf}\n
-      //   Data de Nascimento: ${userData.data_nascimento}\n
-      //   Telefone: ${userData.telefone}`);
+      localStorage.setItem("userId", res.data.user.id);      
 
       // Define a mensagem de sucesso e abre o Snackbar
       setSuccessMessage("Login realizado com sucesso!");
