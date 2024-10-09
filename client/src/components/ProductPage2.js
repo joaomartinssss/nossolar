@@ -10,12 +10,15 @@ import Loading3 from "./Loading3";
 import Erro from "./Error";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function ProductPage2({ cartItems, setCartItems }) {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
 
   const isMobile = useMediaQuery(breakPoints.mobile);
 
@@ -43,10 +46,20 @@ function ProductPage2({ cartItems, setCartItems }) {
   }, [productId]);
 
   const handleAddToCart = () => {
-    setCartItems((prevCartItems) => [
-      ...prevCartItems,
-      { ...product, quantity: 1 },
-    ]);
+    const productInCart = cartItems.find((item) => item.id === product.id);
+
+    if (productInCart) {
+      setOpenSnackBar(true);
+    } else {
+      setCartItems((prevCartItems) => [
+        ...prevCartItems,
+        { ...product, quantity: 1 },
+      ]);
+    }
+  };
+
+  const handleCloseSnackBar = () => {
+    setOpenSnackBar(false);
   };
 
   if (loading) {
@@ -169,6 +182,26 @@ function ProductPage2({ cartItems, setCartItems }) {
           </CardContent>
         </Card>
       </div>
+      <Snackbar
+        open={openSnackBar}
+        onClose={handleCloseSnackBar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        autoHideDuration={3000}
+      >
+        <MuiAlert
+          onClose={handleCloseSnackBar}
+          severity="error"
+          sx={{
+            width: "100%",
+            backgroundColor: "#EDD2E0",
+            fontSize: "1.2rem",
+            color: "black",
+            border: "1px solid red",
+          }}
+        >
+          Produto já está no carrinho!
+        </MuiAlert>
+      </Snackbar>
       <Rodape />
     </div>
   );
