@@ -10,7 +10,7 @@ import {
   DialogActions,
   IconButton,
 } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Rodape from "./Rodape";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,6 +20,8 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 function Payment() {
   const [selectOption, setSelectOption] = useState("");
@@ -27,7 +29,10 @@ function Payment() {
   const [cartItems, setCartItems] = useState();
   const [userData, setUserData] = useState(null);
   const [fetchedUserData, setFetchedUserData] = useState(null); // Nova constante para armazenar os dados da requisição
-
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(breakPoints.mobile);
 
   useEffect(() => {
@@ -75,24 +80,31 @@ function Payment() {
 
   const handleCreateOrder = async () => {
     if (!selectOption) {
-      alert("Por favor, selecione uma forma de pagamento!");
+      handleOpenSnackbar(
+        "Por favor, selecione uma forma de pagamento!",
+        "error"
+      );
       return;
     }
 
     if (!cartItems || cartItems.length === 0) {
-      alert("Carrinho vazio! Adicione itens ao carrinho antes de continuar.");
+      handleOpenSnackbar(
+        "Carrinho vazio! Adicione itens ao carrinho antes de continuar.",
+        "error"
+      );
       return;
     }
 
     const formattedCartItems = cartItems.map((item) => ({
       product_id: item.id,
       quantity: item.quantity,
+      price: item.price,
+      name: item.name,
     }));
 
     if (fetchedUserData && fetchedUserData.id) {
-      // Verifica se fetchedUserData está preenchido
       const newOrder = {
-        user_id: fetchedUserData.id, // Usa o id armazenado em fetchedUserData
+        user_id: fetchedUserData.id,
         payment_method: selectOption,
         type: "retirada",
         items: formattedCartItems,
@@ -101,22 +113,40 @@ function Payment() {
       try {
         const res = await axios.post("http://localhost:4000/orders", newOrder);
         console.log("Pedido criado com sucesso", res.data);
-        alert("Pedido realizado com sucesso!");
+        handleOpenSnackbar("Pedido realizado com sucesso!", "success");
 
         // Salvar os items do pedido em localStorage
         localStorage.setItem("orderItems", JSON.stringify(formattedCartItems));
 
-        //remover os itens do carrinho
+        // Remover os itens do carrinho
         localStorage.removeItem("cartItems");
         setCartItems([]);
-        
+        setTimeout(() => {
+          navigate("/obrigado");
+        }, 3500);
       } catch (err) {
         console.error("Erro ao criar pedido:", err);
-        alert("Erro ao realizar pedido. Tente novamente");
+        handleOpenSnackbar(
+          "Erro ao realizar pedido. Tente novamente.",
+          "error"
+        );
       }
     } else {
-      alert("Erro ao recuperar os dados do usuário. Tente novamente.");
+      handleOpenSnackbar(
+        "Erro ao recuperar os dados do usuário. Tente novamente.",
+        "error"
+      );
     }
+  };
+
+  const handleOpenSnackbar = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   const style = {
@@ -334,6 +364,21 @@ function Payment() {
           </Button>
         )}
       </Card>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
       <Rodape />
     </div>
   );

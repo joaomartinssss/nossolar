@@ -32,6 +32,7 @@ import Order from "./components/OrderPage";
 import HistoryPurchase from "./components/HistoryPurchase";
 import ShowUserData from "./components/showUserData";
 import PrivateRoute from "./components/PERMISSIONADM/PrivateRoute";
+import ThanksPage from "./components/Obrigado";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -208,6 +209,7 @@ function App() {
                   />
                 }
               />
+              <Route path="obrigado" element={<ThanksPage />} />
             </Routes>
             {!selectedProduct && (
               <ProductGrid

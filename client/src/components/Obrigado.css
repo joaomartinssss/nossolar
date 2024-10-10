@@ -1,0 +1,29 @@
+.div {
+  background-color: #1976d2;
+}
+
+.typography1 {
+  color: #fff;
+  margin: 1rem;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.detalhes_do_pedido {
+  text-align: center !important;
+  color: #000000;
+  margin: 1rem !important;  
+}
+
+.Card {
+  background-color: #fff !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.typography2 {
+  color: #000;
+  margin: 0.5rem !important;
+  font-weight: bold !important;
+  font-size: 1.5rem !important;
+}
