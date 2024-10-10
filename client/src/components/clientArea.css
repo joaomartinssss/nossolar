@@ -1,0 +1,32 @@
+.input,
+.inputTelefone,
+.inputCep,
+.inputEndereco {
+  margin-left: 0.5rem;
+  border-radius: 5px;
+  font-size: 1.1rem; /* Ajusta o tamanho da fonte */
+  height: 2rem; /* Aumenta a altura do input para deixar o cursor maior */
+  padding-left: 5px; /* Adiciona padding para o texto não encostar na borda */
+}
+
+.input {
+  width: 100%; /* Usar 100% para ocupar todo o espaço disponível */
+  max-width: 100%; /* Limita a largura ao máximo disponível */
+  padding-right: 5px; /* Reduz o padding direito */
+}
+
+.inputTelefone {
+  width: 30%;
+  padding-right: 5px; /* Reduz o padding direito */
+}
+
+.inputCep {
+  width: 30%;
+  padding-right: 5px; /* Reduz o padding direito */
+}
+
+.inputEndereco {
+  width: 100%;
+  max-width: 100%; /* Limita a largura ao máximo disponível */
+  padding-right: 5px; /* Reduz o padding direito */
+}

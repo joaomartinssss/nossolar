@@ -18,6 +18,8 @@ import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import "./clientArea.css";
+import InputMask from "react-input-mask";
 
 const style = {
   card: {
@@ -63,6 +65,49 @@ function ClientArea() {
   const [userData, setUserData] = useState(null);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const navigate = useNavigate();
+  const [editMode, setEditMode] = useState({
+    name: false,
+    cep: false,
+    telefone: false,
+    endereco: false,
+  });
+  const [editData, setEditData] = useState({
+    name: userData?.name || "",
+    cep: userData?.cep || "",
+    telefone: userData?.telefone || "",
+    endereco: userData?.endereco || "",
+  });
+
+  // Função para iniciar ou encerrar o modo de edição
+  const handleEditToggle = (field) => {
+    setEditMode((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  // Função para atualizar o valor de um campo editável
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/auth/user/${userData.id}`,
+        editData
+      );
+      setUserData(response.data); // Atualiza os dados exibidos com as alterações feitas
+      alert("Dados atualizados com sucesso!");
+    } catch (error) {
+      console.error("Erro ao atualizar dados do usuário", error);
+      alert("Erro ao atualizar dados.");
+    }
+  };
 
   const isMobile = useMediaQuery(breakPoints.mobile);
 
@@ -157,8 +202,22 @@ function ClientArea() {
               variant="h6"
               style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
             >
-              Nome: {userData.name}
-              <Button sx={{ color: "#7C7C7C" }}>
+              Nome:{" "}
+              {editMode.name ? (
+                <input
+                  className="input"
+                  type="text"
+                  name="name"
+                  value={editData.name}
+                  onChange={handleEditChange}
+                />
+              ) : (
+                userData.name
+              )}
+              <Button
+                onClick={() => handleEditToggle("name")}
+                sx={{ color: "#7C7C7C" }}
+              >
                 <EditIcon />
               </Button>
             </Typography>
@@ -166,8 +225,23 @@ function ClientArea() {
               variant="h6"
               style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
             >
-              CEP: {userData.cep}
-              <Button sx={{ color: "#7C7C7C" }}>
+              CEP:{" "}
+              {editMode.cep ? (
+                <InputMask
+                mask=" 99999 - 999"
+                  className="inputCep"
+                  type="text"
+                  name="cep"
+                  value={editData.cep}
+                  onChange={handleEditChange}
+                />
+              ) : (
+                userData.cep
+              )}
+              <Button
+                onClick={() => handleEditToggle("cep")}
+                sx={{ color: "#7C7C7C" }}
+              >
                 <EditIcon />
               </Button>
             </Typography>
@@ -175,8 +249,23 @@ function ClientArea() {
               variant="h6"
               style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
             >
-              Telefone: {userData.telefone}
-              <Button sx={{ color: "#7C7C7C" }}>
+              Telefone:{" "}
+              {editMode.telefone ? (
+                <InputMask
+                mask="(99) 99999 - 9999"
+                  className="inputTelefone"
+                  type="text"
+                  name="telefone"
+                  value={editData.telefone}
+                  onChange={handleEditChange}
+                />
+              ) : (
+                userData.telefone
+              )}
+              <Button
+                onClick={() => handleEditToggle("telefone")}
+                sx={{ color: "#7C7C7C" }}
+              >
                 <EditIcon />
               </Button>
             </Typography>
@@ -196,8 +285,22 @@ function ClientArea() {
               variant="h6"
               style={{ ...style.typography, width: isMobile ? "60%" : "100%" }}
             >
-              Endereço: {userData.endereco}{" "}
-              <Button sx={{ color: "#7C7C7C" }}>
+              Endereço:{" "}
+              {editMode.endereco ? (
+                <input
+                  className="inputEndereco"
+                  type="text"
+                  name="endereco"
+                  value={editData.endereco}
+                  onChange={handleEditChange}
+                />
+              ) : (
+                userData.endereco
+              )}
+              <Button
+                onClick={() => handleEditToggle("endereco")}
+                sx={{ color: "#7C7C7C" }}
+              >
                 <EditIcon />
               </Button>
             </Typography>
@@ -216,6 +319,7 @@ function ClientArea() {
               }}
             >
               <Button
+                onClick={handleSaveChanges}
                 variant="contained"
                 sx={{
                   background: "green",

@@ -108,4 +108,28 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
+router.put("/user/:id", async (req, res) => {
+  const { name, cep, telefone, endereco } = req.body;
+
+  // Encontre o usuário pelo ID e atualize os dados
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) {
+      return res.status(404).json({ msg: "Usuário não encontrado" });
+    }
+
+    // Atualize os campos editáveis
+    user.name = name || user.name;
+    user.cep = cep || user.cep;
+    user.telefone = telefone || user.telefone;
+    user.endereco = endereco || user.endereco;
+
+    await user.save(); // Salva as alterações no banco de dados
+    res.json(user); // Retorna os dados atualizados
+  } catch (err) {
+    console.error("Erro ao atualizar usuário", err);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
 module.exports = router;
