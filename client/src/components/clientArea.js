@@ -10,6 +10,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
@@ -77,6 +79,8 @@ function ClientArea() {
     telefone: userData?.telefone || "",
     endereco: userData?.endereco || "",
   });
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // Estado para controlar Snackbar
+  const [snackbarMessage, setSnackbarMessage] = useState(""); // Estado para armazenar a mensagem da Snackbar
 
   // Função para iniciar ou encerrar o modo de edição
   const handleEditToggle = (field) => {
@@ -102,10 +106,12 @@ function ClientArea() {
         editData
       );
       setUserData(response.data); // Atualiza os dados exibidos com as alterações feitas
-      alert("Dados atualizados com sucesso!");
+      setSnackbarMessage("Dados atualizados com sucesso!");
+      setSnackbarOpen(true);
     } catch (error) {
       console.error("Erro ao atualizar dados do usuário", error);
-      alert("Erro ao atualizar dados.");
+      setSnackbarMessage("Erro ao atualizar dados."); // Defina a mensagem de erro
+      setSnackbarOpen(true); // Abra a Snackbar
     }
   };
 
@@ -151,6 +157,10 @@ function ClientArea() {
     }
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false); // Função para fechar a Snackbar
+  };
+
   if (!userData) {
     return <div>Carregando...</div>;
   }
@@ -160,7 +170,7 @@ function ClientArea() {
       style={{
         top: 0,
         left: 0,
-        background: "lightblue",
+        background: "#1976d2",
         width: "100%",
         height: "100%",
         position: "fixed",
@@ -228,7 +238,7 @@ function ClientArea() {
               CEP:{" "}
               {editMode.cep ? (
                 <InputMask
-                mask=" 99999 - 999"
+                  mask=" 99999 - 999"
                   className="inputCep"
                   type="text"
                   name="cep"
@@ -252,7 +262,7 @@ function ClientArea() {
               Telefone:{" "}
               {editMode.telefone ? (
                 <InputMask
-                mask="(99) 99999 - 9999"
+                  mask="(99) 99999 - 9999"
                   className="inputTelefone"
                   type="text"
                   name="telefone"
@@ -432,15 +442,15 @@ function ClientArea() {
                 Histórico de Compras
               </Typography>
             </Link>
-            <Link
+            {/* <Link
               style={{
                 width: isMobile ? "100%" : "100%",
                 display: "flex",
                 justifyContent: isMobile ? "center" : "flex-start",
                 textDecoration: "none",
               }}
-            >
-              {/* <Typography
+            > */}
+            {/* <Typography
                 variant="h6"
                 sx={{
                   fontWeight: "bold",
@@ -458,9 +468,22 @@ function ClientArea() {
               >
                 Endereços Salvos
               </Typography> */}
-            </Link>
+            {/* </Link> */}
           </CardContent>
         </Box>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000} // Duração antes de fechar automaticamente
+          onClose={handleSnackbarClose}
+        >
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
       </Card>
     </div>
   );

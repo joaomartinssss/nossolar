@@ -33,11 +33,11 @@ const User = sequelize.define(
       allowNull: false,
     },
     cep: {
-      type: DataTypes.STRING(9),
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     cpf: {
-      type: DataTypes.STRING(14),
+      type: DataTypes.STRING(20),
       allowNull: false,
       unique: true,
     },
@@ -50,7 +50,7 @@ const User = sequelize.define(
       defaultValue: DataTypes.NOW,
     },
     telefone: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(20),
       allowNull: false,
       unique: true,
     },
