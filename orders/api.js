@@ -114,6 +114,32 @@ app.delete("/orders", async (req, res) => {
   }
 });
 
+// Rota para buscar os pedidos de um usuário específico
+app.get("/orders/history/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const orders = await Order.findAll({
+      where: { user_id }, // Filtra pelos pedidos do usuário logado
+      include: {
+        model: OrderItem,
+        include: Product, // Inclui os detalhes dos produtos
+      },
+    });
+
+    if (orders.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Nenhum pedido encontrado para este usuário." });
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Erro ao buscar pedidos:", error);
+    res.status(500).json({ error: "Erro ao buscar pedidos" });
+  }
+});
+
 // Iniciar o servidor
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

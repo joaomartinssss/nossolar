@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -7,32 +7,60 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import axios from "axios";
 import "./HistoryPurchase.css";
 
 function HistoryPurchase() {
   const [selectedPurchase, setSelectedPurchase] = useState(null);
+  const [purchaseHistory, setPurchaseHistory] = useState([]);
+  const userId = 4;
 
-  const purchaseHistory = [
-    {
-      id: "001",
-      date: "01/08/2024",
-      items: [
-        { name: "Produto 1", quantity: 2, price: "R$20,00" },
-        { name: "Produto 2", quantity: 1, price: "R$50,00" },
-      ],
-      totalAmount: "R$90,00",
-    },
-    {
-      id: "002",
-      date: "15/07/2024",
-      items: [
-        { name: "Produto 3", quantity: 1, price: "R$15,00" },
-        { name: "Produto 4", quantity: 2, price: "R$25,00" },
-      ],
-      totalAmount: "R$65,00",
-    },
-    // Adicione outras compras aqui
-  ];
+  useEffect(() => {
+    const fetchPurchaseHistory = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/orders/history/4`
+        );
+        const orders = response.data.map((order) => ({
+          id: order.id,
+          date: new Date(order.order_time).toLocaleDateString(),
+          items: order.OrderItems.map((item) => ({
+            name: item.Product.name,
+            quantity: item.quantity,
+            price: `R$${parseFloat(item.Product.price).toFixed(2)}`,
+          })),
+          totalAmount: `R$${parseFloat(order.total).toFixed(2)}`,
+        }));
+        setPurchaseHistory(orders);
+      } catch (error) {
+        console.error("Erro ao buscar o histórico de compras:", error);
+      }
+    };
+
+    fetchPurchaseHistory();
+  }, [userId]);
+
+  // const purchaseHistory = [
+  //   {
+  //     id: "001",
+  //     date: "01/08/2024",
+  //     items: [
+  //       { name: "Produto 1", quantity: 2, price: "R$20,00" },
+  //       { name: "Produto 2", quantity: 1, price: "R$50,00" },
+  //     ],
+  //     totalAmount: "R$90,00",
+  //   },
+  //   {
+  //     id: "002",
+  //     date: "15/07/2024",
+  //     items: [
+  //       { name: "Produto 3", quantity: 1, price: "R$15,00" },
+  //       { name: "Produto 4", quantity: 2, price: "R$25,00" },
+  //     ],
+  //     totalAmount: "R$65,00",
+  //   },
+  //   // Adicione outras compras aqui
+  // ];
 
   const handlePurchaseClick = (purchase) => {
     setSelectedPurchase(purchase);
@@ -56,28 +84,36 @@ function HistoryPurchase() {
             Seu Histórico de Compras
           </Typography>
           <Grid container spacing={2}>
-            {purchaseHistory.map((purchase) => (
-              <Grid item xs={12} key={purchase.id}>
-                <Button
-                  onClick={() => handlePurchaseClick(purchase)}
-                  sx={{
-                    border: "2px solid #003599",
-                    width: "100%",
-                    marginTop: "1rem",
-                    color: "black",
-                    ":hover": {
-                      backgroundColor: "#E5E7E6",
-                      borderColor: "#003599",
-                      color: "blue",
-                    },
-                  }}
-                >
-                  <Typography sx={{ fontWeight: "bold", textAlign: "center" }}>
-                    Compra no dia {purchase.date}
-                  </Typography>
-                </Button>
-              </Grid>
-            ))}
+            {purchaseHistory.length > 0 ? (
+              purchaseHistory.map((purchase) => (
+                <Grid item xs={12} key={purchase.id}>
+                  <Button
+                    onClick={() => handlePurchaseClick(purchase)}
+                    sx={{
+                      border: "2px solid #003599",
+                      width: "100%",
+                      marginTop: "1rem",
+                      color: "black",
+                      ":hover": {
+                        backgroundColor: "#E5E7E6",
+                        borderColor: "#003599",
+                        color: "blue",
+                      },
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Compra no dia {purchase.date}
+                    </Typography>
+                  </Button>
+                </Grid>
+              ))
+            ) : (
+              <Typography variant="body2">
+                Nenhum histórico de compras encontrado.
+              </Typography>
+            )}
           </Grid>
         </CardContent>
       </Card>
