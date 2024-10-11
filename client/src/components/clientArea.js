@@ -108,6 +108,9 @@ function ClientArea() {
       setUserData(response.data); // Atualiza os dados exibidos com as alterações feitas
       setSnackbarMessage("Dados atualizados com sucesso!");
       setSnackbarOpen(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2500);
     } catch (error) {
       console.error("Erro ao atualizar dados do usuário", error);
       setSnackbarMessage("Erro ao atualizar dados."); // Defina a mensagem de erro
