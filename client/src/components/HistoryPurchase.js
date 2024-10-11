@@ -13,32 +13,42 @@ import "./HistoryPurchase.css";
 function HistoryPurchase() {
   const [selectedPurchase, setSelectedPurchase] = useState(null);
   const [purchaseHistory, setPurchaseHistory] = useState([]);
-  const userId = 4;
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    //Recuperar os dados do usuário do LocalStorage
+    const storedUserData = localStorage.getItem("user");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData)); //Converta para JSON e atualize o estado
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPurchaseHistory = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/orders/history/4`
-        );
-        const orders = response.data.map((order) => ({
-          id: order.id,
-          date: new Date(order.order_time).toLocaleDateString(),
-          items: order.OrderItems.map((item) => ({
-            name: item.Product.name,
-            quantity: item.quantity,
-            price: `R$${parseFloat(item.Product.price).toFixed(2)}`,
-          })),
-          totalAmount: `R$${parseFloat(order.total).toFixed(2)}`,
-        }));
-        setPurchaseHistory(orders);
-      } catch (error) {
-        console.error("Erro ao buscar o histórico de compras:", error);
+      if (userData && userData.id) {
+        try {
+          const response = await axios.get(
+            `http://localhost:4000/orders/history/${userData.id}`
+          );
+          const orders = response.data.map((order) => ({
+            id: order.id,
+            date: new Date(order.order_time).toLocaleDateString(),
+            items: order.OrderItems.map((item) => ({
+              name: item.Product.name,
+              quantity: item.quantity,
+              price: `R$${parseFloat(item.Product.price).toFixed(2)}`,
+            })),
+            totalAmount: `R$${parseFloat(order.total).toFixed(2)}`,
+          }));
+          setPurchaseHistory(orders);
+        } catch (error) {
+          console.error("Erro ao buscar o histórico de compras:", error);
+        }
       }
     };
 
     fetchPurchaseHistory();
-  }, [userId]);
+  }, [userData]);
 
   // const purchaseHistory = [
   //   {
