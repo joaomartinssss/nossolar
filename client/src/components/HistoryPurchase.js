@@ -6,20 +6,26 @@ import {
   Grid,
   Button,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
 } from "@mui/material";
 import axios from "axios";
 import "./HistoryPurchase.css";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 function HistoryPurchase() {
   const [selectedPurchase, setSelectedPurchase] = useState(null);
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const [userData, setUserData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     //Recuperar os dados do usuário do LocalStorage
     const storedUserData = localStorage.getItem("user");
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData)); //Converta para JSON e atualize o estado
+      setUserData(JSON.parse(storedUserData)); // Converta para JSON e atualize o estado
     }
   }, []);
 
@@ -33,6 +39,7 @@ function HistoryPurchase() {
           const orders = response.data.map((order) => ({
             id: order.id,
             date: new Date(order.order_time).toLocaleDateString(),
+            time: new Date(order.order_time).toLocaleTimeString(), // Adiciona o horário da compra
             items: order.OrderItems.map((item) => ({
               name: item.Product.name,
               quantity: item.quantity,
@@ -50,30 +57,13 @@ function HistoryPurchase() {
     fetchPurchaseHistory();
   }, [userData]);
 
-  // const purchaseHistory = [
-  //   {
-  //     id: "001",
-  //     date: "01/08/2024",
-  //     items: [
-  //       { name: "Produto 1", quantity: 2, price: "R$20,00" },
-  //       { name: "Produto 2", quantity: 1, price: "R$50,00" },
-  //     ],
-  //     totalAmount: "R$90,00",
-  //   },
-  //   {
-  //     id: "002",
-  //     date: "15/07/2024",
-  //     items: [
-  //       { name: "Produto 3", quantity: 1, price: "R$15,00" },
-  //       { name: "Produto 4", quantity: 2, price: "R$25,00" },
-  //     ],
-  //     totalAmount: "R$65,00",
-  //   },
-  //   // Adicione outras compras aqui
-  // ];
-
   const handlePurchaseClick = (purchase) => {
     setSelectedPurchase(purchase);
+    setIsModalOpen(true); // Abre o modal quando a compra é clicada
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Fecha o modal
   };
 
   return (
@@ -85,6 +75,7 @@ function HistoryPurchase() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            overflowY: "auto",
           }}
         >
           <Typography
@@ -114,7 +105,8 @@ function HistoryPurchase() {
                     <Typography
                       sx={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      Compra no dia {purchase.date}
+                      Compra no dia {purchase.date} às {purchase.time}{" "}
+                      {/* Exibe a data e o horário */}
                     </Typography>
                   </Button>
                 </Grid>
@@ -127,29 +119,54 @@ function HistoryPurchase() {
           </Grid>
         </CardContent>
       </Card>
-      {selectedPurchase && (
-        <Card className="cardHistory">
-          <Typography variant="h5" sx={{ fontWeight: "bold", margin: "1rem" }}>
-            Detalhes da Compra no dia {selectedPurchase.date}
-          </Typography>
+
+      {/* Modal com detalhes da compra */}
+      <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth>
+        <DialogTitle sx={{ fontWeight: "bold" }}>
+          Detalhes da Compra no dia {selectedPurchase?.date} às{" "}
+          {selectedPurchase?.time}
+          <IconButton
+            onClick={handleCloseModal}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: "black",
+            }}
+          >
+            <HighlightOffIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
           <Box sx={{ margin: "1rem" }}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", textAlign: "center" }}
+            >
               Itens Comprados:
             </Typography>
-            {selectedPurchase.items.map((item, index) => (
-              <Typography key={index} variant="body2" sx={{ margin: "0.5rem" }}>
+            {selectedPurchase?.items.map((item, index) => (
+              <Typography
+                key={index}
+                variant="body2"
+                sx={{ margin: "0.5rem", textAlign: "center" }}
+              >
                 {item.name} - {item.quantity} x {item.price}
               </Typography>
             ))}
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", marginTop: "1rem" }}
+              sx={{
+                fontWeight: "bold",
+                marginTop: "1rem",
+                textAlign: "center",
+              }}
             >
-              Total Gasto: {selectedPurchase.totalAmount}
+              Total Gasto: {selectedPurchase?.totalAmount}
             </Typography>
           </Box>
-        </Card>
-      )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
