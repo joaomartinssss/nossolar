@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import breakPoints from "./BreakPoints";
 import axios from "axios";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -281,6 +282,11 @@ const TopNav = ({
                   <ClickAwayListener onClickAway={handleClickAway}>
                     <Users handleClose={handleClose} />
                   </ClickAwayListener>
+                )}
+                {userData && userData.id === 4 && (
+                  <Link to={"/adm"}>
+                    <SettingsIcon sx={{ color: "#D3D3D3" }} />
+                  </Link>
                 )}
               </div>
             </ClickAwayListener>
