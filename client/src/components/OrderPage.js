@@ -21,8 +21,26 @@ function Order() {
   const isTablet = useMediaQuery(breakPoints.tablet);
   const [orderItems, setOrderItems] = useState([]);
   const [openModal, setOpenModal] = useState(false); // Estado para abrir/fechar o modal
+  const [userData, setUserData] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    if (userData && userData.id) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/user/${userData.id}`
+          );
+          setUserData(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userData]);
 
   const cartItems = JSON.parse(localStorage.getItem("cartItems")).map(
     (item) => ({
@@ -141,35 +159,25 @@ function Order() {
             >
               Detalhes do Pedido #{selectedOrder?.id}
             </Typography>
-            {user && (
+            {userData && (
               <Box sx={{ textAlign: "left" }}>
                 <Typography
-                  variant="body1"
                   sx={{
                     fontWeight: "bold",
-                    fontSize: isMobile
-                      ? "1.5rem"
-                      : isTablet
-                      ? "2.5rem"
-                      : "1.5rem",
+                    fontSize: isMobile ? "1.5rem" : "1.5rem",
                     margin: "0.5rem",
                   }}
                 >
-                  Nome do Cliente: {user.name}
+                  Nome do Cliente: {userData.name}
                 </Typography>
                 <Typography
-                  variant="body1"
                   sx={{
                     fontWeight: "bold",
-                    fontSize: isMobile
-                      ? "1.5rem"
-                      : isTablet
-                      ? "2.5rem"
-                      : "1.5rem",
+                    fontSize: isMobile ? "1.5rem" : "1.5rem",
                     margin: "0.5rem",
                   }}
                 >
-                  Telefone: {user.telefone}
+                  Telefone: {userData.telefone}
                 </Typography>
               </Box>
             )}
@@ -231,9 +239,11 @@ function Order() {
                         ? "2rem"
                         : "1.5rem",
                       textAlign: "left",
+                      color: "gray",
+                      fontFamily: "inherit",
                     }}
                   >
-                    {item.Product.name} - {item.quantity} x R${" "}
+                    - {item.Product.name} - {item.quantity} x R${" "}
                     {Number(item.Product.price).toFixed(2)}
                   </Typography>
                 ))
@@ -285,7 +295,7 @@ function Order() {
                   },
                 }}
               >
-                Encerrar Pedido
+                Despachar Pedido
               </Button>
             </Box>
           </DialogContent>
