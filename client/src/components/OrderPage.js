@@ -6,6 +6,8 @@ import {
   Grid,
   Button,
   Box,
+  Dialog,
+  DialogContent,
 } from "@mui/material";
 import "./OrderPage.css";
 import breakPoints from "./BreakPoints";
@@ -18,6 +20,9 @@ function Order() {
   const isMobile = useMediaQuery(breakPoints.mobile);
   const isTablet = useMediaQuery(breakPoints.tablet);
   const [orderItems, setOrderItems] = useState([]);
+  const [openModal, setOpenModal] = useState(false); // Estado para abrir/fechar o modal
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const cartItems = JSON.parse(localStorage.getItem("cartItems")).map(
     (item) => ({
@@ -36,7 +41,7 @@ function Order() {
   const fetchOrders = async () => {
     try {
       const response = await axios.get("http://localhost:4000/orders");
-      console.log("Pedidos retornados da API:", response.data); // Adicione isto para verificar os dados
+      console.log("Pedidos retornados da API:", response.data);
       setOrders(response.data);
     } catch (error) {
       console.error("Erro ao buscar pedidos:", error);
@@ -49,6 +54,11 @@ function Order() {
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
+    setOpenModal(true); // Abrir o modal
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false); // Fechar o modal
   };
 
   return (
@@ -110,100 +120,176 @@ function Order() {
           </Grid>
         </CardContent>
       </Card>
+
+      {/* Modal para detalhes do pedido */}
       {selectedOrder && (
-        <Card className="card" sx={{ overflowY: "auto", textAlign: "center" }}>
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: "bold",
-              margin: "1rem",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
-            }}
-          >
-            Detalhes do Pedido #{selectedOrder.id}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              margin: "1rem",
-              fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
-            }}
-          >
-            Status: {selectedOrder.status}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              margin: "1rem",
-              fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
-            }}
-          >
-            Forma de Pagamento: {selectedOrder.payment_method}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              margin: "1rem",
-              fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
-            }}
-          >
-            Opção de Entrega: {selectedOrder.type}
-          </Typography>
-          <Box sx={{ margin: "1rem", textAlign: "center" }}>
+        <Dialog
+          open={openModal}
+          onClose={handleCloseModal}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogContent>
             <Typography
-              variant="h6"
+              variant="h5"
               sx={{
                 fontWeight: "bold",
+                margin: "1rem",
                 fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
+                textAlign: "center",
               }}
             >
-              Itens do Pedido:
+              Detalhes do Pedido #{selectedOrder?.id}
             </Typography>
-            {selectedOrder.OrderItems && selectedOrder.OrderItems.length > 0 ? (
-              selectedOrder.OrderItems.map((item, index) => (
+            {user && (
+              <Box sx={{ textAlign: "left" }}>
                 <Typography
-                  key={index}
-                  variant="body2"
+                  variant="body1"
                   sx={{
-                    margin: "0.5rem",
+                    fontWeight: "bold",
                     fontSize: isMobile
                       ? "1.5rem"
                       : isTablet
                       ? "2.5rem"
                       : "1.5rem",
+                    margin: "0.5rem",
                   }}
                 >
-                  {item.Product.name} - {item.quantity} x R${" "}
-                  {Number(item.Product.price).toFixed(2)}
+                  Nome do Cliente: {user.name}
                 </Typography>
-              ))
-            ) : (
-              <Typography
-                variant="body2"
-                sx={{ margin: "0.5rem", fontSize: "1.5rem" }}
-              >
-                Nenhum item encontrado neste pedido.
-              </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: isMobile
+                      ? "1.5rem"
+                      : isTablet
+                      ? "2.5rem"
+                      : "1.5rem",
+                    margin: "0.5rem",
+                  }}
+                >
+                  Telefone: {user.telefone}
+                </Typography>
+              </Box>
             )}
-
-            <Button
-              variant="contained"
+            <Typography
+              variant="body1"
               sx={{
-                marginTop: "1rem",
-                width: isMobile ? "100%" : isTablet ? "30rem" : "40rem",
-                height: "4rem",
-                marginBottom: "1rem",
-                fontSize: "1.5rem",
+                margin: "0.5rem",
                 fontWeight: "bold",
+                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
               }}
             >
-              Encerrar Pedido
-            </Button>
-          </Box>
-        </Card>
+              Status: {selectedOrder?.status}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                margin: "0.5rem",
+                fontWeight: "bold",
+                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
+              }}
+            >
+              Forma de Pagamento: {selectedOrder?.payment_method}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                margin: "0.5rem",
+                fontWeight: "bold",
+                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
+              }}
+            >
+              Opção de Entrega: {selectedOrder?.type}
+            </Typography>
+            <Box sx={{ margin: "1rem", textAlign: "center" }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: isMobile
+                    ? "1.5rem"
+                    : isTablet
+                    ? "2.5rem"
+                    : "1.5rem",
+                }}
+              >
+                Itens do Pedido:
+              </Typography>
+              {selectedOrder?.OrderItems &&
+              selectedOrder.OrderItems.length > 0 ? (
+                selectedOrder.OrderItems.map((item, index) => (
+                  <Typography
+                    key={index}
+                    variant="body2"
+                    sx={{
+                      margin: "0.5rem",
+                      fontSize: isMobile
+                        ? "1.5rem"
+                        : isTablet
+                        ? "2rem"
+                        : "1.5rem",
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.Product.name} - {item.quantity} x R${" "}
+                    {Number(item.Product.price).toFixed(2)}
+                  </Typography>
+                ))
+              ) : (
+                <Typography
+                  variant="body2"
+                  sx={{ margin: "0.5rem", fontSize: "1.5rem" }}
+                >
+                  Nenhum item encontrado neste pedido.
+                </Typography>
+              )}
+              {/* Calcular e exibir o total do pedido */}
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  margin: "0.5rem",
+                  fontSize: isMobile
+                    ? "1.5rem"
+                    : isTablet
+                    ? "2.5rem"
+                    : "1.5rem",
+                  textAlign: "left", // Alinhar o total à direita
+                }}
+              >
+                Total: R${" "}
+                {selectedOrder?.OrderItems
+                  ? selectedOrder.OrderItems.reduce(
+                      (total, item) =>
+                        total + item.quantity * Number(item.Product.price),
+                      0
+                    ).toFixed(2)
+                  : "0.00"}
+              </Typography>
+
+              <Button
+                variant="contained"
+                sx={{
+                  marginTop: "1rem",
+                  width: isMobile ? "100%" : isTablet ? "30rem" : "25rem",
+                  height: "3rem",
+                  marginBottom: "1rem",
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "white", // Cor de fundo quando hover
+                    color: "#1976d2", // Cor do texto quando hover
+                    border: " 1px solid #1976d2", // Cor da borda quando hover
+                  },
+                }}
+              >
+                Encerrar Pedido
+              </Button>
+            </Box>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );

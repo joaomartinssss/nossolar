@@ -103,7 +103,7 @@ function ProductControl() {
   return (
     <div
       style={{
-        background: "#CDD1DE",
+        background: "#1976d2",
         position: "fixed",
         top: 0,
         left: 0,
