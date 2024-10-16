@@ -1,78 +1,37 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
+  Typography,
   Card,
   CardContent,
-  Typography,
   Grid,
   Button,
-  Box,
   Dialog,
   DialogContent,
-  DialogActions,
+  Box,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import "./OrderPage.css";
 import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
-import axios from "axios";
-import { Snackbar, Alert } from "@mui/material";
+import "./ReadyForPickup.css";
 
-function Order() {
-  const [selectedOrder, setSelectedOrder] = useState(null);
+function ReadyForPickup() {
   const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null); // Estado para o pedido selecionado
+  const [openModal, setOpenModal] = useState(false); // Estado para abrir/fechar o modal
   const isMobile = useMediaQuery(breakPoints.mobile);
   const isTablet = useMediaQuery(breakPoints.tablet);
-  const [orderItems, setOrderItems] = useState([]);
-  const [openModal, setOpenModal] = useState(false); // Estado para abrir/fechar o modal
-  const [userData, setUserData] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [openConfirmDialog, setOpenConfirmDialog] = useState(false); // Estado para o diálogo de confirmação
-  const [orderToUpdate, setOrderToUpdate] = useState(null); // Para armazenar o pedido que será despachado
-
-  useEffect(() => {
-    if (userData && userData.id) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/api/auth/user/${userData.id}`
-          );
-          setUserData(response.data);
-        } catch (error) {
-          console.error("Erro ao buscar dados do usuário", error);
-        }
-      };
-      fetchData();
-    }
-  }, [userData]);
-
-  const cartItems = JSON.parse(localStorage.getItem("cartItems")).map(
-    (item) => ({
-      ...item,
-      price: Number(item.price),
-    })
-  );
-
-  useEffect(() => {
-    const savedOrderItems = localStorage.getItem("orderItems");
-    if (savedOrderItems) {
-      setOrderItems(JSON.parse(savedOrderItems));
-    }
-  }, []);
 
   const fetchOrders = async () => {
     try {
       const response = await axios.get("http://localhost:4000/orders");
-      console.log("Pedidos retornados da API:", response.data);
-      // Filtrar os pedidos que NÃO estão prontos para retirada
-      const pendingOrders = response.data.filter(
-        (order) =>
-          order.status !== "Pronto para retirada" &&
-          order.status !== "Pedido retirado"
+      const readyOrders = response.data.filter(
+        (order) => order.status === "Pronto para retirada"
       );
-      setOrders(pendingOrders); // Apenas pedidos pendentes serão salvos
+      setOrders(readyOrders);
     } catch (error) {
       console.error("Erro ao buscar pedidos:", error);
     }
@@ -82,59 +41,27 @@ function Order() {
     fetchOrders();
   }, []);
 
+  // Função para abrir o modal com o pedido selecionado
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
-    setOpenModal(true); // Abrir o modal
+    setOpenModal(true);
   };
 
+  // Função para fechar o modal
   const handleCloseModal = () => {
-    setOpenModal(false); // Fechar o modal
+    setOpenModal(false);
   };
 
   const updateOrderStatus = async (orderId, newStatus) => {
-    // Adiciona a lógica de confirmação
     try {
       await axios.put(`http://localhost:4000/orders/${orderId}`, {
         status: newStatus,
       });
-      fetchOrders(); // Atualiza a lista de pedidos
-
-      // Define a mensagem do Snackbar
-      setSnackbarMessage(`Pedido #${orderId} despachado com sucesso!`);
-      setSnackbarOpen(true); // Abre o Snackbar
-      handleCloseConfirmDialog();
-      handleCloseModal();
-    } catch (error) {
-      console.error("Erro ao atualizar o status do pedido:", error);
-    }
-  };
-
-  const handleOpenConfirmDialog = (orderId) => {
-    setOrderToUpdate(orderId); // Armazena o ID do pedido que será atualizado
-    setOpenConfirmDialog(true); // Abre o diálogo de confirmação
-  };
-
-  const handleCloseConfirmDialog = () => {
-    setOpenConfirmDialog(false); // Fecha o diálogo de confirmação
-  };
-
-  const confirmUpdateOrderStatus = async () => {
-    if (!orderToUpdate) return;
-
-    try {
-      await axios.put(`http://localhost:4000/orders/${orderToUpdate}`, {
-        status: "Pronto para retirada",
-      });
-      fetchOrders(); // Atualiza a lista de pedidos
-
-      // Define a mensagem do Snackbar
-      setSnackbarMessage("Pedido despachado com sucesso!");
+      fetchOrders(); // Atualiza a lista de pedidos após a alteração
+      setSnackbarMessage("Pedido concluído com sucesso!");
       setSnackbarOpen(true); // Abre o Snackbar
     } catch (error) {
       console.error("Erro ao atualizar o status do pedido:", error);
-    } finally {
-      handleCloseConfirmDialog(); // Fecha o diálogo de confirmação
-      setOrderToUpdate(null); // Reseta o pedido
     }
   };
 
@@ -145,13 +72,9 @@ function Order() {
       >
         <Typography
           variant="h4"
-          sx={{
-            fontWeight: "bold",
-            marginBottom: "1rem",
-            textAlign: "center",
-          }}
+          sx={{ fontWeight: "bold", marginBottom: "1rem", textAlign: "center" }}
         >
-          Pedidos Pendentes
+          Pedidos Prontos para Retirada
         </Typography>
         <CardContent
           sx={{
@@ -164,7 +87,7 @@ function Order() {
               <Grid item xs={12} key={order.id}>
                 <Button
                   variant="outlined"
-                  onClick={() => handleOrderClick(order)}
+                  onClick={() => handleOrderClick(order)} // Abrir o modal ao clicar no pedido
                   sx={{
                     width: "100%",
                     color: "black",
@@ -181,16 +104,7 @@ function Order() {
                     },
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      width: isMobile ? "90%" : isTablet ? "60%" : "40rem",
-                      height: "3rem",
-                    }}
-                  >
-                    Pedido #{order.id}
-                  </Typography>
+                  Pedido #{order.id}
                 </Button>
               </Grid>
             ))}
@@ -216,8 +130,9 @@ function Order() {
                 textAlign: "center",
               }}
             >
-              Detalhes do Pedido #{selectedOrder?.id}
+              Detalhes do Pedido #{selectedOrder.id}
             </Typography>
+
             {/* Snackbar para exibir mensagens */}
             <Snackbar
               open={snackbarOpen}
@@ -229,28 +144,7 @@ function Order() {
                 {snackbarMessage}
               </Alert>
             </Snackbar>
-            {userData && (
-              <Box sx={{ textAlign: "left" }}>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: isMobile ? "1.5rem" : "1.5rem",
-                    margin: "0.5rem",
-                  }}
-                >
-                  Nome do Cliente: {userData.name}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: isMobile ? "1.5rem" : "1.5rem",
-                    margin: "0.5rem",
-                  }}
-                >
-                  Telefone: {userData.telefone}
-                </Typography>
-              </Box>
-            )}
+
             <Typography
               variant="body1"
               sx={{
@@ -259,7 +153,7 @@ function Order() {
                 fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
               }}
             >
-              Status: {selectedOrder?.status}
+              Status: {selectedOrder.status}
             </Typography>
             <Typography
               variant="body1"
@@ -269,7 +163,7 @@ function Order() {
                 fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
               }}
             >
-              Forma de Pagamento: {selectedOrder?.payment_method}
+              Forma de Pagamento: {selectedOrder.payment_method}
             </Typography>
             <Typography
               variant="body1"
@@ -279,8 +173,9 @@ function Order() {
                 fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
               }}
             >
-              Opção de Entrega: {selectedOrder?.type}
+              Opção de Entrega: {selectedOrder.type}
             </Typography>
+
             <Box sx={{ margin: "1rem", textAlign: "center" }}>
               <Typography
                 variant="h6"
@@ -295,7 +190,7 @@ function Order() {
               >
                 Itens do Pedido:
               </Typography>
-              {selectedOrder?.OrderItems &&
+              {selectedOrder.OrderItems &&
               selectedOrder.OrderItems.length > 0 ? (
                 selectedOrder.OrderItems.map((item, index) => (
                   <Typography
@@ -325,7 +220,8 @@ function Order() {
                   Nenhum item encontrado neste pedido.
                 </Typography>
               )}
-              {/* Calcular e exibir o total do pedido */}
+
+              {/* Exibir o total do pedido */}
               <Typography
                 variant="h6"
                 sx={{
@@ -336,11 +232,11 @@ function Order() {
                     : isTablet
                     ? "2.5rem"
                     : "1.5rem",
-                  textAlign: "left", // Alinhar o total à direita
+                  textAlign: "left",
                 }}
               >
                 Total: R${" "}
-                {selectedOrder?.OrderItems
+                {selectedOrder.OrderItems
                   ? selectedOrder.OrderItems.reduce(
                       (total, item) =>
                         total + item.quantity * Number(item.Product.price),
@@ -364,82 +260,18 @@ function Order() {
                     border: " 1px solid #1976d2", // Cor da borda quando hover
                   },
                 }}
-                onClick={() => handleOpenConfirmDialog(selectedOrder.id)} //Abre o dialogo de confirmação
-                // onClick={() =>
-                //   updateOrderStatus(selectedOrder.id, "Pronto para retirada")
-                // }
+                onClick={() =>
+                  updateOrderStatus(selectedOrder.id, "Pedido retirado")
+                }
               >
-                Despachar Pedido
+                Confirmar Retirada
               </Button>
             </Box>
           </DialogContent>
         </Dialog>
       )}
-      {/* Diálogo de confirmação */}
-      <Dialog
-        open={openConfirmDialog}
-        onClose={handleCloseConfirmDialog}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogContent>
-          <Typography
-            variant="h6"
-            sx={{ textAlign: "center", fontWeight: "bold" }}
-          >
-            Tem certeza que deseja despachar este pedido?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            sx={{
-              background: "red",
-              margin: ".5rem",
-              ":hover": {
-                backgroundColor: "#E5E7E6",
-                border: "1px solid red",
-                color: "red",
-              },
-            }}
-            onClick={handleCloseConfirmDialog}
-          >
-            Cancelar
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              background: "green",
-              margin: ".5rem",
-              ":hover": {
-                backgroundColor: "#E5E7E6",
-                border: "1px solid green",
-                color: "green",
-              },
-            }}
-            onClick={() =>
-              updateOrderStatus(selectedOrder.id, "Pronto para retirada")
-            }
-            color="primary"
-          >
-            Confirmar
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Snackbar para exibir mensagens */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={() => setSnackbarOpen(false)} severity="success">
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
 
-export default Order;
+export default ReadyForPickup;

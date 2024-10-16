@@ -33,6 +33,7 @@ import HistoryPurchase from "./components/HistoryPurchase";
 import ShowUserData from "./components/showUserData";
 import PrivateRoute from "./components/PERMISSIONADM/PrivateRoute";
 import ThanksPage from "./components/Obrigado";
+import ReadyForPickup from "./components/ReadyForPickup";
 
 const ScrollToTopButton = styled(Button)({
   position: "fixed",
@@ -155,6 +156,10 @@ function App() {
                     setCartItems={setCartItems}
                   />
                 }
+              />
+              <Route
+                path="/PedidosProntosParaRetirada"
+                element={<ReadyForPickup />}
               />
               <Route path="/ShowUserData" element={<ShowUserData />} />
               <Route path="/HistoricoDeCompras" element={<HistoryPurchase />} />
