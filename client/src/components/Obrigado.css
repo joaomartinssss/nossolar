@@ -4,15 +4,16 @@
 
 .typography1 {
   color: #fff;
-  margin: 1rem;
+  margin: 0.5rem;
   font-weight: bold;
   font-size: 2rem;
+  text-align: center;
 }
 
 .detalhes_do_pedido {
   text-align: center !important;
   color: #000000;
-  margin: 1rem !important;  
+  margin: 1rem !important;
 }
 
 .Card {
@@ -22,7 +23,14 @@
 }
 
 .typography2 {
-  color: #000;
+  color: gray;
+  margin: 0.5rem !important;
+  font-weight: bold !important;
+  font-size: 1.5rem !important;
+  font-family: inherit !important;
+}
+
+.typography3 {
   margin: 0.5rem !important;
   font-weight: bold !important;
   font-size: 1.5rem !important;
