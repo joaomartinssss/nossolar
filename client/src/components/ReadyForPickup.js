@@ -18,12 +18,34 @@ import "./ReadyForPickup.css";
 
 function ReadyForPickup() {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null); // Estado para o pedido selecionado
-  const [openModal, setOpenModal] = useState(false); // Estado para abrir/fechar o modal
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false); // Estado para o diálogo de confirmação
+  const [isLoading, setIsLoading] = useState(false); // Estado de loading
   const isMobile = useMediaQuery(breakPoints.mobile);
   const isTablet = useMediaQuery(breakPoints.tablet);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [userData, setUserData] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/user/${userData.id}`
+          );
+          setUserData(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userData]);
 
   const fetchOrders = async () => {
     try {
@@ -41,27 +63,42 @@ function ReadyForPickup() {
     fetchOrders();
   }, []);
 
-  // Função para abrir o modal com o pedido selecionado
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
     setOpenModal(true);
   };
 
-  // Função para fechar o modal
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  const updateOrderStatus = async (orderId, newStatus) => {
-    try {
-      await axios.put(`http://localhost:4000/orders/${orderId}`, {
-        status: newStatus,
-      });
-      fetchOrders(); // Atualiza a lista de pedidos após a alteração
-      setSnackbarMessage("Pedido concluído com sucesso!");
-      setSnackbarOpen(true); // Abre o Snackbar
-    } catch (error) {
-      console.error("Erro ao atualizar o status do pedido:", error);
+  // Função para abrir o modal de confirmação
+  const handleConfirmClick = () => {
+    setOpenConfirmation(true); // Abre o diálogo de confirmação
+  };
+
+  // Função para fechar o diálogo de confirmação
+  const handleCloseConfirmation = () => {
+    setOpenConfirmation(false);
+  };
+
+  const confirmOrderPickup = async () => {
+    if (selectedOrder) {
+      setIsLoading(true); // Inicia o estado de loading
+      try {
+        await axios.put(`http://localhost:4000/orders/${selectedOrder.id}`, {
+          status: "Pedido retirado",
+        });
+        fetchOrders(); // Atualiza a lista de pedidos após a alteração
+        setSnackbarMessage(`Pedido #${selectedOrder.id} concluído com sucesso!`);
+        setSnackbarOpen(true);
+        handleCloseConfirmation(); // Fecha o diálogo de confirmação
+        handleCloseModal();
+      } catch (error) {
+        console.error("Erro ao atualizar o status do pedido:", error);
+      } finally {
+        setIsLoading(false); // Finaliza o estado de loading
+      }
     }
   };
 
@@ -76,6 +113,16 @@ function ReadyForPickup() {
         >
           Pedidos Prontos para Retirada
         </Typography>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={() => setSnackbarOpen(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert onClose={() => setSnackbarOpen(false)} severity="success">
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
         <CardContent
           sx={{
             overflowY: "auto",
@@ -87,7 +134,7 @@ function ReadyForPickup() {
               <Grid item xs={12} key={order.id}>
                 <Button
                   variant="outlined"
-                  onClick={() => handleOrderClick(order)} // Abrir o modal ao clicar no pedido
+                  onClick={() => handleOrderClick(order)}
                   sx={{
                     width: "100%",
                     color: "black",
@@ -132,22 +179,13 @@ function ReadyForPickup() {
             >
               Detalhes do Pedido #{selectedOrder.id}
             </Typography>
-
-            {/* Snackbar para exibir mensagens */}
-            <Snackbar
-              open={snackbarOpen}
-              autoHideDuration={6000}
-              onClose={() => setSnackbarOpen(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={() => setSnackbarOpen(false)} severity="success">
-                {snackbarMessage}
-              </Alert>
-            </Snackbar>
-
             <Typography
               variant="body1"
               sx={{
+                borderRadius: "5px",
+                background: "#31D843",
+                color: "black",
+                textAlign: "center",
                 margin: "0.5rem",
                 fontWeight: "bold",
                 fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
@@ -155,6 +193,37 @@ function ReadyForPickup() {
             >
               Status: {selectedOrder.status}
             </Typography>
+            {userData && (
+              <Box sx={{ textAlign: "left" }}>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: isMobile ? "1.5rem" : "1.5rem",
+                    margin: "0.5rem",
+                  }}
+                >
+                  Cliente: {userData.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: isMobile ? "1.5rem" : "1.5rem",
+                    margin: "0.5rem",
+                  }}
+                >
+                  Telefone: {userData.telefone}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: isMobile ? "1.5rem" : "1.5rem",
+                    margin: "0.5rem",
+                  }}
+                >
+                  CPF: {userData.cpf}
+                </Typography>
+              </Box>
+            )}
             <Typography
               variant="body1"
               sx={{
@@ -221,7 +290,6 @@ function ReadyForPickup() {
                 </Typography>
               )}
 
-              {/* Exibir o total do pedido */}
               <Typography
                 variant="h6"
                 sx={{
@@ -255,14 +323,12 @@ function ReadyForPickup() {
                   fontSize: "1.2rem",
                   fontWeight: "bold",
                   "&:hover": {
-                    backgroundColor: "white", // Cor de fundo quando hover
-                    color: "#1976d2", // Cor do texto quando hover
-                    border: " 1px solid #1976d2", // Cor da borda quando hover
+                    backgroundColor: "white",
+                    color: "#1976d2",
+                    border: " 1px solid #1976d2",
                   },
                 }}
-                onClick={() =>
-                  updateOrderStatus(selectedOrder.id, "Pedido retirado")
-                }
+                onClick={handleConfirmClick} // Abre o diálogo de confirmação
               >
                 Confirmar Retirada
               </Button>
@@ -270,6 +336,62 @@ function ReadyForPickup() {
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Diálogo de confirmação */}
+      <Dialog
+        open={openConfirmation}
+        onClose={handleCloseConfirmation}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogContent>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: "1rem",
+            }}
+          >
+            Tem certeza que deseja confirmar a retirada?
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Button
+              variant="contained"
+              onClick={handleCloseConfirmation}
+              sx={{
+                width: "45%",
+                background: "red",
+                margin: ".5rem",
+                ":hover": {
+                  backgroundColor: "#E5E7E6",
+                  border: "1px solid red",
+                  color: "red",
+                },
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                width: "45%",
+                background: "green",
+                margin: ".5rem",
+                ":hover": {
+                  backgroundColor: "#E5E7E6",
+                  border: "1px solid green",
+                  color: "green",
+                },
+              }}
+              onClick={confirmOrderPickup}
+              disabled={isLoading} // Desabilita o botão durante o loading
+            >
+              {isLoading ? "Confirmando..." : "Confirmar"}
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

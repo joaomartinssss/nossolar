@@ -159,7 +159,12 @@ function App() {
               />
               <Route
                 path="/PedidosProntosParaRetirada"
-                element={<ReadyForPickup />}
+                element={
+                  <PrivateRoute
+                    element={<ReadyForPickup />}
+                    isAdmin={isAdmin}
+                  />
+                }
               />
               <Route path="/ShowUserData" element={<ShowUserData />} />
               <Route path="/HistoricoDeCompras" element={<HistoryPurchase />} />

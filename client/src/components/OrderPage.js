@@ -219,6 +219,20 @@ function Order() {
               Detalhes do Pedido #{selectedOrder?.id}
             </Typography>
             {/* Snackbar para exibir mensagens */}
+            <Typography
+              variant="body1"
+              sx={{
+                borderRadius: "5px",
+                background: "#F5D547",
+                color: "black",
+                textAlign: "center",
+                margin: "0.5rem",
+                fontWeight: "bold",
+                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
+              }}
+            >
+              Status: {selectedOrder?.status}
+            </Typography>
             <Snackbar
               open={snackbarOpen}
               autoHideDuration={6000}
@@ -238,7 +252,7 @@ function Order() {
                     margin: "0.5rem",
                   }}
                 >
-                  Nome do Cliente: {userData.name}
+                  Cliente: {userData.name}
                 </Typography>
                 <Typography
                   sx={{
@@ -251,16 +265,6 @@ function Order() {
                 </Typography>
               </Box>
             )}
-            <Typography
-              variant="body1"
-              sx={{
-                margin: "0.5rem",
-                fontWeight: "bold",
-                fontSize: isMobile ? "1.5rem" : isTablet ? "2.5rem" : "1.5rem",
-              }}
-            >
-              Status: {selectedOrder?.status}
-            </Typography>
             <Typography
               variant="body1"
               sx={{
