@@ -1,7 +1,7 @@
 import { CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 
 const style = {

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { IconButton, Typography, Grid, Button } from "@material-ui/core";
+import { IconButton, Typography, Grid, Button } from "@mui/material";
 import {
   Add as AddIcon,
   Remove as RemoveIcon,
   Delete as DeleteIcon,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
