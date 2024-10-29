@@ -19,7 +19,7 @@ function CategoryProductGrid({
     const fetchProductsByCategory = async () => {
       try {
         const response = await fetch(
-          `http://15.228.201.29:3001/categories/${categoryId}/products`
+          `http://localhost:3001/categories/${categoryId}/products`
         );
         if (!response.ok) {
           throw new Error("Falha ao carregar categoria.");

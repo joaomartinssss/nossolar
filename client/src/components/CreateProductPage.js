@@ -30,7 +30,7 @@ function CreateProductPage() {
 
     try {
       const response = await fetch(
-        `http://15.228.201.29:3001/categories/${productCategory}/products`,
+        `http://localhost:3001/categories/${productCategory}/products`,
         {
           method: "POST",
           headers: {

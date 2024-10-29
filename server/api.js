@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const app = express();
 const PORT = 3001; // Definindo a porta como 3001
-const baseApiRoute = "http://15.228.201.29:3001"; // Ajustando a rota base
+const baseApiRoute = "http://localhost:3001"; // Ajustando a rota base
 
 app.use(express.json());
 app.use(cors());
@@ -26,8 +26,16 @@ db.connect((err) => {
   console.log("Conexão ao banco de dados bem-sucedida!");
 });
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://main.d2dstay1bvn7vg.amplifyapp.com",
+];
+
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://main.d2dstay1bvn7vg.amplifyapp.com/");
+  const origin = req.header.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }  
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
@@ -186,7 +194,7 @@ app.get("/products/:productId", (req, res) => {
 app.put("/products/:productId", (req, res) => {
   const productId = req.params.productId;
   const { name, categoryId, image, description, price } = req.body;
-  console.log("Dados recebidos na requisição:", req.body)
+  console.log("Dados recebidos na requisição:", req.body);
   const updateProduct = {
     name,
     category_id: categoryId,

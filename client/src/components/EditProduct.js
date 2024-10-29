@@ -29,7 +29,7 @@ function EditProduct() {
 
   useEffect(() => {
     axios
-      .get(`http://15.228.201.29:3001/products/${productId}`)
+      .get(`http://localhost:3001/products/${productId}`)
       .then((response) => {
         const product = response.data;
         setName(product.name);
@@ -53,7 +53,7 @@ function EditProduct() {
     };
 
     axios
-      .put(`http://15.228.201.29:3001/products/${productId}`, updatedProduct)
+      .put(`http://localhost:3001/products/${productId}`, updatedProduct)
       .then((response) => {
         setSuccessMessage("Produto atualizado com sucesso!"); // Define a mensagem de sucesso
         setOpenSnackbar(true); // Abre o Snackbar
