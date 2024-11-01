@@ -28,7 +28,7 @@ function ProductPage2({ cartItems, setCartItems }) {
       setError(null);
       try {
         const response = await fetch(
-          `http://localhost:3001/products/${productId}`
+          `http://15.229.70.98:3001/products/${productId}`
         );
         if (!response.ok) {
           throw new Error("Falha ao carregar o produto.");

@@ -63,7 +63,7 @@ function ProductControl() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/products")
+      .get("http://15.229.70.98:3001/products")
       .then((response) => {
         setProducts(response.data);
       })
@@ -83,7 +83,7 @@ function ProductControl() {
 
   const confirmDelete = () => {
     axios
-      .delete(`http://localhost:3001/products/${deleteProductId}`)
+      .delete(`http://15.229.70.98:3001/products/${deleteProductId}`)
       .then((response) => {
         setProducts(
           products.filter((product) => product.id !== deleteProductId)

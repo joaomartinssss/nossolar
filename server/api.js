@@ -4,17 +4,17 @@ const cors = require("cors");
 
 const app = express();
 const PORT = 3001; // Definindo a porta como 3001
-const baseApiRoute = "http://localhost:3001"; // Ajustando a rota base
+const baseApiRoute = "http://15.229.70.98:3001"; // Ajustando a rota base
 
 app.use(express.json());
 app.use(cors());
 
 // Configurações do banco de dados
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Bl@ck100305",
-  database: "nosso_lar_suburbano",
+  host: "nossolardb.clqm8i0mo85q.sa-east-1.rds.amazonaws.com",
+  user: "admin",
+  password: "53972029837",
+  database: "nosso_lar_products",
 });
 
 // Conecta ao banco de dados
