@@ -72,7 +72,7 @@ function App() {
         const data = await response.json();
         setProducts(data);
       } catch (error) {
-        console.error("Erro ao obter os produtos:", error);
+        console.error("Erro ao obter os produtos:", error.message);
       }
     };
 
