@@ -65,7 +65,7 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://15.229.70.98:3001/products");
+        const response = await fetch("https://products.nossolarsupermercado.com/products");
         if (!response.ok) {
           throw new Error("Falha ao carregar os produtos.");
         }
