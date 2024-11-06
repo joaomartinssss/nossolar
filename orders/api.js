@@ -10,7 +10,14 @@ app.use(cors());
 app.use(express.json());
 
 // Sincronizar o banco de dados
-sequelize.sync();
+sequelize
+  .sync({ alter: true }) // Usa alter para ajustar sem recriar tabelas
+  .then(() => {
+    console.log("Banco de dados sincronizado.");
+  })
+  .catch((error) => {
+    console.error("Erro ao sincronizar banco de dados:", error);
+  });
 
 // Rota para criar um novo pedido
 app.post("/orders", async (req, res) => {
