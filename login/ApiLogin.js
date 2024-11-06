@@ -14,10 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/auth", auth);
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Bl@ck100305",
-  database: "nosso_lar_suburbano",
+  host: "nossolardb.clqm8i0mo85q.sa-east-1.rds.amazonaws.com",
+  user: "admin",
+  password: "53972029837",
+  database: "nosso_lar_products",
 });
 
 connection.connect((err) => {
