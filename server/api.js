@@ -15,7 +15,7 @@ const corsOptions = {
 
 const app = express();
 const PORT = 3001; // Definindo a porta como 3001
-const baseApiRoute = "http://15.229.70.98:3001"; // Ajustando a rota base
+const baseApiRoute = "https://products.nossolarsupermercado.com"; // Ajustando a rota base
 
 app.use(express.json());
 app.use(cors(corsOptions));

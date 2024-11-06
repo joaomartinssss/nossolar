@@ -28,7 +28,7 @@ function ProductPage2({ cartItems, setCartItems }) {
       setError(null);
       try {
         const response = await fetch(
-          `http://15.229.70.98:3001/products/${productId}`
+          `https://products.nossolarsupermercado.com/products/${productId}`
         );
         if (!response.ok) {
           throw new Error("Falha ao carregar o produto.");

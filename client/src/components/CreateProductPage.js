@@ -30,7 +30,7 @@ function CreateProductPage() {
 
     try {
       const response = await fetch(
-        `http://15.229.70.98:3001/categories/${productCategory}/products`,
+        `https://products.nossolarsupermercado.com/categories/${productCategory}/products`,
         {
           method: "POST",
           headers: {

@@ -19,7 +19,7 @@ function CategoryProductGrid({
     const fetchProductsByCategory = async () => {
       try {
         const response = await fetch(
-          `http://15.229.70.98:3001/categories/${categoryId}/products`
+          `https://products.nossolarsupermercado.com/categories/${categoryId}/products`
         );
         if (!response.ok) {
           throw new Error("Falha ao carregar categoria.");
