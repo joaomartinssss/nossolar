@@ -7,6 +7,9 @@ const Product = require("./Product");
 const Order = require("./Order");
 const OrderItem = require("./OrderItem");
 const auth = require("../server/users/auth");
+
+const app = express(); // Mova esta linha para o início, antes do uso de middlewares
+
 const allowedOrigins = [
   "http://localhost:3000",
   "https://main.d2dstay1bvn7vg.amplifyapp.com",
@@ -26,8 +29,6 @@ const corsOptions = {
 
 // Middleware CORS
 app.use(cors(corsOptions));
-
-// Resposta para requisições OPTIONS (preflight)
 app.options("*", cors(corsOptions));
 
 // Demais middlewares
@@ -35,9 +36,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Suas rotas e demais configurações...
-
-const app = express();
+// Suas rotas e demais configurações...*
 const PORT = 3001; // Definindo a porta como 3001
 const baseApiRoute = "https://products.nossolarsupermercado.com"; // Ajustando a rota base
 
