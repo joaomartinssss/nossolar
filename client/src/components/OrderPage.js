@@ -64,7 +64,9 @@ function Order() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("https://products.nossolarsupermercado.com/orders");
+      const response = await axios.get(
+        "https://products.nossolarsupermercado.com/orders"
+      );
       console.log("Pedidos retornados da API:", response.data);
       // Filtrar os pedidos que NÃO estão prontos para retirada
       const pendingOrders = response.data.filter(
@@ -88,16 +90,19 @@ function Order() {
   };
 
   const handleCloseModal = () => {
-    console.log("Fechando o modal...")
+    console.log("Fechando o modal...");
     setOpenModal(false); // Fechar o modal
   };
 
   const updateOrderStatus = async (orderId, newStatus) => {
     // Adiciona a lógica de confirmação
     try {
-      await axios.put(`https://products.nossolarsupermercado.com/orders/${orderId}`, {
-        status: newStatus,
-      });
+      await axios.put(
+        `https://products.nossolarsupermercado.com/orders/${orderId}`,
+        {
+          status: newStatus,
+        }
+      );
       fetchOrders(); // Atualiza a lista de pedidos
 
       // Define a mensagem do Snackbar
@@ -123,9 +128,12 @@ function Order() {
     if (!orderToUpdate) return;
 
     try {
-      await axios.put(`https://products.nossolarsupermercado.com/orders/${orderToUpdate}`, {
-        status: "Pronto para retirada",
-      });
+      await axios.put(
+        `https://products.nossolarsupermercado.com/orders/${orderToUpdate}`,
+        {
+          status: "Pronto para retirada",
+        }
+      );
       fetchOrders(); // Atualiza a lista de pedidos
 
       // Define a mensagem do Snackbar
@@ -253,7 +261,7 @@ function Order() {
                     margin: "0.5rem",
                   }}
                 >
-                  Cliente: {userData?.name}
+                  Cliente: {userData.name || "Nome não disponível"}
                 </Typography>
                 <Typography
                   sx={{
@@ -262,7 +270,7 @@ function Order() {
                     margin: "0.5rem",
                   }}
                 >
-                  Telefone: {userData.telefone}
+                  Telefone: {userData.telefone || "Telefone não disponível"}
                 </Typography>
               </Box>
             )}
@@ -318,8 +326,11 @@ function Order() {
                       fontFamily: "inherit",
                     }}
                   >
-                    - {item.Product.name} - {item.quantity} x R${" "}
-                    {Number(item.Product.price).toFixed(2)}
+                    - {item.Product?.name || "Produto desconhecido"} -{" "}
+                    {item.quantity} x R${" "}
+                    {item.Product
+                      ? Number(item.Product.price).toFixed(2)
+                      : "0.00"}
                   </Typography>
                 ))
               ) : (
