@@ -63,25 +63,30 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("https://products.nossolarsupermercado.com/api/auth/login", {
-        email,
-        senha,
-      });
-      // Armazene o token no localStorage
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user)); //Salva o usuário
-      localStorage.setItem("userId", res.data.user.id);      
+      const res = await axios.post(
+        "https://products.nossolarsupermercado.com/api/auth/login",
+        {
+          email,
+          senha,
+        }
+      );
+      if (res.data.token && res.data.user) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user)); // Salva o usuário
+        localStorage.setItem("userId", res.data.user.id);
 
-      // Define a mensagem de sucesso e abre o Snackbar
-      setSuccessMessage("Login realizado com sucesso!");
-      setOpenSnackbar(true);
+        setSuccessMessage("Login realizado com sucesso!");
+        setOpenSnackbar(true);
 
-      //Redirecionar o usuário para a página inicial após 3 segundos
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      } else {
+        alert("Erro no login. Tente novamente.");
+      }
     } catch (err) {
       console.error("Erro ao fazer login", err);
+      localStorage.clear(); // Limpar qualquer dado de login anterior
       alert("Email ou senha incorretos");
     }
   };

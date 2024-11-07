@@ -13,12 +13,13 @@ const app = express(); // Mova esta linha para o início, antes do uso de middle
 const allowedOrigins = [
   "https://main.d2dstay1bvn7vg.amplifyapp.com", // Adicione outras origens se necessário
   "https://products.nossolarsupermercado.com",
+  "https://nossolarsupermercado.com",
 ];
 
 const corsOptions = {
-  origin: "https://main.d2dstay1bvn7vg.amplifyapp.com", // Altere para o domínio correto
+  origin: allowedOrigins, // Permite múltiplas origens
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
+  credentials: true, // Permite o envio de cookies (se necessário)
 };
 
 app.use(cors(corsOptions)); // Use corsOptions agora que está definido
