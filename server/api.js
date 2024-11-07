@@ -10,10 +10,13 @@ const auth = require("../server/users/auth");
 
 const app = express(); // Mova esta linha para o início, antes do uso de middlewares
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://main.d2dstay1bvn7vg.amplifyapp.com/",
-];
+app.use(
+  cors({
+    origin: "https://main.d2dstay1bvn7vg.amplifyapp.com", // Altere para o domínio correto
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 const corsOptions = {
   origin: function (origin, callback) {
