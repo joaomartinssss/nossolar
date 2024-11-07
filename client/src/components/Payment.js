@@ -67,7 +67,7 @@ function Payment() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
           );
           setFetchedUserData(response.data); // Armazena os dados da requisição em fetchedUserData
         } catch (error) {
@@ -111,7 +111,7 @@ function Payment() {
       };
 
       try {
-        const res = await axios.post("http://localhost:4000/orders", newOrder);
+        const res = await axios.post("https://products.nossolarsupermercado.com/orders", newOrder);
         console.log("Pedido criado com sucesso", res.data);
         handleOpenSnackbar("Pedido realizado com sucesso!", "success");
 

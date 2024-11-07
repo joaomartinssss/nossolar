@@ -111,7 +111,7 @@ function BlackOverlay({ cartItems, setCartItems }) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
           );
           setUserData(response.data); // Atualize o estado com os dados do servidor
         } catch (error) {

@@ -8,7 +8,7 @@ function ShowUserData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/auth/user/3");
+        const response = await axios.get("https://products.nossolarsupermercado.com/api/auth/user/3");
         setUserData(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados do usuário", error);

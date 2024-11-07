@@ -102,7 +102,7 @@ function ClientArea() {
   const handleSaveChanges = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/auth/user/${userData.id}`,
+        `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}`,
         editData
       );
       setUserData(response.data); // Atualiza os dados exibidos com as alterações feitas
@@ -133,7 +133,7 @@ function ClientArea() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
+            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}` // Certifique-se de usar o campo id correto
           );
           setUserData(response.data); // Atualize o estado com os dados do servidor
         } catch (error) {

@@ -37,7 +37,7 @@ function Order() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/user/${userData.id}`
+            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}`
           );
           setUserData(response.data);
         } catch (error) {
@@ -64,7 +64,7 @@ function Order() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/orders");
+      const response = await axios.get("https://products.nossolarsupermercado.com/orders");
       console.log("Pedidos retornados da API:", response.data);
       // Filtrar os pedidos que NÃO estão prontos para retirada
       const pendingOrders = response.data.filter(
@@ -94,7 +94,7 @@ function Order() {
   const updateOrderStatus = async (orderId, newStatus) => {
     // Adiciona a lógica de confirmação
     try {
-      await axios.put(`http://localhost:4000/orders/${orderId}`, {
+      await axios.put(`https://products.nossolarsupermercado.com/orders/${orderId}`, {
         status: newStatus,
       });
       fetchOrders(); // Atualiza a lista de pedidos
@@ -122,7 +122,7 @@ function Order() {
     if (!orderToUpdate) return;
 
     try {
-      await axios.put(`http://localhost:4000/orders/${orderToUpdate}`, {
+      await axios.put(`https://products.nossolarsupermercado.com/orders/${orderToUpdate}`, {
         status: "Pronto para retirada",
       });
       fetchOrders(); // Atualiza a lista de pedidos

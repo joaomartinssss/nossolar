@@ -34,7 +34,7 @@ function HistoryPurchase() {
       if (userData && userData.id) {
         try {
           const response = await axios.get(
-            `http://localhost:4000/orders/history/${userData.id}`
+            `https://products.nossolarsupermercado.com/orders/history/${userData.id}`
           );
           const orders = response.data.map((order) => ({
             id: order.id,

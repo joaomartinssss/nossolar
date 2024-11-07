@@ -36,7 +36,7 @@ function ReadyForPickup() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/auth/user/${userData.id}`
+            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}`
           );
           setUserData(response.data);
         } catch (error) {
@@ -49,7 +49,7 @@ function ReadyForPickup() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/orders");
+      const response = await axios.get("https://products.nossolarsupermercado.com/orders");
       const readyOrders = response.data.filter(
         (order) => order.status === "Pronto para retirada"
       );
@@ -86,7 +86,7 @@ function ReadyForPickup() {
     if (selectedOrder) {
       setIsLoading(true); // Inicia o estado de loading
       try {
-        await axios.put(`http://localhost:4000/orders/${selectedOrder.id}`, {
+        await axios.put(`https://products.nossolarsupermercado.com/orders/${selectedOrder.id}`, {
           status: "Pedido retirado",
         });
         fetchOrders(); // Atualiza a lista de pedidos após a alteração
