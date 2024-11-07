@@ -12,7 +12,7 @@ const app = express(); // Mova esta linha para o início, antes do uso de middle
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://main.d2dstay1bvn7vg.amplifyapp.com",
+  "https://main.d2dstay1bvn7vg.amplifyapp.com/",
 ];
 
 const corsOptions = {
