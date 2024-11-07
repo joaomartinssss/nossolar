@@ -7,6 +7,11 @@ const Product = require("./Product");
 const Order = require("./Order");
 const OrderItem = require("./OrderItem");
 const auth = require("../server/users/auth");
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://main.d2dstay1bvn7vg.amplifyapp.com",
+];
+
 const corsOptions = {
   origin: function (origin, callback) {
     if (allowedOrigins.includes(origin) || !origin) {
@@ -15,18 +20,26 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
+// Middleware CORS
+app.use(cors(corsOptions));
+
+// Resposta para requisições OPTIONS (preflight)
+app.options("*", cors(corsOptions));
+
+// Demais middlewares
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Suas rotas e demais configurações...
 
 const app = express();
 const PORT = 3001; // Definindo a porta como 3001
 const baseApiRoute = "https://products.nossolarsupermercado.com"; // Ajustando a rota base
-
-app.use(express.json());
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 const connection = mysql.createConnection({
   host: "nossolardb.clqm8i0mo85q.sa-east-1.rds.amazonaws.com",
@@ -181,11 +194,6 @@ app.get("/orders/history/:user_id", async (req, res) => {
   }
 });
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://main.d2dstay1bvn7vg.amplifyapp.com",
-];
-
 app.use((req, res, next) => {
   const origin = req.header.origin;
   if (allowedOrigins.includes(origin)) {
@@ -237,15 +245,19 @@ app.get(`${baseApiRoute}/Categoria/:category`, (req, res) => {
 app.post("/categories", (req, res) => {
   const { name } = req.body;
   const newCategory = { name };
-  connection.query("INSERT INTO categories SET ?", newCategory, (error, results) => {
-    if (error) {
-      console.error("Erro ao inserir categoria:", error);
-      res.status(500).send("Erro ao criar categoria");
-      return;
+  connection.query(
+    "INSERT INTO categories SET ?",
+    newCategory,
+    (error, results) => {
+      if (error) {
+        console.error("Erro ao inserir categoria:", error);
+        res.status(500).send("Erro ao criar categoria");
+        return;
+      }
+      newCategory.id = results.insertId;
+      res.status(201).json(newCategory);
     }
-    newCategory.id = results.insertId;
-    res.status(201).json(newCategory);
-  });
+  );
 });
 
 app.post("/categories/:categoryId/products", (req, res) => {
@@ -258,15 +270,19 @@ app.post("/categories/:categoryId/products", (req, res) => {
     description,
     price,
   };
-  connection.query("INSERT INTO products SET ?", newProduct, (error, results) => {
-    if (error) {
-      console.error("Erro ao inserir produto:", error);
-      res.status(500).send("Erro ao criar produto");
-      return;
+  connection.query(
+    "INSERT INTO products SET ?",
+    newProduct,
+    (error, results) => {
+      if (error) {
+        console.error("Erro ao inserir produto:", error);
+        res.status(500).send("Erro ao criar produto");
+        return;
+      }
+      newProduct.id = results.insertId;
+      res.status(201).json(newProduct);
     }
-    newProduct.id = results.insertId;
-    res.status(201).json(newProduct);
-  });
+  );
 });
 
 app.get("/categories", (req, res) => {
