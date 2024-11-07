@@ -133,6 +133,28 @@ app.get("/orders", async (req, res) => {
   }
 });
 
+app.get("/orders/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const order = await Order.findByPk(id, {
+      include: {
+        model: OrderItem,
+        include: Product, // Inclui os detalhes dos produtos
+      },
+    });
+
+    if (!order) {
+      return res.status(404).json({ error: "Pedido não encontrado" });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    console.error("Erro ao buscar pedido:", error);
+    res.status(500).json({ error: "Erro ao buscar pedido", error });
+  }
+});
+
 // Rota para atualizar o status de um pedido
 app.put("/orders/:id", async (req, res) => {
   const { id } = req.params;
