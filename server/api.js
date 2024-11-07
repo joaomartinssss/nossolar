@@ -1,6 +1,12 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
+const sequelize = require("./database");
+const bodyParser = require("body-parser");
+const Product = require("./Product");
+const Order = require("./Order");
+const OrderItem = require("./OrderItem");
+const auth = require("../server/users/auth");
 const corsOptions = {
   origin: function (origin, callback) {
     if (allowedOrigins.includes(origin) || !origin) {
@@ -19,22 +25,160 @@ const baseApiRoute = "https://products.nossolarsupermercado.com"; // Ajustando a
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Configurações do banco de dados
-const db = mysql.createConnection({
+const connection = mysql.createConnection({
   host: "nossolardb.clqm8i0mo85q.sa-east-1.rds.amazonaws.com",
   user: "admin",
   password: "53972029837",
   database: "nosso_lar_products",
 });
 
-// Conecta ao banco de dados
-db.connect((err) => {
+connection.connect((err) => {
   if (err) {
     console.error("Erro ao conectar ao banco de dados:", err);
     return;
   }
-  console.log("Conexão ao banco de dados bem-sucedida!");
+  console.log("Conexão ao banco de dados bem-sucedida");
+});
+
+sequelize
+  .sync({ alter: true })
+  .then(() => console.log("Banco de dados sincronizado."))
+  .catch((error) =>
+    console.error("Erro ao sincronizar banco de dados:", error)
+  );
+
+// Middleware de autenticação
+app.use("/api/auth", auth); // Endpoints de autenticação
+
+// Rota para criar um novo pedido
+app.post("/orders", async (req, res) => {
+  const { user_id, payment_method, status, type, items } = req.body;
+
+  console.log("Iniciando criação de pedido...");
+  console.log("Dados do pedido:", req.body);
+
+  try {
+    //calcular o total somando o preço * quantidade para cada item
+    let total = 0;
+
+    //Busca os produtos e calcula o total
+    for (let item of items) {
+      const product = await Product.findByPk(item.product_id);
+      if (!product) {
+        return res
+          .status(400)
+          .json({ error: `Produto com ID ${item.product_id} não encontrado` });
+      }
+      total += product.price * item.quantity; // Assumindo que o modelo Product tem um campo 'price'
+    }
+
+    //cria o novo pedido com o total calculado
+    const newOrder = await Order.create({
+      user_id,
+      payment_method: payment_method,
+      status: "pendente",
+      type: type,
+      total,
+    });
+
+    console.log("Pedido criado com ID:", newOrder.id);
+
+    // Adiciona os itens do pedido
+    const orderItems = items.map((item) => ({
+      order_id: newOrder.id,
+      product_id: item.product_id,
+      quantity: item.quantity,
+    }));
+
+    await OrderItem.bulkCreate(orderItems);
+
+    console.log("Itens do pedido criados.");
+
+    res.status(201).json(newOrder);
+  } catch (error) {
+    console.error("Erro ao criar pedido:", error);
+    res
+      .status(500)
+      .json({ error: "Erro ao criar pedido", details: error.message });
+  }
+});
+
+// Rota para buscar todos os pedidos
+app.get("/orders", async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      include: {
+        model: OrderItem,
+        include: Product, // Inclui os detalhes dos produtos
+      },
+    });
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Erro ao buscar pedidos:", error);
+    res.status(500).json({ error: "Erro ao buscar pedidos", error });
+  }
+});
+
+// Rota para atualizar o status de um pedido
+app.put("/orders/:id", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const order = await Order.findByPk(id);
+    if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
+
+    order.status = status;
+    await order.save();
+
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao atualizar status do pedido" });
+  }
+});
+
+// Rota para deletar todos os pedidos
+app.delete("/orders", async (req, res) => {
+  try {
+    await Order.destroy({ where: {} }); // Apaga todos os pedidos
+    res
+      .status(200)
+      .json({ message: "Todos os pedidos foram deletados com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar todos os pedidos:", error);
+    res
+      .status(500)
+      .json({ error: "Erro ao deletar pedidos", details: error.message });
+  }
+});
+
+// Rota para buscar os pedidos de um usuário específico
+app.get("/orders/history/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const orders = await Order.findAll({
+      where: { user_id }, // Filtra pelos pedidos do usuário logado
+      include: {
+        model: OrderItem,
+        include: Product, // Inclui os detalhes dos produtos
+      },
+    });
+
+    if (orders.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Nenhum pedido encontrado para este usuário." });
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Erro ao buscar pedidos:", error);
+    res.status(500).json({ error: "Erro ao buscar pedidos" });
+  }
 });
 
 const allowedOrigins = [
@@ -82,7 +226,7 @@ app.get(`${baseApiRoute}/Categoria/:category`, (req, res) => {
   }
 
   let sql = "SELECT * FROM products WHERE category_id = ?";
-  db.query(sql, [categoryId], (err, result) => {
+  connection.query(sql, [categoryId], (err, result) => {
     if (err) throw err;
     res.json(result);
   });
@@ -93,7 +237,7 @@ app.get(`${baseApiRoute}/Categoria/:category`, (req, res) => {
 app.post("/categories", (req, res) => {
   const { name } = req.body;
   const newCategory = { name };
-  db.query("INSERT INTO categories SET ?", newCategory, (error, results) => {
+  connection.query("INSERT INTO categories SET ?", newCategory, (error, results) => {
     if (error) {
       console.error("Erro ao inserir categoria:", error);
       res.status(500).send("Erro ao criar categoria");
@@ -114,7 +258,7 @@ app.post("/categories/:categoryId/products", (req, res) => {
     description,
     price,
   };
-  db.query("INSERT INTO products SET ?", newProduct, (error, results) => {
+  connection.query("INSERT INTO products SET ?", newProduct, (error, results) => {
     if (error) {
       console.error("Erro ao inserir produto:", error);
       res.status(500).send("Erro ao criar produto");
@@ -126,7 +270,7 @@ app.post("/categories/:categoryId/products", (req, res) => {
 });
 
 app.get("/categories", (req, res) => {
-  db.query("SELECT * FROM categories", (error, results) => {
+  connection.query("SELECT * FROM categories", (error, results) => {
     if (error) {
       console.error("Erro ao buscar categorias:", error);
       res.status(500).send("Erro ao buscar categorias");
@@ -138,7 +282,7 @@ app.get("/categories", (req, res) => {
 
 app.get("/categories/:categoryId/products", (req, res) => {
   const categoryId = req.params.categoryId;
-  db.query(
+  connection.query(
     "SELECT * FROM products WHERE category_id = ?",
     [categoryId],
     (error, results) => {
@@ -157,7 +301,7 @@ app.put("/categories/:categoryId", (req, res) => {
   const { name } = req.body;
   const updateCategory = { name };
 
-  db.query(
+  connection.query(
     "UPDATE categories SET ? WHERE id = ?",
     [updateCategory, categoryId],
     (error, results) => {
@@ -172,7 +316,7 @@ app.put("/categories/:categoryId", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-  db.query("SELECT * FROM products", (error, results) => {
+  connection.query("SELECT * FROM products", (error, results) => {
     if (error) {
       console.error("Erro ao buscar produtos:", error);
       res.status(500).send("Erro ao buscar produtos");
@@ -184,7 +328,7 @@ app.get("/products", (req, res) => {
 
 app.get("/products/:productId", (req, res) => {
   const productId = req.params.productId;
-  db.query(
+  connection.query(
     "SELECT * FROM products WHERE id = ?",
     [productId],
     (error, results) => {
@@ -215,7 +359,7 @@ app.put("/products/:productId", (req, res) => {
 
   console.log("Dados recebidos para atualização:", updateProduct);
 
-  db.query(
+  connection.query(
     "UPDATE products SET ? WHERE id = ?",
     [updateProduct, productId],
     (error, results) => {
@@ -236,7 +380,7 @@ app.put("/products/:productId", (req, res) => {
 app.delete("/categories/:categoryId", (req, res) => {
   const categoryId = req.params.categoryId;
 
-  db.query(
+  connection.query(
     "DELETE FROM categories WHERE id = ?",
     [categoryId],
     (error, results) => {
@@ -253,7 +397,7 @@ app.delete("/categories/:categoryId", (req, res) => {
 app.delete("/products/:productId", (req, res) => {
   const productId = req.params.productId;
 
-  db.query(
+  connection.query(
     "DELETE FROM products WHERE id = ?",
     [productId],
     (error, results) => {
@@ -268,7 +412,7 @@ app.delete("/products/:productId", (req, res) => {
 });
 
 app.delete("/products", (req, res) => {
-  db.query("DELETE FROM products", (error, results) => {
+  connection.query("DELETE FROM products", (error, results) => {
     if (error) {
       console.error("Erro ao excluir todos os produtos:", error);
       res.status(500).send("Erro ao excluir todos os produtos");
