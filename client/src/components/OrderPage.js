@@ -88,6 +88,7 @@ function Order() {
   };
 
   const handleCloseModal = () => {
+    console.log("Fechando o modal...")
     setOpenModal(false); // Fechar o modal
   };
 
@@ -252,7 +253,7 @@ function Order() {
                     margin: "0.5rem",
                   }}
                 >
-                  Cliente: {userData.name}
+                  Cliente: {userData?.name}
                 </Typography>
                 <Typography
                   sx={{
