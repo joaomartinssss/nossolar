@@ -65,6 +65,11 @@ sequelize
 // Middleware de autenticação
 app.use("/api/auth", auth); // Endpoints de autenticação
 
+app.post("/api/auth/login", (req, res) => {
+  // lógica de autenticação
+  res.send("Login realizado com sucesso");
+});
+
 // Rota para criar um novo pedido
 app.post("/orders", async (req, res) => {
   const { user_id, payment_method, status, type, items } = req.body;
