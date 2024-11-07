@@ -10,16 +10,13 @@ const auth = require("../server/users/auth");
 
 const app = express(); // Mova esta linha para o início, antes do uso de middlewares
 
-app.use(
-  cors({
-    origin: "https://main.d2dstay1bvn7vg.amplifyapp.com", // Altere para o domínio correto
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: "https://main.d2dstay1bvn7vg.amplifyapp.com", // Altere para o domínio correto
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
 
-// Middleware CORS
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Use corsOptions agora que está definido
 app.options("*", cors(corsOptions));
 
 // Demais middlewares
