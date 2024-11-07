@@ -10,6 +10,11 @@ const auth = require("../server/users/auth");
 
 const app = express(); // Mova esta linha para o início, antes do uso de middlewares
 
+const allowedOrigins = [
+  "https://main.d2dstay1bvn7vg.amplifyapp.com", // Adicione outras origens se necessário
+  "https://products.nossolarsupermercado.com",
+];
+
 const corsOptions = {
   origin: "https://main.d2dstay1bvn7vg.amplifyapp.com", // Altere para o domínio correto
   methods: ["GET", "POST", "PUT", "DELETE"],
