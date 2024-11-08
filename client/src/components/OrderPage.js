@@ -6,15 +6,13 @@ import {
   Grid,
   Button,
   Box,
-  Dialog,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
 import "./OrderPage.css";
 import breakPoints from "./BreakPoints";
 import { useMediaQuery } from "@mui/material";
 import axios from "axios";
 import { Snackbar, Alert } from "@mui/material";
+import { Dialog, DialogContent, DialogActions } from "@mui/material";
 
 function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -215,6 +213,13 @@ function Order() {
           onClose={handleCloseModal}
           maxWidth="sm"
           fullWidth
+          sx={{
+            position: "fixed",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1300, // Coloca o modal no topo da pilha
+          }}
         >
           {console.log("Modal Aberto:", openModal)}
           <DialogContent
