@@ -85,6 +85,7 @@ function Order() {
   }, []);
 
   const handleOrderClick = (order) => {
+    console.log("Pedido selecionado", order);
     setSelectedOrder(order);
     setOpenModal(true); // Abrir o modal
   };
@@ -209,8 +210,16 @@ function Order() {
 
       {/* Modal para detalhes do pedido */}
       {selectedOrder && (
-        <Dialog open={openModal} onClose={handleCloseModal} disablePortal>
-          <DialogContent sx={{ background: "white", padding: "1rem" }}>
+        <Dialog
+          open={openModal}
+          onClose={handleCloseModal}
+          maxWidth="sm"
+          fullWidth
+        >
+          {console.log("Modal Aberto:", openModal)}
+          <DialogContent
+            sx={{ background: "white", padding: "1rem", minHeight: "200px" }}
+          >
             <Typography
               variant="h5"
               sx={{
