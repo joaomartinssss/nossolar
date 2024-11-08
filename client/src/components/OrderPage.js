@@ -209,13 +209,7 @@ function Order() {
 
       {/* Modal para detalhes do pedido */}
       {selectedOrder && (
-        <Dialog
-          open={openModal}
-          onClose={handleCloseModal}
-          maxWidth="sm"
-          fullWidth
-          BackdropProps={{ invisible: false }}
-        >
+        <Dialog open={openModal} onClose={handleCloseModal}>
           <DialogContent>
             <Typography
               variant="h5"
