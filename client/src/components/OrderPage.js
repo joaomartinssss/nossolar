@@ -209,8 +209,8 @@ function Order() {
 
       {/* Modal para detalhes do pedido */}
       {selectedOrder && (
-        <Dialog open={openModal} onClose={handleCloseModal}>
-          <DialogContent>
+        <Dialog open={openModal} onClose={handleCloseModal} disablePortal>
+          <DialogContent sx={{ background: "white", padding: "1rem" }}>
             <Typography
               variant="h5"
               sx={{
