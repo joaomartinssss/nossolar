@@ -214,6 +214,7 @@ function Order() {
           onClose={handleCloseModal}
           maxWidth="sm"
           fullWidth
+          BackdropProps={{ invisible: false }}
         >
           <DialogContent>
             <Typography
