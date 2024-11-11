@@ -29,6 +29,28 @@ function Order() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false); // Estado para o diálogo de confirmação
   const [orderToUpdate, setOrderToUpdate] = useState(null); // Para armazenar o pedido que será despachado
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        "https://products.nossolarsupermercado.com/products"
+      );
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts(); // Busca os produtos ao carregar o componente
+  }, []);
+
+  const getProductDetails = (productId) => {
+    const product = products.find((product) => product.id === productId);
+    console.log("Product Details:", product); // Verifique se o produto é encontrado corretamente
+    return product || { name: "Produto desconhecido", price: "0.00" };
+  };
 
   useEffect(() => {
     if (userData && userData.id) {
@@ -46,12 +68,24 @@ function Order() {
     }
   }, [userData]);
 
-  const cartItems = JSON.parse(localStorage.getItem("cartItems")).map(
+  const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]").map(
     (item) => ({
       ...item,
       price: Number(item.price),
     })
   );
+
+  useEffect(() => {
+    // Salva `orderItems` se não estiver no localStorage ainda
+    if (!localStorage.getItem("orderItems")) {
+      localStorage.setItem("orderItems", JSON.stringify([]));
+    }
+
+    const savedOrderItems = localStorage.getItem("orderItems");
+    if (savedOrderItems) {
+      setOrderItems(JSON.parse(savedOrderItems));
+    }
+  }, []);
 
   useEffect(() => {
     const savedOrderItems = localStorage.getItem("orderItems");
@@ -315,39 +349,26 @@ function Order() {
               >
                 Itens do Pedido:
               </Typography>
-              {selectedOrder?.OrderItems &&
-              selectedOrder.OrderItems.length > 0 ? (
-                selectedOrder.OrderItems.map((item, index) => (
-                  <Typography
-                    key={index}
-                    variant="body2"
-                    sx={{
-                      margin: "0.5rem",
-                      fontSize: isMobile
-                        ? "1.5rem"
-                        : isTablet
-                        ? "2rem"
-                        : "1.5rem",
-                      textAlign: "left",
-                      color: "gray",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    - {item.Product?.name || "Produto desconhecido"} -{" "}
-                    {item.quantity} x R${" "}
-                    {item.Product
-                      ? Number(item.Product.price).toFixed(2)
-                      : "0.00"}
-                  </Typography>
-                ))
-              ) : (
+              {selectedOrder?.OrderItems.map((item, index) => (
                 <Typography
+                  key={index}
                   variant="body2"
-                  sx={{ margin: "0.5rem", fontSize: "1.5rem" }}
+                  sx={{
+                    margin: "0.5rem",
+                    fontSize: isMobile
+                      ? "1.5rem"
+                      : isTablet
+                      ? "2rem"
+                      : "1.5rem",
+                    textAlign: "left",
+                    color: "gray",
+                    fontFamily: "inherit",
+                  }}
                 >
-                  Nenhum item encontrado neste pedido.
+                  - {item.product.name} - {item.quantity} x R${" "}
+                  {Number(item.product.price).toFixed(2)}
                 </Typography>
-              )}
+              ))}
               {/* Calcular e exibir o total do pedido */}
               <Typography
                 variant="h6"
@@ -359,7 +380,7 @@ function Order() {
                     : isTablet
                     ? "2.5rem"
                     : "1.5rem",
-                  textAlign: "left", // Alinhar o total à direita
+                  textAlign: "left",
                 }}
               >
                 Total: R${" "}
@@ -368,7 +389,7 @@ function Order() {
                       (total, item) =>
                         total +
                         item.quantity *
-                          (item.Product ? Number(item.Product.price) : 0),
+                          (item.product ? Number(item.product.price) : 0),
                       0
                     ).toFixed(2)
                   : "0.00"}
