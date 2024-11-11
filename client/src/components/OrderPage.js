@@ -366,7 +366,9 @@ function Order() {
                 {selectedOrder?.OrderItems
                   ? selectedOrder.OrderItems.reduce(
                       (total, item) =>
-                        total + item.quantity * Number(item.Product.price),
+                        total +
+                        item.quantity *
+                          (item.Product ? Number(item.Product.price) : 0),
                       0
                     ).toFixed(2)
                   : "0.00"}
