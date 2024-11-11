@@ -235,7 +235,7 @@ const categories = {
 };
 
 // Rota dinâmica para buscar produtos por categoria
-app.get(`${baseApiRoute}/Categoria/:category`, (req, res) => {
+app.get(`/Categoria/:category`, (req, res) => {
   const category = req.params.category;
   const categoryId = categories[category];
 

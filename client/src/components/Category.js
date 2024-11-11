@@ -6,6 +6,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 const Categoria = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const containerRef = useRef(null);
+  const baseApiRoute = "https://products.nossolarsupermercado.com";
 
   const categoryMapping = {
     hortifruti: 1,
@@ -102,7 +103,7 @@ const Categoria = () => {
         {Object.keys(categoryMapping).map((category) => (
           <Link
             key={category}
-            to={`/Categoria/${categoryMapping[category]}`}
+            to={`${baseApiRoute}/Categoria/${categoryMapping[category]}`}
             style={
               hoveredButton === category
                 ? { ...style.button, ...style.buttonHover }
