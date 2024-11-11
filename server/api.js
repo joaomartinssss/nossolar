@@ -245,7 +245,12 @@ app.get(`/Categoria/:category`, (req, res) => {
 
   let sql = "SELECT * FROM products WHERE category_id = ?";
   connection.query(sql, [categoryId], (err, result) => {
-    if (err) throw err;
+    if (err) {
+      console.error("Erro na consulta ao banco de dados:", err);
+      return res
+        .status(500)
+        .json({ error: "Erro ao acessar o banco de dados" });
+    }
     res.json(result);
   });
 });

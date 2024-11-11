@@ -169,19 +169,19 @@ const TopNav = ({
   return (
     <div style={{ position: "relative" }}>
       <NavigationBar isMobile={isMobile}>
-        <NavLink href="#" onClick={scrollToBottom}>
+        <NavLink href="" onClick={scrollToBottom}>
           Institucional
         </NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>
+        <NavLink href="https://wa.me/5511940862140">
           Atendimento
         </NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>
+        <NavLink href="" onClick={scrollToBottom}>
           Lojas
         </NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>
+        <NavLink href="" onClick={scrollToBottom}>
           Folhetos
         </NavLink>
-        <NavLink href="#" onClick={scrollToBottom}>
+        <NavLink href="" onClick={scrollToBottom}>
           Trabalhe Conosco
         </NavLink>
       </NavigationBar>
