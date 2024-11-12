@@ -17,12 +17,18 @@ const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: allowedOrigins, // Permite múltiplas origens
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true, // Permite o envio de cookies (se necessário)
+  credentials: true,
 };
 
-app.use(cors(corsOptions)); // Use corsOptions agora que está definido
+app.use(cors(corsOptions)); // Usando apenas esta linha para configurar CORS
 app.options("*", cors(corsOptions));
 
 // Demais middlewares
