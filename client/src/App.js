@@ -65,7 +65,16 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://products.nossolarsupermercado.com/products");
+        const response = await fetch(
+          "https://products.nossolarsupermercado.com/products",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include", // Inclui cookies e credenciais
+          }
+        );
         if (!response.ok) {
           throw new Error("Falha ao carregar os produtos.");
         }
