@@ -1,31 +1,29 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 
 const Categoria = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const containerRef = useRef(null);
 
-  const categoryMapping = {
-    hortifruti: 1,
-    padaria: 2,
-    açougue: 3,
-    bebidas: 4,
-    rotisseria: 5,
-    bomboniere: 6,
-    bazar: 7,
-    automotivo: 8,
-    petshop: 9,
-    mercearia: 10,
-    limpeza: 11,
-    laticinios: 12,
-    bebes: 13,
-    higiene: 14,
-    congelados: 15,
-    utilidades: 16,
-    japones: 17,
-  };
+  const categories = [
+    "hortifruti",
+    "padaria",
+    "açougue",
+    "bebidas",
+    "rotisseria",
+    "bomboniere",
+    "bazar",
+    "automotivo",
+    "petshop",
+    "mercearia",
+    "limpeza",
+    "laticinios",
+    "bebes",
+    "higiene",
+    "congelados",
+    "utilidades",
+    "japones",
+  ];
 
   const style = {
     container: {
@@ -84,25 +82,25 @@ const Categoria = () => {
     },
   };
 
-  const scrollLeft = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollLeft -= 100;
-    }
-  };
+  // const scrollLeft = () => {
+  //   if (containerRef.current) {
+  //     containerRef.current.scrollLeft -= 100;
+  //   }
+  // };
 
-  const scrollRight = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollLeft += 100;
-    }
-  };
+  // const scrollRight = () => {
+  //   if (containerRef.current) {
+  //     containerRef.current.scrollLeft += 100;
+  //   }
+  // };
 
   return (
     <div style={style.container}>
       <section id="produtos" style={style.produtos} ref={containerRef}>
-        {Object.keys(categoryMapping).map((category) => (
+        {categories.map((category) => (
           <Link
             key={category}
-            to={`/Categoria/${categoryMapping[category]}`}
+            to={`/Categoria/${category}`} // Agora usa o nome da categoria diretamente
             style={
               hoveredButton === category
                 ? { ...style.button, ...style.buttonHover }
@@ -111,6 +109,7 @@ const Categoria = () => {
             onMouseEnter={() => setHoveredButton(category)}
             onMouseLeave={() => setHoveredButton(null)}
           >
+            {/* Capitalize a primeira letra para exibição */}
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </Link>
         ))}
