@@ -19,7 +19,7 @@ function CategoryProductGrid({
     const fetchProductsByCategory = async () => {
       try {
         const response = await fetch(
-          `https://products.nossolarsupermercado.com/categories/${categoryId}/products`
+          `https://products.nossolarsupermercado.com/Categoria/${categoryId}`
         );
         if (!response.ok) {
           throw new Error("Falha ao carregar categoria.");
