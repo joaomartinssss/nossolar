@@ -243,7 +243,13 @@ const categories = {
 // Rota dinâmica para buscar produtos por categoria
 app.get(`/Categoria/:category`, (req, res) => {
   const category = req.params.category;
-  const categoryId = categories[category];
+  const normalizedCategory =
+    category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+  const categoryId = categories[normalizedCategory];
+
+  console.log("Categoria requisitada:", category);
+  console.log("Categoria normalizada:", normalizedCategory);
+  console.log("ID da categoria:", categoryId);
 
   if (!categoryId) {
     return res.status(404).json({ error: "Categoria não encontrada" });
