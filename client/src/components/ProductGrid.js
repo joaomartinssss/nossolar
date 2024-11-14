@@ -12,7 +12,8 @@ const ProductGrid = ({
   cartItems = [],
 }) => {
   const isMobile = useMediaQuery(breakPoints.mobile);
-
+  const isTablet = useMediaQuery(breakPoints.tablet);
+  
   return (
     <Grid
       container
@@ -29,13 +30,12 @@ const ProductGrid = ({
         <Grid
           key={product.id}
           item
-          xs={isMobile ? 6 : 12}
-          sm={6}
-          md={2}
-          lg={2}
-          style={{ display: "flex" }}
+          xs={isMobile ? 6 : isTablet ? 4 : 12} // Adjust for mobile, tablet, and desktop
+          sm={isTablet ? 4 : isMobile ? 6 : 12} // Handle both mobile and tablet breakpoints
+          md={4} // Maintain 4 cards per column on larger screens
+          lg={3} // 3 cards per column on desktops (new)
+          style={{ display: "flex" }} // Ensure consistent styling
         >
-          {/* Passe a função addToCart como propriedade para o componente ProductCard */}
           <ProductCard
             product={product}
             addToCart={addToCart}
