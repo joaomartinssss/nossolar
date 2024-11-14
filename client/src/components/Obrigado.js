@@ -55,16 +55,14 @@ function ThanksPage() {
   };
 
   return (
-    <div className="div">
+    <div className="div1">
       <h4 className="typography1">
-        Obrigado {userData ? userData.name : "nome não disponível"} por
-        <h4 className="typography1">
-          realizar sua compra com o SUPERMERCADO NOSSO LAR!
-        </h4>
+        Obrigado {userData ? userData.name : "nome não disponível"} por realizar
+        sua compra com o SUPERMERCADO NOSSO LAR!
       </h4>
-      <h4 className="typography1">Assim que seu pedido estiver pronto,</h4>
       <h4 className="typography1">
-        entraremos em contato com o número: {userData.telefone}
+        Assim que seu pedido estiver pronto, entraremos em contato com o número:{" "}
+        {userData.telefone}
       </h4>
       <Card className="Card">
         <h3 className="detalhes_do_pedido">Detalhes do seu pedido:</h3>

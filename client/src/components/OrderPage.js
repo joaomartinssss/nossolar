@@ -21,10 +21,6 @@ function Order() {
   const isTablet = useMediaQuery(breakPoints.tablet);
   const [orderItems, setOrderItems] = useState([]);
   const [openModal, setOpenModal] = useState(false); // Estado para abrir/fechar o modal
-  const [userData, setUserData] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false); // Estado para o diálogo de confirmação
@@ -52,28 +48,46 @@ function Order() {
     return product || { name: "Produto desconhecido", price: "0.00" };
   };
 
-  useEffect(() => {
-    if (userData && userData.id) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}`
-          );
-          setUserData(response.data);
-        } catch (error) {
-          console.error("Erro ao buscar dados do usuário", error);
-        }
-      };
-      fetchData();
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await axios.get(
+        `products.nossolarsupermercado.com/api/auth/user/${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar dados do usuário:", error);
+      return null; // Caso haja erro, retorna null
     }
-  }, [userData]);
+  };
 
-  const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]").map(
-    (item) => ({
-      ...item,
-      price: Number(item.price),
-    })
-  );
+  useEffect(() => {
+    const fetchOrdersAndUserData = async () => {
+      try {
+        const response = await axios.get(
+          "products.nossolarsupermercado.com/orders"
+        );
+        const pendingOrders = response.data.filter(
+          (order) =>
+            order.status !== "Pronto para retirada" &&
+            order.status !== "Pedido retirado"
+        );
+
+        // Para cada pedido, busca os dados do usuário com base no user_id
+        const ordersWithUserData = await Promise.all(
+          pendingOrders.map(async (order) => {
+            const user = await fetchUserData(order.user_id); // Buscando dados do usuário pelo user_id
+            return { ...order, user }; // Adiciona os dados do usuário ao pedido
+          })
+        );
+
+        setOrders(ordersWithUserData); // Atualiza os pedidos com os dados do usuário
+      } catch (error) {
+        console.error("Erro ao buscar pedidos:", error);
+      }
+    };
+
+    fetchOrdersAndUserData();
+  }, []);
 
   useEffect(() => {
     // Salva `orderItems` se não estiver no localStorage ainda
@@ -87,12 +101,12 @@ function Order() {
     }
   }, []);
 
-  useEffect(() => {
-    const savedOrderItems = localStorage.getItem("orderItems");
-    if (savedOrderItems) {
-      setOrderItems(JSON.parse(savedOrderItems));
-    }
-  }, []);
+  const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]").map(
+    (item) => ({
+      ...item,
+      price: Number(item.price),
+    })
+  );
 
   const fetchOrders = async () => {
     try {
@@ -293,7 +307,7 @@ function Order() {
                 {snackbarMessage}
               </Alert>
             </Snackbar>
-            {userData && (
+            {selectedOrder.user && (
               <Box sx={{ textAlign: "left" }}>
                 <Typography
                   sx={{
@@ -302,7 +316,7 @@ function Order() {
                     margin: "0.5rem",
                   }}
                 >
-                  Cliente: {userData.name || "Nome não disponível"}
+                  Cliente: {selectedOrder.user.name || "Nome não disponível"}
                 </Typography>
                 <Typography
                   sx={{
@@ -311,7 +325,17 @@ function Order() {
                     margin: "0.5rem",
                   }}
                 >
-                  Telefone: {userData.telefone || "Telefone não disponível"}
+                  Telefone:{" "}
+                  {selectedOrder.user.telefone || "Telefone não disponível"}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: isMobile ? "1.5rem" : "1.5rem",
+                    margin: "0.5rem",
+                  }}
+                >
+                  CPF: {selectedOrder.user.cpf || "CPF não disponível"}
                 </Typography>
               </Box>
             )}

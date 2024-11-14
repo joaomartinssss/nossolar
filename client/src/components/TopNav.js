@@ -40,22 +40,24 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   borderRadius: `${theme.shape.borderRadius}px 0 0 ${theme.shape.borderRadius}px`,
 }));
 
-const CartContainer = styled("div")(({ theme, isOpen, isMobile }) => ({
-  position: "fixed",
-  boxSizing: "border-box",
-  top: 0,
-  right: 0,
-  zIndex: 999,
-  padding: "2rem 1rem",
-  width: isMobile ? "95%" : "30vw",
-  height: "100vh",
-  backgroundColor: "white",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
-  overflowY: "auto",
-  transition: "transform 0.5s ease-in-out",
-  transform: `translateX(${isOpen ? "0%" : "100%"})`,
-  color: "#333",
-}));
+const CartContainer = styled("div")(
+  ({ theme, isOpen, isMobile, isTablet }) => ({
+    position: "fixed",
+    boxSizing: "border-box",
+    top: 0,
+    right: 0,
+    zIndex: 999,
+    padding: "2rem 1rem",
+    width: isMobile ? "95%" : isTablet ? "96%" : "30vw",
+    height: "100vh",
+    backgroundColor: "white",
+    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
+    overflowY: "auto",
+    transition: "transform 0.5s ease-in-out",
+    transform: `translateX(${isOpen ? "0%" : "100%"})`,
+    color: "#333",
+  })
+);
 
 const CartIndicator = styled("div")({
   position: "absolute",
@@ -72,12 +74,14 @@ const CartIndicator = styled("div")({
   fontSize: 12,
 });
 
-const NavigationBar = styled("div")(({ isMobile }) => ({
+const NavigationBar = styled("div")(({ isMobile, isTablet }) => ({
   backgroundColor: "red",
   padding: "0.8rem 0",
   textAlign: "center",
-  display: isMobile ? "flex" : "",
-  overflowX: isMobile ? "auto" : "",
+  display: "flex",
+  overflowX: isMobile ? "auto" : "hidden",
+  width: isMobile ? "108%" : isTablet ? "107vw" : "auto",
+  justifyContent: isMobile ? "space-between" : "center",
 }));
 
 const NavLink = styled("a")({
@@ -165,16 +169,15 @@ const TopNav = ({
   };
 
   const isMobile = useMediaQuery(breakPoints.mobile);
+  const isTablet = useMediaQuery(breakPoints.tablet);
 
   return (
     <div style={{ position: "relative" }}>
-      <NavigationBar isMobile={isMobile}>
+      <NavigationBar isMobile={isMobile} isTablet={isTablet}>
         <NavLink href="" onClick={scrollToBottom}>
           Institucional
         </NavLink>
-        <NavLink href="https://wa.me/5511940862140">
-          Atendimento
-        </NavLink>
+        <NavLink href="https://wa.me/5511940862140">Atendimento</NavLink>
         <NavLink href="" onClick={scrollToBottom}>
           Lojas
         </NavLink>
@@ -185,7 +188,10 @@ const TopNav = ({
           Trabalhe Conosco
         </NavLink>
       </NavigationBar>
-      <AppBar position="static" style={{}}>
+      <AppBar
+        position="static"
+        style={{ width: isMobile ? "100%" : isTablet ? "101%" : "" }}
+      >
         <Toolbar
           sx={{
             justifyContent: "space-between",
@@ -193,6 +199,8 @@ const TopNav = ({
             background: "#003599", //mudança feita para teste
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
+            flexDirection: isMobile || isTablet ? "column" : "row",
+            width: "100%",
           }}
         >
           <Link to={"/"}>
@@ -200,8 +208,8 @@ const TopNav = ({
               style={{
                 color: "white",
                 fontWeight: "bold",
-                fontSize: "1.5rem",
-                marginBottom: isMobile ? "1rem" : "0",
+                fontSize: isTablet ? "2rem" : "1.5rem",
+                marginBottom: isMobile || isTablet ? "1rem" : "0",
               }}
             >
               Supermercado Nosso Lar
@@ -210,16 +218,24 @@ const TopNav = ({
           <SearchInput
             style={{
               padding: ".2rem 5rem .2rem .1rem",
-              marginBottom: isMobile ? "1rem" : "0",
+              marginBottom: isMobile || isTablet ? "1rem" : "0",
             }}
           >
             <SearchIconWrapper>
-              <SearchIcon style={{ cursor: "pointer" }} />
+              <SearchIcon
+                style={{
+                  cursor: "pointer",
+                  fontSize: isTablet ? "2rem" : "default",
+                }}
+              />
             </SearchIconWrapper>
             <InputBase
               placeholder="Pesquisar por produtos"
               inputProps={{ "aria-label": "search" }}
-              style={{ paddingLeft: "2rem" }}
+              style={{
+                paddingLeft: "2rem",
+                padding: isMobile || isTablet ? "0.3rem 3rem" : "",
+              }}
               value={searchTerm}
               onChange={handleSearchChange}
             />
@@ -231,7 +247,7 @@ const TopNav = ({
                   display: "flex",
                   alignItems: "center",
                   position: "relative",
-                  marginBottom: isMobile ? "0.3rem" : "0",
+                  marginBottom: isMobile || isTablet ? "0.3rem" : "0",
                 }}
               >
                 <IconButton
@@ -239,9 +255,13 @@ const TopNav = ({
                   color="primary"
                   aria-label="carrinho"
                   onClick={handleCartClick}
-                  style={{ color: "#D3D3D3" }}
+                  style={{
+                    color: "#D3D3D3",
+                  }}
                 >
-                  <ShoppingCartIcon />
+                  <ShoppingCartIcon
+                    style={{ fontSize: isTablet ? "2rem" : "default" }}
+                  />
                   {totalItems > 0 && (
                     <CartIndicator>{indicatorContent}</CartIndicator>
                   )}
@@ -261,12 +281,15 @@ const TopNav = ({
                     color="primary"
                     aria-label="conta"
                     // onClick={handleUserPopupClick} // Adicione a função de clique no botão de conta
-                    style={{ color: "#D3D3D3" }}
+                    style={{
+                      color: "#D3D3D3",
+                      fontSize: isTablet ? "2rem" : "default",
+                    }}
                   >
                     <span
                       style={{
                         marginRight: "0.5rem",
-                        fontSize: "1rem",
+                        fontSize: isTablet ? "1.4rem" : "1rem",
                         marginLeft: "1rem",
                         color: "#D3D3D3",
                       }}
@@ -275,7 +298,11 @@ const TopNav = ({
                         ? userData.name
                         : "Entre ou cadastre-se"}
                     </span>
-                    <AccountCircleIcon />
+                    <AccountCircleIcon
+                      style={{
+                        fontSize: isTablet ? "2rem" : "default",
+                      }}
+                    />
                   </IconButton>
                 </Link>
                 {isUserPopupOpen && (
@@ -285,7 +312,14 @@ const TopNav = ({
                 )}
                 {userData && userData.id === 4 && (
                   <Link to={"/adm"}>
-                    <SettingsIcon sx={{ color: "#D3D3D3" }} />
+                    <SettingsIcon
+                      sx={{
+                        color: "#D3D3D3",
+                        fontSize: isTablet ? "2rem" : "default",
+                        marginRight: isMobile ? "" : isTablet ? "" : "5rem",
+                        margin: isMobile || isTablet ? "1rem" : "",
+                      }}
+                    />
                   </Link>
                 )}
               </div>

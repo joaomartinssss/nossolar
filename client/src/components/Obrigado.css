@@ -1,10 +1,20 @@
-.div {
+.div1 {
   background-color: #1976d2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 .typography1 {
   color: #fff;
-  margin: 0.5rem;
+  margin: 1rem;
   font-weight: bold;
   font-size: 2rem;
   text-align: center;
@@ -20,18 +30,20 @@
   background-color: #fff !important;
   display: flex;
   flex-direction: column;
+  overflow-y: auto !important;
+  margin-top: 2rem !important;
 }
 
 .typography2 {
   color: gray;
-  margin: 0.5rem !important;
+  margin: 1rem !important;
   font-weight: bold !important;
   font-size: 1.5rem !important;
   font-family: inherit !important;
 }
 
 .typography3 {
-  margin: 0.5rem !important;
+  margin: 1rem !important;
   font-weight: bold !important;
   font-size: 1.5rem !important;
 }

@@ -28,9 +28,9 @@ function AdmPage() {
               Visualizar Pedidos Pendentes
             </Button>
           </Link>
-          <Link to={"/Delivery"}>
+          <Link to={"/PedidosProntosParaRetirada"}>
             <Button style={style.button} variant="contained">
-              Visualizar Pedidos Prontos
+              Visualizar Pedidos Prontos para retirada
             </Button>
           </Link>
           <Link

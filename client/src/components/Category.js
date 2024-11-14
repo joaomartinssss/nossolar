@@ -1,9 +1,13 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import breakPoints from "./BreakPoints";
+import { useMediaQuery } from "@mui/material";
 
 const Categoria = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const containerRef = useRef(null);
+  const isMobile = useMediaQuery(breakPoints.mobile);
+  const isTablet = useMediaQuery(breakPoints.tablet);
 
   const categories = [
     "hortifruti",
@@ -37,7 +41,8 @@ const Categoria = () => {
       height: "100%",
       overflowX: "auto",
       scrollBehavior: "smooth",
-      padding: "5px",
+      padding: "5px 0", // Evita espaçamento lateral
+      margin: 0,
       backgroundColor: "gold",
       color: "aliceblue",
     },
@@ -95,8 +100,13 @@ const Categoria = () => {
   // };
 
   return (
-    <div style={style.container}>
-      <section id="produtos" style={style.produtos} ref={containerRef}>
+    <div
+      style={{
+        ...style.container,
+        width: isMobile ? "108vw" : isTablet ? "107vw" : "",
+      }}
+    >
+      <section id="produtos" style={{ ...style.produtos }} ref={containerRef}>
         {categories.map((category) => (
           <Link
             key={category}

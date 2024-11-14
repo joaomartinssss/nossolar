@@ -39,11 +39,11 @@ function HistoryPurchase() {
           const orders = response.data.map((order) => ({
             id: order.id,
             date: new Date(order.order_time).toLocaleDateString(),
-            time: new Date(order.order_time).toLocaleTimeString(), // Adiciona o horário da compra
+            time: new Date(order.order_time).toLocaleTimeString(),
             items: order.OrderItems.map((item) => ({
-              name: item.Product.name,
+              name: item.product.name,
               quantity: item.quantity,
-              price: `R$${parseFloat(item.Product.price).toFixed(2)}`,
+              price: `R$${parseFloat(item.product.price).toFixed(2)}`,
             })),
             totalAmount: `R$${parseFloat(order.total).toFixed(2)}`,
           }));
@@ -105,7 +105,7 @@ function HistoryPurchase() {
                     <Typography
                       sx={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      Compra no dia {purchase.date} às {purchase.time}{" "}
+                      Compra no dia {purchase.date} às {purchase.time} no valor de: {purchase.totalAmount}
                       {/* Exibe a data e o horário */}
                     </Typography>
                   </Button>

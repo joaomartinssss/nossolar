@@ -26,30 +26,84 @@ function ReadyForPickup() {
   const isTablet = useMediaQuery(breakPoints.tablet);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [userData, setUserData] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        "https://products.nossolarsupermercado.com/products"
+      );
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  };
 
   useEffect(() => {
-    if (userData && userData.id) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://products.nossolarsupermercado.com/api/auth/user/${userData.id}`
-          );
-          setUserData(response.data);
-        } catch (error) {
-          console.error("Erro ao buscar dados do usuário", error);
-        }
-      };
-      fetchData();
+    fetchProducts(); // Busca os produtos ao carregar o componente
+  }, []);
+
+  const getProductDetails = (productId) => {
+    const product = products.find((product) => product.id === productId);
+    console.log("Product Details:", product); // Verifique se o produto é encontrado corretamente
+    return product || { name: "Produto desconhecido", price: "0.00" };
+  };
+
+  useEffect(() => {
+    // Salva `orderItems` se não estiver no localStorage ainda
+    if (!localStorage.getItem("orderItems")) {
+      localStorage.setItem("orderItems", JSON.stringify([]));
     }
-  }, [userData]);
+
+    const savedOrderItems = localStorage.getItem("orderItems");
+    if (savedOrderItems) {
+      setOrderItems(JSON.parse(savedOrderItems));
+    }
+  }, []);
+
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await axios.get(
+        `https://products.nossolarsupermercado.com/api/auth/user/${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar dados do usuário:", error);
+      return null; // Caso haja erro, retorna null
+    }
+  };
+
+  useEffect(() => {
+    const fetchOrdersAndUserData = async () => {
+      try {
+        const response = await axios.get(
+          "https://products.nossolarsupermercado.com/orders"
+        );
+        const readyForPickupOrders = response.data.filter(
+          (order) => order.status === "Pronto para retirada"
+        );
+
+        const ordersWithUserData = await Promise.all(
+          readyForPickupOrders.map(async (order) => {
+            const user = await fetchUserData(order.user_id); // Buscando dados do usuário pelo user_id
+            return { ...order, user }; // Adiciona os dados do usuário ao pedido
+          })
+        );
+
+        setOrders(ordersWithUserData);
+      } catch (error) {
+        console.error("Erro ao buscar pedidos:", error);
+      }
+    };
+
+    fetchOrdersAndUserData();
+  }, []);
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("https://products.nossolarsupermercado.com/orders");
+      const response = await axios.get(
+        "https://products.nossolarsupermercado.com/orders"
+      );
       const readyOrders = response.data.filter(
         (order) => order.status === "Pronto para retirada"
       );
@@ -61,6 +115,7 @@ function ReadyForPickup() {
 
   useEffect(() => {
     fetchOrders();
+    fetchProducts();
   }, []);
 
   const handleOrderClick = (order) => {
@@ -86,11 +141,16 @@ function ReadyForPickup() {
     if (selectedOrder) {
       setIsLoading(true); // Inicia o estado de loading
       try {
-        await axios.put(`https://products.nossolarsupermercado.com/orders/${selectedOrder.id}`, {
-          status: "Pedido retirado",
-        });
+        await axios.put(
+          `https://products.nossolarsupermercado.com/orders/${selectedOrder.id}`,
+          {
+            status: "Pedido retirado",
+          }
+        );
         fetchOrders(); // Atualiza a lista de pedidos após a alteração
-        setSnackbarMessage(`Pedido #${selectedOrder.id} concluído com sucesso!`);
+        setSnackbarMessage(
+          `Pedido #${selectedOrder.id} concluído com sucesso!`
+        );
         setSnackbarOpen(true);
         handleCloseConfirmation(); // Fecha o diálogo de confirmação
         handleCloseModal();
@@ -193,7 +253,7 @@ function ReadyForPickup() {
             >
               Status: {selectedOrder.status}
             </Typography>
-            {userData && (
+            {selectedOrder.user && (
               <Box sx={{ textAlign: "left" }}>
                 <Typography
                   sx={{
@@ -202,7 +262,7 @@ function ReadyForPickup() {
                     margin: "0.5rem",
                   }}
                 >
-                  Cliente: {userData.name}
+                  Cliente: {selectedOrder.user.name || "Nome não disponível"}
                 </Typography>
                 <Typography
                   sx={{
@@ -211,7 +271,8 @@ function ReadyForPickup() {
                     margin: "0.5rem",
                   }}
                 >
-                  Telefone: {userData.telefone}
+                  Telefone:{" "}
+                  {selectedOrder.user.telefone || "Telefone não disponível"}
                 </Typography>
                 <Typography
                   sx={{
@@ -220,7 +281,7 @@ function ReadyForPickup() {
                     margin: "0.5rem",
                   }}
                 >
-                  CPF: {userData.cpf}
+                  CPF: {selectedOrder.user.cpf || "CPF não disponível"}
                 </Typography>
               </Box>
             )}
@@ -259,37 +320,26 @@ function ReadyForPickup() {
               >
                 Itens do Pedido:
               </Typography>
-              {selectedOrder.OrderItems &&
-              selectedOrder.OrderItems.length > 0 ? (
-                selectedOrder.OrderItems.map((item, index) => (
-                  <Typography
-                    key={index}
-                    variant="body2"
-                    sx={{
-                      margin: "0.5rem",
-                      fontSize: isMobile
-                        ? "1.5rem"
-                        : isTablet
-                        ? "2rem"
-                        : "1.5rem",
-                      textAlign: "left",
-                      color: "gray",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    - {item.Product.name} - {item.quantity} x R${" "}
-                    {Number(item.Product.price).toFixed(2)}
-                  </Typography>
-                ))
-              ) : (
+              {selectedOrder?.OrderItems.map((item, index) => (
                 <Typography
+                  key={index}
                   variant="body2"
-                  sx={{ margin: "0.5rem", fontSize: "1.5rem" }}
+                  sx={{
+                    margin: "0.5rem",
+                    fontSize: isMobile
+                      ? "1.5rem"
+                      : isTablet
+                      ? "2rem"
+                      : "1.5rem",
+                    textAlign: "left",
+                    color: "gray",
+                    fontFamily: "inherit",
+                  }}
                 >
-                  Nenhum item encontrado neste pedido.
+                  - {item.product.name} - {item.quantity} x R${" "}
+                  {Number(item.product.price).toFixed(2)}
                 </Typography>
-              )}
-
+              ))}
               <Typography
                 variant="h6"
                 sx={{
@@ -304,15 +354,16 @@ function ReadyForPickup() {
                 }}
               >
                 Total: R${" "}
-                {selectedOrder.OrderItems
+                {selectedOrder?.OrderItems
                   ? selectedOrder.OrderItems.reduce(
                       (total, item) =>
-                        total + item.quantity * Number(item.Product.price),
+                        total +
+                        item.quantity *
+                          (item.product ? Number(item.product.price) : 0),
                       0
                     ).toFixed(2)
                   : "0.00"}
               </Typography>
-
               <Button
                 variant="contained"
                 sx={{
