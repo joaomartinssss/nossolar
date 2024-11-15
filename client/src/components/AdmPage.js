@@ -1,36 +1,51 @@
-import { Card, Button, Typography, Box } from "@mui/material";
+import { Card, Button, Typography, Box, useMediaQuery } from "@mui/material";
 import "./AdmPage.css";
 import { Link } from "react-router-dom";
+import breakPoints from "./BreakPoints";
 
 function AdmPage() {
-  const style = {
-    button: {
-      margin: "0.5rem",
-      background: "#003599",
-      width: "400px",
+  const isMobile = useMediaQuery(breakPoints.mobile);
+  const isTablet = useMediaQuery(breakPoints.tablet);
+
+  const buttonStyles = {
+    margin: "0.5rem",
+    background: "#1976d2",
+    width: isMobile ? "90%" : isTablet ? "70%" : "500px",
+    height: "50px",
+    fontWeight: "bold",
+    ":hover": {
+      background: "white",
+      color: "#1976d2",
+      border: "1px solid #1976d2",
+      fontWeight: "bold",
+      transform: "scale(1.05)",
+      transition: "all 0.3s ease-in-out",
     },
   };
 
   return (
     <div className="divadm">
       <Card className="cardadm">
-        <Typography variant="h4" sx={{ fontWeight: "bold", marginTop: "2rem" }}>
+        <Typography
+          variant="h4"
+          sx={{ fontWeight: "bold", marginTop: "2rem", marginBottom: "3rem" }}
+        >
           Página de Administração do Supermercado Nosso Lar
         </Typography>
         <Box className="box">
           <Link to={"/ProductControl"}>
-            <Button style={style.button} variant="contained">
+            <Button sx={buttonStyles} variant="contained">
               Pagina de Controle de Produtos
             </Button>
           </Link>
           <Link to={"/PedidosPendentes"}>
-            <Button style={style.button} variant="contained">
+            <Button sx={buttonStyles} variant="contained">
               Visualizar Pedidos Pendentes
             </Button>
           </Link>
           <Link to={"/PedidosProntosParaRetirada"}>
-            <Button style={style.button} variant="contained">
-              Visualizar Pedidos Prontos para retirada
+            <Button sx={buttonStyles} variant="contained">
+              Visualizar Pedidos Prontos
             </Button>
           </Link>
           <Link
@@ -38,7 +53,7 @@ function AdmPage() {
               "https://wa.me/5511980607358?text=João,+preciso+de+uma+ajuda+no+sistema"
             }
           >
-            <Button style={style.button} variant="contained">
+            <Button sx={buttonStyles} variant="contained">
               Ajuda do Desenvolvedor
             </Button>
           </Link>
