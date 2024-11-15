@@ -94,11 +94,9 @@ const NavLink = styled("a")({
   "&:hover": {
     color: "white",
     backgroundColor: "#A40606",
-    paddingBottom: "30px",
     paddingLeft: "10px",
     paddingRight: "10px",
-    paddingTop: "10px",
-    borderRadius: "6px",
+    borderRadius: "2px",
   },
   fontWeight: "bold",
 });
@@ -234,7 +232,7 @@ const TopNav = ({
               inputProps={{ "aria-label": "search" }}
               style={{
                 paddingLeft: "2rem",
-                padding: isMobile || isTablet ? "0.3rem 3rem" : "",
+                padding: isMobile || isTablet ? "0.3rem 3rem" : "0.1rem 3rem",
               }}
               value={searchTerm}
               onChange={handleSearchChange}
@@ -260,7 +258,7 @@ const TopNav = ({
                   }}
                 >
                   <ShoppingCartIcon
-                    style={{ fontSize: isTablet ? "2rem" : "default" }}
+                    style={{ fontSize: isTablet ? "2rem" : "1.5rem" }}
                   />
                   {totalItems > 0 && (
                     <CartIndicator>{indicatorContent}</CartIndicator>
@@ -300,7 +298,7 @@ const TopNav = ({
                     </span>
                     <AccountCircleIcon
                       style={{
-                        fontSize: isTablet ? "2rem" : "default",
+                        fontSize: isTablet ? "2rem" : "1.5rem",
                       }}
                     />
                   </IconButton>
@@ -315,7 +313,7 @@ const TopNav = ({
                     <SettingsIcon
                       sx={{
                         color: "#D3D3D3",
-                        fontSize: isTablet ? "2rem" : "default",
+                        fontSize: isTablet ? "2rem" : "1.5rem",
                         marginRight: isMobile ? "" : isTablet ? "" : "5rem",
                         margin: isMobile || isTablet ? "1rem" : "",
                       }}

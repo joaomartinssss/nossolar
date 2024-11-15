@@ -13,7 +13,7 @@ const ProductGrid = ({
 }) => {
   const isMobile = useMediaQuery(breakPoints.mobile);
   const isTablet = useMediaQuery(breakPoints.tablet);
-  
+
   return (
     <Grid
       container
@@ -30,10 +30,10 @@ const ProductGrid = ({
         <Grid
           key={product.id}
           item
-          xs={isMobile ? 6 : isTablet ? 4 : 12} // Adjust for mobile, tablet, and desktop
-          sm={isTablet ? 4 : isMobile ? 6 : 12} // Handle both mobile and tablet breakpoints
+          xs={6} // Adjust for mobile, tablet, and desktop
+          sm={4} // Handle both mobile and tablet breakpoints
           md={4} // Maintain 4 cards per column on larger screens
-          lg={3} // 3 cards per column on desktops (new)
+          lg={2} // 3 cards per column on desktops (new)
           style={{ display: "flex" }} // Ensure consistent styling
         >
           <ProductCard
