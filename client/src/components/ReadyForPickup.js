@@ -27,6 +27,7 @@ function ReadyForPickup() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [products, setProducts] = useState([]);
+  const [orderItems, setOrderItems] = useState([]);
 
   const fetchProducts = async () => {
     try {
