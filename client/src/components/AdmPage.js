@@ -13,52 +13,59 @@ function AdmPage() {
     width: isMobile ? "90%" : isTablet ? "70%" : "500px",
     height: "50px",
     fontWeight: "bold",
+    fontSize: isMobile ? "1rem" : "1.2rem",
     ":hover": {
       background: "white",
       color: "#1976d2",
       border: "1px solid #1976d2",
-      fontWeight: "bold",
       transform: "scale(1.05)",
       transition: "all 0.3s ease-in-out",
     },
   };
 
   return (
-    <div className="divadm">
-      <Card className="cardadm">
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: "bold", marginTop: "2rem", marginBottom: "3rem" }}
-        >
-          Página de Administração do Supermercado Nosso Lar
-        </Typography>
-        <Box className="box">
-          <Link to={"/ProductControl"}>
-            <Button sx={buttonStyles} variant="contained">
-              Pagina de Controle de Produtos
-            </Button>
-          </Link>
-          <Link to={"/PedidosPendentes"}>
-            <Button sx={buttonStyles} variant="contained">
-              Visualizar Pedidos Pendentes
-            </Button>
-          </Link>
-          <Link to={"/PedidosProntosParaRetirada"}>
-            <Button sx={buttonStyles} variant="contained">
-              Visualizar Pedidos Prontos
-            </Button>
-          </Link>
-          <Link
-            to={
-              "https://wa.me/5511980607358?text=João,+preciso+de+uma+ajuda+no+sistema"
-            }
+    <div className="adm-container">
+      <div className="divadm">
+        <Card className="cardadm">
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              marginTop: "2rem",
+              marginBottom: isMobile ? "" : "3rem",
+              fontSize: isMobile ? "2rem" : "2.5rem",
+            }}
           >
-            <Button sx={buttonStyles} variant="contained">
-              Ajuda do Desenvolvedor
-            </Button>
-          </Link>
-        </Box>
-      </Card>
+            Página de Administração do Supermercado Nosso Lar
+          </Typography>
+          <Box className="box">
+            <Link to={"/ProductControl"}>
+              <Button sx={buttonStyles} variant="contained">
+                Pagina de Controle de Produtos
+              </Button>
+            </Link>
+            <Link to={"/PedidosPendentes"}>
+              <Button sx={buttonStyles} variant="contained">
+                Visualizar Pedidos Pendentes
+              </Button>
+            </Link>
+            <Link to={"/PedidosProntosParaRetirada"}>
+              <Button sx={buttonStyles} variant="contained">
+                Visualizar Pedidos Prontos
+              </Button>
+            </Link>
+            <Link
+              to={
+                "https://wa.me/5511980607358?text=João,+preciso+de+uma+ajuda+no+sistema"
+              }
+            >
+              <Button sx={buttonStyles} variant="contained">
+                Ajuda do Desenvolvedor
+              </Button>
+            </Link>
+          </Box>
+        </Card>
+      </div>
     </div>
   );
 }

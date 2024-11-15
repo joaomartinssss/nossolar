@@ -1,4 +1,4 @@
-.divadm {
+.adm-container .divadm {
   background-color: #1976d2;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-.cardadm {
+.adm-container .cardadm {
   background-color: #f0f0f0;
   width: 70rem;
   height: 30rem;
@@ -22,7 +22,7 @@
   align-items: center;
   text-align: center; /* Centraliza o texto */
 }
-.box a {
+.adm-container .box a {
   width: 45rem; /* Faz os botões ocuparem toda a largura disponível */
   display: flex;
   height: 4rem;
@@ -33,12 +33,12 @@
 }
 
 @media (max-width: 712px) {
-  .divadm {
+  .adm-container .divadm {
     justify-content: center; /* Garante que todo o conteúdo está centralizado */
     align-items: center;
   }
 
-  .cardadm {
+  .adm-container .cardadm {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,7 +49,7 @@
     text-align: center; /* Centraliza o texto */
   }
 
-  .box {
+  .adm-container .box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,17 +58,17 @@
     gap: 1rem;
   }
 
-  .box a {
+  .adm-container .box a {
     width: 45rem; /* Faz os botões ocuparem toda a largura disponível */
     display: flex;
     height: 5rem;
     justify-content: center;
   }
 
-  button {
+  .adm-container button {
     width: 90%; /* Reduz a largura do botão em tablets */
   }
-  .box a button {
+  .adm-container .box a button {
     font-size: 1.2rem; /* Aumenta o tamanho do texto */
     font-weight: bold; /* Deixa o texto em negrito (opcional) */
     height: 4rem;
@@ -76,35 +76,31 @@
 }
 
 @media (max-width: 415px) {
-  .divadm {
-    height: 150vh;
+  .adm-container .divadm {
+    height: 110vh;
   }
 
-  .cardadm {
-    width: 90%;
-    height: 50%;
+  .adm-container .cardadm {
+    width: 90%; /* Corrigido para ocupar 90% da largura */
+    height: auto; /* Ajusta dinamicamente à altura do conteúdo */
     padding: 1rem;
-    gap: 2rem;
+    gap: 1rem;
   }
 
-  .box {
+  .adm-container .box {
     flex-direction: column;
     align-items: center;
   }
-  button {
-    width: 90%; /* Reduz a largura do botão em tablets */
-  }
-  .box a button {
-    font-size: 1.3rem; /* Aumenta o tamanho do texto */
-    font-weight: bold; /* Deixa o texto em negrito (opcional) */
-    height: 4rem;
+
+  .adm-container .box a {
+    width: 100% !important; /* Garante que o botão ocupa toda a largura */
+    display: flex;
+    justify-content: center;
+    height: 3.5rem;
   }
 
-  .box a {
-    width: 45rem; /* Faz os botões ocuparem toda a largura disponível */
-    display: flex;
-    height: 5rem;
-    width: 35rem;
-    justify-content: center;
+  .adm-container .box a button {
+    font-size: 1rem !important;
+    font-weight: bold;
   }
 }
