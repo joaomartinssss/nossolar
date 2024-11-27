@@ -7,6 +7,7 @@ const Product = require("./Product");
 const Order = require("./Order");
 const OrderItem = require("./OrderItem");
 const auth = require("../server/users/auth");
+const AWS = require("aws-sdk");
 
 const app = express(); // Mova esta linha para o início, antes do uso de middlewares
 
@@ -35,6 +36,9 @@ app.options("*", cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+AWS.config.update({ region: "sa-east-1" });
+const sns = new AWS.SNS();
 
 // Suas rotas e demais configurações...*
 const PORT = 3001; // Definindo a porta como 3001
@@ -78,10 +82,10 @@ app.post("/orders", async (req, res) => {
   console.log("Dados do pedido:", req.body);
 
   try {
-    //calcular o total somando o preço * quantidade para cada item
+    // Calcular o total somando o preço * quantidade para cada item
     let total = 0;
 
-    //Busca os produtos e calcula o total
+    // Busca os produtos e calcula o total
     for (let item of items) {
       const product = await Product.findByPk(item.product_id);
       if (!product) {
@@ -92,7 +96,7 @@ app.post("/orders", async (req, res) => {
       total += product.price * item.quantity; // Assumindo que o modelo Product tem um campo 'price'
     }
 
-    //cria o novo pedido com o total calculado
+    // Cria o novo pedido com o total calculado
     const newOrder = await Order.create({
       user_id,
       payment_method: payment_method,
@@ -113,6 +117,34 @@ app.post("/orders", async (req, res) => {
     await OrderItem.bulkCreate(orderItems);
 
     console.log("Itens do pedido criados.");
+
+    // Personalizar a mensagem de notificação
+    const message = `Novo pedido recebido!
+      ID do Pedido: ${newOrder.id}
+      Usuário: ${user_id}
+      Produtos:
+              ${items
+                .map(
+                  (item) =>
+                    `- Produto ${item.product_id}: ${item.quantity} unidades`
+                )
+                .join("\n")}
+      Total: R$${total.toFixed(2)}
+      Status: Pendente`;
+
+    // Enviar a mensagem para o tópico SNS
+    const params = {
+      Message: message,
+      TopicArn:
+        "arn:aws:sns:sa-east-1:727646499549:Pedidos_nosso_lar:22790cf7-9d2f-44b5-b02d-0a66a68ddee0", // Substitua pelo ARN do seu tópico
+    };
+
+    try {
+      await sns.publish(params).promise();
+      console.log("Notificação enviada via SMS!");
+    } catch (snsError) {
+      console.error("Erro ao enviar SMS:", snsError.message);
+    }
 
     res.status(201).json(newOrder);
   } catch (error) {
