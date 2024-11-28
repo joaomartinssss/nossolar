@@ -130,6 +130,7 @@ app.post("/orders", async (req, res) => {
                 )
                 .join("\n")}
       Total: R$${total.toFixed(2)}
+      Forma de pagamento: ${payment_method}
       Status: Pendente`;
 
     // Enviar a mensagem para o tópico SNS
