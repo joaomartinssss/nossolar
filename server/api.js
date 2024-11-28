@@ -135,8 +135,7 @@ app.post("/orders", async (req, res) => {
     // Enviar a mensagem para o tópico SNS
     const params = {
       Message: message,
-      TopicArn:
-        "arn:aws:sns:sa-east-1:727646499549:Pedidos_nosso_lar:22790cf7-9d2f-44b5-b02d-0a66a68ddee0", // Substitua pelo ARN do seu tópico
+      TopicArn: "arn:aws:sns:sa-east-1:727646499549:Pedidos_nosso_lar", // Substitua pelo ARN do seu tópico
     };
 
     try {
