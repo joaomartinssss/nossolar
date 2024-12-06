@@ -137,7 +137,7 @@ function EditProduct() {
         >
           <Link to={"/"}>
             <img
-              src="https://scontent-gru1-1.xx.fbcdn.net/v/t39.30808-6/318768361_487649283434966_4923966161297574562_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=0cXwzlWS6KMQ7kNvgH_HD3J&_nc_zt=23&_nc_ht=scontent-gru1-1.xx&_nc_gid=AOe1B-7xqFQ5T5xkgQw1ALx&oh=00_AYCE5s1A0izd2Iv7aYgHeaYNKc7cTwFnbyKB9uchFjqaqQ&oe=673C4993"
+              src="https://products-nosso-lar.s3.sa-east-1.amazonaws.com/logoNossoLar.jpg"
               alt="Logo Nosso Lar"
               style={style.image}
             ></img>

@@ -126,7 +126,7 @@ app.post("/orders", async (req, res) => {
               ${items
                 .map(
                   (item) =>
-                    `- ${item.name}: ${item.quantity} unidades`
+                    `- ${item.name}: ${item.quantity}x`
                 )
                 .join("\n")}
       Total: R$${total.toFixed(2)}

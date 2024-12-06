@@ -266,7 +266,7 @@ function Payment() {
       >
         <Link to={"/"}>
           <img
-            src="https://scontent.fsdu3-1.fna.fbcdn.net/v/t39.30808-6/318768361_487649283434966_4923966161297574562_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=7TKcQRWdGNMQ7kNvgHoG6tD&_nc_ht=scontent.fsdu3-1.fna&_nc_gid=AKhI9BMdyPuhrsXqQDNSMUn&oh=00_AYDhWbiLzaYKpBG8KriZBgxqYTT4o38J45yHwLqRrTmFIQ&oe=67032893"
+            src="https://products-nosso-lar.s3.sa-east-1.amazonaws.com/logoNossoLar.jpg"
             alt="Logo Nosso Lar"
             style={style.image}
           ></img>
